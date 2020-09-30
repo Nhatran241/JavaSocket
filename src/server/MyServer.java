@@ -1,7 +1,6 @@
 package server;
 
 import library.SocketTransceiver;
-import library.TcpServer;
 
 public class MyServer{
     private static int[][] arr = new int[10][10];

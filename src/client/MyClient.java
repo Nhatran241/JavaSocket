@@ -1,10 +1,7 @@
 package client;
 
 import library.SocketTransceiver;
-import library.TcpClient;
 
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Scanner;
 
 public class MyClient {

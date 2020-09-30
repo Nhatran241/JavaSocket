@@ -1,7 +1,7 @@
-package library;
+package client;
 
-import java.io.InputStream;
-import java.io.OutputStream;
+import library.SocketTransceiver;
+
 import java.net.InetAddress;
 import java.net.Socket;
 
