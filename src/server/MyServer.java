@@ -37,24 +37,6 @@ public class MyServer{
         tcpServer.start();
     }
 
-    private static void handleClientMessage(SocketTransceiver socketTransceiver, String message) {
-        System.out.println(message);
-        if(socketTransceiver.getNameTag().equals("player0")){
-            int posx = Integer.parseInt(message.charAt(0)+"");
-            int posy = Integer.parseInt(message.charAt(1)+"");
-            arr[posx][posy]=1;
-        }else if(socketTransceiver.getNameTag().equals("player1")){
-            int posx = Integer.parseInt(message.charAt(0)+"");
-            int posy = Integer.parseInt(message.charAt(1)+"");
-            arr[posx][posy]=-1;
-        }
-        for (int i = 0; i <arr.length ; i++) {
-            for (int j = 0; j <arr.length ; j++) {
-                System.out.print(arr[i][j]+" ");
-            }
-            System.out.println();
-        }
-    }
 
 
 }
