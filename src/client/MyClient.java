@@ -13,6 +13,7 @@ public class MyClient {
         TcpClient tcpClient = new TcpClient() {
             @Override
             public void onConnect(SocketTransceiver transceiver) {
+
             }
 
             @Override
@@ -21,8 +22,7 @@ public class MyClient {
             }
 
             @Override
-            public void onReceive(SocketTransceiver transceiver, InputStream inputStream, OutputStream outputStream) {
-
+            public void onReceive(SocketTransceiver transceiver, String message) {
             }
 
 

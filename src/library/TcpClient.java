@@ -25,9 +25,8 @@ public abstract class TcpClient implements Runnable {
 
 
 				@Override
-				public void onReceive(InetAddress addr, String request) {
-
-					System.out.println(addr+":"+request);
+				public void onReceive(InetAddress addr, String message) {
+					TcpClient.this.onReceive(this,message);
 				}
 
 				@Override
@@ -66,8 +65,7 @@ public abstract class TcpClient implements Runnable {
 
 	public abstract void onConnectFailed();
 
-
-	public abstract void onReceive(SocketTransceiver transceiver, InputStream inputStream,OutputStream outputStream);
+	public abstract void onReceive(SocketTransceiver transceiver,String message);
 
 	public abstract void onDisconnect(SocketTransceiver transceiver);
 }

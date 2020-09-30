@@ -35,7 +35,6 @@ public abstract class TcpServer implements Runnable {
             while(runFlag) {
                 try {
                     Socket socket = serverSocket.accept();
-                    System.out.println("Number client connected"+clients.size());
                     handleClientConnect(socket);
                 } catch (IOException exception) {
                     onConnectFailed(exception);
