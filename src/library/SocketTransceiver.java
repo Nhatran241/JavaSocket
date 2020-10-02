@@ -64,16 +64,15 @@ public abstract class SocketTransceiver implements Runnable {
 
 	@Override
 	public void run() {
+		System.out.println("This client use thead name"+Thread.currentThread().getName());
 		try {
 			in = new DataInputStream(this.socket.getInputStream());
 			out = new DataOutputStream(this.socket.getOutputStream());
-
-
 		} catch (IOException e) {
 			e.printStackTrace();
 			runFlag = false;
 		}
-
+		onThreadStartSuccess();
 		while (runFlag) {
 			try {
 				final String s = in.readUTF();
@@ -95,8 +94,10 @@ public abstract class SocketTransceiver implements Runnable {
 		this.onDisconnect(addr);
 	}
 
-	public abstract void onReceive(InetAddress addr,String request);
+	public abstract void onReceive(InetAddress addr,String message);
 
 	public abstract void onDisconnect(InetAddress addr);
+
+	public abstract void onThreadStartSuccess();
 
 }

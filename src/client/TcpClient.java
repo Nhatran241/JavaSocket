@@ -22,11 +22,9 @@ public abstract class TcpClient implements Runnable {
 		try {
 			Socket socket = new Socket(hostIP, port);
 			transceiver = new SocketTransceiver(socket) {
-
-
 				@Override
 				public void onReceive(InetAddress addr, String message) {
-					TcpClient.this.onReceive(this,message);
+					TcpClient.this.onReceive(transceiver,message);
 				}
 
 				@Override
@@ -35,10 +33,14 @@ public abstract class TcpClient implements Runnable {
 					connect = false;
 					TcpClient.this.onDisconnect(this);
 				}
+
+				@Override
+				public void onThreadStartSuccess() {
+					connect = true;
+					TcpClient.this.onConnect(this);
+				}
 			};
 			transceiver.start();
-			connect = true;
-			this.onConnect(transceiver);
 		} catch (Exception e) {
 			e.printStackTrace();
 			this.onConnectFailed();
