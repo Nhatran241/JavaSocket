@@ -1,10 +1,11 @@
 package library;
 
+import com.google.gson.Gson;
+import library.model.request.BaseRequest;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public abstract class SocketTransceiver implements Runnable {
 
@@ -61,19 +62,31 @@ public abstract class SocketTransceiver implements Runnable {
 		return false;
 	}
 
+	public boolean send(Object object) {
+		if (out != null) {
+			try {
+				out.writeUTF(new Gson().toJson(object));
+				out.flush();
+				return true;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+
 
 	@Override
 	public void run() {
+		System.out.println("This client use thead name"+Thread.currentThread().getName());
 		try {
 			in = new DataInputStream(this.socket.getInputStream());
 			out = new DataOutputStream(this.socket.getOutputStream());
-
-
 		} catch (IOException e) {
 			e.printStackTrace();
 			runFlag = false;
 		}
-
+		onThreadStartSuccess();
 		while (runFlag) {
 			try {
 				final String s = in.readUTF();
@@ -95,8 +108,10 @@ public abstract class SocketTransceiver implements Runnable {
 		this.onDisconnect(addr);
 	}
 
-	public abstract void onReceive(InetAddress addr,String request);
+	public abstract void onReceive(InetAddress addr,String message);
 
 	public abstract void onDisconnect(InetAddress addr);
+
+	public abstract void onThreadStartSuccess();
 
 }

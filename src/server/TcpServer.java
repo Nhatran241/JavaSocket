@@ -61,22 +61,11 @@ public abstract class TcpServer implements Runnable {
     }
 
     private void handleClientConnect(Socket socket) {
-//        List<InetAddress> inetAddressList = new ArrayList<>();
-//        for (SocketTransceiver socketTransceiver : clients){
-//            inetAddressList.add(socketTransceiver.getInetAddress());
-//        }
-//        if(inetAddressList.contains(socket.getInetAddress())) {
-//            try {
-//                socket.close();
-//            } catch (IOException exception) {
-//                exception.printStackTrace();
-//            }
-//            return;
-//        }
         SocketTransceiver client = new SocketTransceiver(socket) {
             @Override
             public void onReceive(InetAddress addr, String message) {
-               System.out.println(message);
+                TcpServer.this.onReceiver(this,message);
+
             }
 
             @Override
@@ -84,10 +73,14 @@ public abstract class TcpServer implements Runnable {
                 TcpServer.this.onDisconnect(this);
                 clients.remove(this);
             }
+
+            @Override
+            public void onThreadStartSuccess() {
+                TcpServer.this.clients.add(this);
+                TcpServer.this.onConnect(this);
+            }
         };
         client.start();
-        this.clients.add(client);
-        this.onConnect(client);
     }
 
     public abstract void onConnect(SocketTransceiver socketTransceiver);
