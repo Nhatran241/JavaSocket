@@ -1,10 +1,11 @@
 package library;
 
+import com.google.gson.Gson;
+import library.model.request.BaseRequest;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public abstract class SocketTransceiver implements Runnable {
 
@@ -52,6 +53,19 @@ public abstract class SocketTransceiver implements Runnable {
 		if (out != null) {
 			try {
 				out.writeUTF(s);
+				out.flush();
+				return true;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+
+	public boolean send(Object object) {
+		if (out != null) {
+			try {
+				out.writeUTF(new Gson().toJson(object));
 				out.flush();
 				return true;
 			} catch (Exception e) {
