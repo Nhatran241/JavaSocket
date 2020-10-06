@@ -1,0 +1,1 @@
+chạy file main.py để chạy server python

@@ -1,8 +1,9 @@
-package server;
+package library;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import com.google.gson.Gson;
+import library.model.request.BaseRequest;
+
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 
@@ -13,6 +14,8 @@ public abstract class SocketTransceiver implements Runnable {
 	protected DataInputStream in;
 	protected DataOutputStream out;
 	private boolean runFlag;
+	private String nameTag;
+
 
 	public SocketTransceiver(Socket socket) {
 		this.socket = socket;
@@ -28,14 +31,22 @@ public abstract class SocketTransceiver implements Runnable {
 		new Thread(this).start();
 	}
 
+	public String getNameTag() {
+		return nameTag;
+	}
+
+	public void setNameTag(String nameTag) {
+		this.nameTag = nameTag;
+	}
+
 	public void stop() {
 		runFlag = false;
-		try {
-			socket.shutdownInput();
-			in.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			socket.shutdownInput();
+//			in.close();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	public boolean send(String s) {
@@ -51,9 +62,23 @@ public abstract class SocketTransceiver implements Runnable {
 		return false;
 	}
 
+	public boolean send(Object object) {
+		if (out != null) {
+			try {
+				out.writeUTF(new Gson().toJson(object));
+				out.flush();
+				return true;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+
 
 	@Override
 	public void run() {
+		System.out.println("This client use thead name"+Thread.currentThread().getName());
 		try {
 			in = new DataInputStream(this.socket.getInputStream());
 			out = new DataOutputStream(this.socket.getOutputStream());
@@ -61,6 +86,7 @@ public abstract class SocketTransceiver implements Runnable {
 			e.printStackTrace();
 			runFlag = false;
 		}
+		onThreadStartSuccess();
 		while (runFlag) {
 			try {
 				final String s = in.readUTF();
@@ -82,9 +108,10 @@ public abstract class SocketTransceiver implements Runnable {
 		this.onDisconnect(addr);
 	}
 
-
-	public abstract void onReceive(InetAddress addr, String s);
-
+	public abstract void onReceive(InetAddress addr,String message);
 
 	public abstract void onDisconnect(InetAddress addr);
+
+	public abstract void onThreadStartSuccess();
+
 }

@@ -1,11 +1,12 @@
 package server;
 
-import java.io.IOException;
+import library.SocketTransceiver;
+
+import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public abstract class TcpServer implements Runnable {
@@ -13,8 +14,8 @@ public abstract class TcpServer implements Runnable {
     private boolean runFlag;
     private List<SocketTransceiver> clients = new ArrayList();
 
-    public TcpServer(int var1) {
-        this.port = var1;
+    public TcpServer(int port) {
+        this.port = port;
     }
 
     public void start() {
@@ -26,64 +27,69 @@ public abstract class TcpServer implements Runnable {
         this.runFlag = false;
     }
 
+    public List<SocketTransceiver> getClients() {
+        return clients;
+    }
+
     public void run() {
         try {
-            ServerSocket var1 = new ServerSocket(this.port);
-
-            while(this.runFlag) {
+            ServerSocket serverSocket = new ServerSocket(this.port);
+            while(runFlag) {
                 try {
-                    Socket var2 = var1.accept();
-                    this.handleClientConnect(var2);
-                } catch (IOException var4) {
-                    var4.printStackTrace();
-                    this.onConnectFailed();
+                    Socket socket = serverSocket.accept();
+                    handleClientConnect(socket);
+                } catch (IOException exception) {
+                    onConnectFailed(exception);
                 }
             }
-
             try {
-                Iterator var7 = this.clients.iterator();
-
-                while(var7.hasNext()) {
-                    SocketTransceiver var3 = (SocketTransceiver)var7.next();
-                    var3.stop();
+                for (SocketTransceiver client : this.clients) {
+                    client.stop();
                 }
-
-                this.clients.clear();
-                var1.close();
-            } catch (Exception var5) {
-                var5.printStackTrace();
+                clients.clear();
+                serverSocket.close();
+            } catch (Exception exception) {
+                System.out.println(exception.toString());
+                this.onConnectFailed(exception);
             }
-        } catch (IOException var6) {
-            var6.printStackTrace();
+        } catch (IOException exception) {
+            System.out.println(exception.toString());
+            this.onConnectFailed(exception);
         }
-
+        this.stop();
         this.onServerStop();
     }
 
-    private void handleClientConnect(Socket var1) {
-        SocketTransceiver client = new SocketTransceiver(var1) {
+    private void handleClientConnect(Socket socket) {
+        SocketTransceiver client = new SocketTransceiver(socket) {
             @Override
-            public void onReceive(InetAddress addr, String s) {
-                TcpServer.this.onReceive(this,addr+":"+s);
+            public void onReceive(InetAddress addr, String message) {
+                TcpServer.this.onReceiver(this,message);
+
             }
 
             @Override
             public void onDisconnect(InetAddress addr) {
                 TcpServer.this.onDisconnect(this);
+                clients.remove(this);
+            }
+
+            @Override
+            public void onThreadStartSuccess() {
+                TcpServer.this.clients.add(this);
+                TcpServer.this.onConnect(this);
             }
         };
         client.start();
-        this.clients.add(client);
-        this.onConnect(client);
     }
 
-    public abstract void onConnect(SocketTransceiver var1);
+    public abstract void onConnect(SocketTransceiver socketTransceiver);
 
-    public abstract void onConnectFailed();
+    public abstract void onConnectFailed(Exception exception);
 
-    public abstract void onReceive(SocketTransceiver var1, String var2);
+    public abstract void onReceiver(SocketTransceiver socketTransceiver,String message);
 
-    public abstract void onDisconnect(SocketTransceiver var1);
+    public abstract void onDisconnect(SocketTransceiver socketTransceiver);
 
     public abstract void onServerStop();
 }

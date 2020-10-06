@@ -1,4 +1,6 @@
-package server;
+package client;
+
+import library.SocketTransceiver;
 
 import java.net.InetAddress;
 import java.net.Socket;
@@ -20,21 +22,25 @@ public abstract class TcpClient implements Runnable {
 		try {
 			Socket socket = new Socket(hostIP, port);
 			transceiver = new SocketTransceiver(socket) {
-
 				@Override
-				public void onReceive(InetAddress addr, String s) {
-					TcpClient.this.onReceive(this, s);
+				public void onReceive(InetAddress addr, String message) {
+					TcpClient.this.onReceive(transceiver,message);
 				}
 
 				@Override
 				public void onDisconnect(InetAddress addr) {
+					disconnect();
 					connect = false;
 					TcpClient.this.onDisconnect(this);
 				}
+
+				@Override
+				public void onThreadStartSuccess() {
+					connect = true;
+					TcpClient.this.onConnect(this);
+				}
 			};
 			transceiver.start();
-			connect = true;
-			this.onConnect(transceiver);
 		} catch (Exception e) {
 			e.printStackTrace();
 			this.onConnectFailed();
@@ -61,8 +67,7 @@ public abstract class TcpClient implements Runnable {
 
 	public abstract void onConnectFailed();
 
-
-	public abstract void onReceive(SocketTransceiver transceiver, String s);
+	public abstract void onReceive(SocketTransceiver transceiver,String message);
 
 	public abstract void onDisconnect(SocketTransceiver transceiver);
 }
