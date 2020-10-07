@@ -6,6 +6,7 @@ import server.library.model.Geo;
 import server.library.model.reponse.SearchResponse;
 import server.library.model.request.CategoriesRequest;
 import server.library.model.request.SearchRequest;
+import server.library.model.request.SuggestionsKeywordRequest;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -49,7 +50,12 @@ public class MyClient {
                 /**
                  * get Categories
                  */
-                transceiver.send(new CategoriesRequest());
+//                transceiver.send(new CategoriesRequest());
+
+                /**
+                 * get Suggestions keyword
+                 */
+                transceiver.send(new SuggestionsKeywordRequest("trump"));
             }
 
             @Override
