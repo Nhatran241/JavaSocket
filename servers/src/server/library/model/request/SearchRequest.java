@@ -1,12 +1,10 @@
-package library.model.request;
+package server.library.model.request;
 
-import library.model.Category;
-import library.model.Geo;
+import server.library.model.Category;
+import server.library.model.Geo;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class SearchRequest extends BaseRequest{
     private String searchQuery;

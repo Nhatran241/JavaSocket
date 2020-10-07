@@ -1,4 +1,4 @@
-package library.model.reponse;
+package server.library.model.reponse;
 
 import java.util.List;
 
@@ -9,6 +9,11 @@ public class SearchResponse extends BaseResponse {
         super(responseCode);
     }
 
+    @Override
+    protected String setResponseType() {
+        return this.getClass().getName();
+    }
+
     public List<String> getRelatedKeyword() {
         return relatedKeyword;
     }
@@ -17,8 +22,5 @@ public class SearchResponse extends BaseResponse {
         this.relatedKeyword = relatedKeyword;
     }
 
-    @Override
-    protected String setResponseType() {
-        return this.getClass().getName();
-    }
+
 }
