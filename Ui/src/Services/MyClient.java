@@ -7,8 +7,10 @@ import Models.SearchResponse;
 import Models.SocketTransceiver;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class MyClient {
@@ -17,9 +19,13 @@ public class MyClient {
         TcpClient tcpClient = new TcpClient() {
             @Override
             public void onConnect(SocketTransceiver transceiver) {
+                List searchList = new ArrayList<String>();
+                searchList.add("trump");
+                
                 System.out.println("Connected to"+transceiver.getInetAddress());
                 SearchRequest searchRequest = new SearchRequest();
-                searchRequest.setSearchQuery("Trump");
+                
+                searchRequest.setSearchQuery(searchList);
                 searchRequest.setGeo(new Geo("Viet Name","VN"));
                 searchRequest.setCategory(new Category("Pháp luật chính trị","19"));
                 Calendar c = Calendar.getInstance();
@@ -27,6 +33,7 @@ public class MyClient {
                 c.setTime(dt);
                 c.add(Calendar.YEAR, -1);
                 searchRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+                
                 transceiver.send(searchRequest);
             }
 
@@ -39,7 +46,7 @@ public class MyClient {
             public void onReceive(SocketTransceiver transceiver, String message) {
                 System.out.println(message);
                 if(message.contains(SearchResponse.class.getName())){
-
+                
                 }
             }
 
