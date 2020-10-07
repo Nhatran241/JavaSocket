@@ -6,6 +6,7 @@ import server.library.SocketTransceiver;
 import server.library.model.request.CategoriesRequest;
 import server.library.model.request.RelatedTopicRequest;
 import server.library.model.request.SearchRequest;
+import server.library.model.request.SuggestionsKeywordRequest;
 
 public class MyServer{
     public static void main(String[] args){
@@ -32,6 +33,8 @@ public class MyServer{
                     RelatedTopicRequest request = new Gson().fromJson(message,RelatedTopicRequest.class);
                 }else if(message.contains(CategoriesRequest.class.getName())){
                     requestManager.requestCategories(socketTransceiver::send);
+                }else if(message.contains(SuggestionsKeywordRequest.class.getName())){
+                    requestManager.requestSuggestions(new Gson().fromJson(message,SuggestionsKeywordRequest.class),socketTransceiver::send);
                 }
             }
 

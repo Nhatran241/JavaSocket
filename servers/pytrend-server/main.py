@@ -32,6 +32,13 @@ def getCategories():
     result = pytrend.categories()
     return json.dumps(result)
 
+@api.route('/suggestions')
+def getSuggestions():
+    rkeyword = request.args.get("keyword", default = "", type = str).replace("'", "")
+    pytrend = TrendReq(hl='en-US', tz=360)
+    result = pytrend.suggestions(rkeyword)
+    return json.dumps(result)  
+
 def iterdict(d,result):
     pandas = pd
     for k,v in d.items():
