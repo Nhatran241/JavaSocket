@@ -4,6 +4,7 @@ import server.library.SocketTransceiver;
 import server.library.model.Category;
 import server.library.model.Geo;
 import server.library.model.reponse.SearchResponse;
+import server.library.model.request.CategoriesRequest;
 import server.library.model.request.SearchRequest;
 
 import java.text.SimpleDateFormat;
@@ -34,16 +35,21 @@ public class MyClient {
                 /**
                 * localhost:5000/search?q=Trump&geo=VN&cat=19&from=2019-10-6&to=2020-20-6
                 */
-                SearchRequest searchRequest = new SearchRequest();
-                searchRequest.setSearchQuery("Trump");
-                searchRequest.setGeo(new Geo("Viet Name","VN"));
-                searchRequest.setCategory(new Category("Pháp luật chính trị","19"));
-                Calendar c = Calendar.getInstance();
-                Date dt = new Date();
-                c.setTime(dt);
-                c.add(Calendar.YEAR, -1);
-                searchRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
-                transceiver.send(searchRequest);
+//                SearchRequest searchRequest = new SearchRequest();
+//                searchRequest.setSearchQuery("Trump");
+//                searchRequest.setGeo(new Geo("Viet Name","VN"));
+//                searchRequest.setCategory(new Category("Pháp luật chính trị","19"));
+//                Calendar c = Calendar.getInstance();
+//                Date dt = new Date();
+//                c.setTime(dt);
+//                c.add(Calendar.YEAR, -1);
+//                searchRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+//                transceiver.send(searchRequest);
+
+                /**
+                 * get Categories
+                 */
+                transceiver.send(new CategoriesRequest());
             }
 
             @Override
