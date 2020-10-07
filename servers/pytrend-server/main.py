@@ -25,6 +25,13 @@ def trend():
   temp+=iterdict(related_queries_dict,temp)
   result+='{related_queries:{'+temp+'}}]'
   return result
+
+@api.route('/categories')
+def getCategories():
+    pytrend = TrendReq(hl='en-US', tz=360)
+    result = pytrend.categories()
+    return json.dumps(result)
+
 def iterdict(d,result):
     pandas = pd
     for k,v in d.items():

@@ -1,19 +1,18 @@
 package server;
 
-import library.model.reponse.BaseResponse;
-import library.model.reponse.SearchResponse;
-import library.model.request.SearchRequest;
 
+import server.library.model.reponse.BaseResponse;
+import server.library.model.request.BaseRequest;
+import server.library.model.request.SearchRequest;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 public class RequestManager {
-    private String baseUrlPythonServer="http://localhost:5000/";
+    private final String baseUrlPythonServer="http://localhost:5000/";
+    private final String requestCategoriesPath="categories";
     private static RequestManager instance;
 
     public static RequestManager getInstance() {
@@ -21,31 +20,37 @@ public class RequestManager {
             instance = new RequestManager();
         return instance;
     }
-    public void requestSearchTrend(SearchRequest searchRequest,RequestListener requestListener){
+    public void requestSearchTrend(SearchRequest searchRequest, RequestListener requestListener){
         /**
          *  Gui request den server Python
          */
-        System.out.println(mappingSearchParam(searchRequest));
-
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(baseUrlPythonServer+mappingSearchParam(searchRequest)))
                 .build();
-        SearchResponse searchResponse;
         try {
             HttpResponse<String> response = client.send(request,HttpResponse.BodyHandlers.ofString());
-            searchResponse = new SearchResponse(response.statusCode());
-            requestListener.onResponse(mappingSearchResult(searchResponse,response));
-            System.out.println(response.body());
+            requestListener.onResponse(response.body());
         } catch (InterruptedException interruptedException) {
-            searchResponse = new SearchResponse(BaseResponse.interruptedException);
-            requestListener.onResponse(searchResponse);
+            requestListener.onResponse(String.valueOf(BaseResponse.interruptedException));
         } catch (IOException ioException) {
-            searchResponse = new SearchResponse(BaseResponse.ioException);
-            requestListener.onResponse(searchResponse);
+            requestListener.onResponse(String.valueOf(BaseResponse.ioException));
         }
     }
-
+    public void requestCategories(RequestListener requestListener){
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(baseUrlPythonServer+requestCategoriesPath))
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request,HttpResponse.BodyHandlers.ofString());
+            requestListener.onResponse(response.body());
+        } catch (InterruptedException interruptedException) {
+            requestListener.onResponse(String.valueOf(BaseResponse.interruptedException));
+        } catch (IOException ioException) {
+            requestListener.onResponse(String.valueOf(BaseResponse.ioException));
+        }
+    }
     private String mappingSearchParam(SearchRequest searchRequest) {
         String param="search?";
         param += "q=" + searchRequest.getSearchQuery();
@@ -57,14 +62,7 @@ public class RequestManager {
         return param;
     }
 
-    private BaseResponse mappingSearchResult(SearchResponse searchResponse, HttpResponse<String> response) {
-        List<String> relatedKeyword = new ArrayList<>();
-        relatedKeyword.add(response.body());
-        searchResponse.setRelatedKeyword(relatedKeyword);
-        return searchResponse;
-    }
-
     public interface RequestListener{
-        void onResponse(BaseResponse baseResponse);
+        void onResponse(String response);
     }
 }
