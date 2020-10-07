@@ -1,4 +1,4 @@
-package library.model;
+package server.library.model;
 
 import java.util.List;
 

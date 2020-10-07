@@ -1,11 +1,10 @@
 package client;
 
-import com.sun.source.tree.UsesTree;
-import library.SocketTransceiver;
-import library.model.Category;
-import library.model.Geo;
-import library.model.reponse.SearchResponse;
-import library.model.request.SearchRequest;
+import server.library.SocketTransceiver;
+import server.library.model.Category;
+import server.library.model.Geo;
+import server.library.model.reponse.SearchResponse;
+import server.library.model.request.SearchRequest;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

@@ -1,7 +1,7 @@
-package library;
+package server.library;
+
 
 import com.google.gson.Gson;
-import library.model.request.BaseRequest;
 
 import java.io.*;
 import java.net.InetAddress;

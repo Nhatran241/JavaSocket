@@ -1,4 +1,4 @@
-package library.model.request;
+package server.library.model.request;
 
 public class RelatedTopicRequest extends BaseRequest {
     @Override
