@@ -1,7 +1,3 @@
 # Project exclude paths
 /out/
 /.idea/
-/bin/
-/Ui/nbproject/private/
-/Ui/build/
-/Ui/dist/
