@@ -37,6 +37,9 @@ public class RequestManager {
     public void requestSuggestions(SuggestionsKeywordRequest suggestionsKeywordRequest,RequestListener requestListener) {
        sendRequestToPythonServer(baseUrlPythonServer+mappingSuggestionParam(suggestionsKeywordRequest),requestListener);
     }
+    public void requestGeoCountry(RequestListener requestListener) {
+        requestListener.onResponse("[{\"id\":\"SA\",\"name\":\"Ả Rập Xê-út\"},{\"id\":\"EG\",\"name\":\"Ai Cập\"},{\"id\":\"AT\",\"name\":\"Áo\"},{\"id\":\"AR\",\"name\":\"Argentina\"},{\"id\":\"AU\",\"name\":\"Australia\"},{\"id\":\"IN\",\"name\":\"Ấn Độ\"},{\"id\":\"PL\",\"name\":\"Ba Lan\"},{\"id\":\"BE\",\"name\":\"Bỉ\"},{\"id\":\"PT\",\"name\":\"Bồ Đào Nha\"},{\"id\":\"BR\",\"name\":\"Brazil\"},{\"id\":\"CA\",\"name\":\"Canada\"},{\"id\":\"CL\",\"name\":\"Chile\"},{\"id\":\"CO\",\"name\":\"Colombia\"},{\"id\":\"TW\",\"name\":\"Đài Loan\"},{\"id\":\"DK\",\"name\":\"Đan Mạch\"},{\"id\":\"DE\",\"name\":\"Đức\"},{\"id\":\"NL\",\"name\":\"Hà Lan\"},{\"id\":\"KR\",\"name\":\"Hàn Quốc\"},{\"id\":\"US\",\"name\":\"Hoa Kỳ\"},{\"id\":\"HK\",\"name\":\"Hồng Kông\"},{\"id\":\"HU\",\"name\":\"Hungary\"},{\"id\":\"GR\",\"name\":\"Hy Lạp\"},{\"id\":\"ID\",\"name\":\"Indonesia\"},{\"id\":\"IE\",\"name\":\"Ireland\"},{\"id\":\"IL\",\"name\":\"Israel\"},{\"id\":\"IT\",\"name\":\"Italy\"},{\"id\":\"KE\",\"name\":\"Kenya\"},{\"id\":\"MY\",\"name\":\"Malaysia\"},{\"id\":\"MX\",\"name\":\"Mexico\"},{\"id\":\"NO\",\"name\":\"Na Uy\"},{\"id\":\"ZA\",\"name\":\"Nam Phi\"},{\"id\":\"NZ\",\"name\":\"New Zealand\"},{\"id\":\"RU\",\"name\":\"Nga\"},{\"id\":\"JP\",\"name\":\"Nhật Bản\"},{\"id\":\"NG\",\"name\":\"Nigeria\"},{\"id\":\"FR\",\"name\":\"Pháp\"},{\"id\":\"FI\",\"name\":\"Phần Lan\"},{\"id\":\"PH\",\"name\":\"Philippines\"},{\"id\":\"RO\",\"name\":\"Romania\"},{\"id\":\"CZ\",\"name\":\"Séc\"},{\"id\":\"SG\",\"name\":\"Singapore\"},{\"id\":\"TH\",\"name\":\"Thái Lan\"},{\"id\":\"TR\",\"name\":\"Thổ Nhĩ Kỳ\"},{\"id\":\"SE\",\"name\":\"Thụy Điển\"},{\"id\":\"CH\",\"name\":\"Thụy Sĩ\"},{\"id\":\"UA\",\"name\":\"Ukraina\"},{\"id\":\"VN\",\"name\":\"Việt Nam\"},{\"id\":\"GB\",\"name\":\"Vương quốc Anh\"}]");
+    }
 
     private String mappingSuggestionParam(SuggestionsKeywordRequest suggestionsKeywordRequest) {
         String param=requestSuggestionPath+"?";
@@ -68,6 +71,9 @@ public class RequestManager {
         } catch (IOException ioException) {
             requestListener.onResponse(String.valueOf(BaseResponse.ioException));
         }
+    }
+
+    public void requestGeos() {
     }
 
 
