@@ -1,16 +1,9 @@
 package client;
 
 import server.library.SocketTransceiver;
-import server.library.model.Category;
-import server.library.model.Geo;
 import server.library.model.reponse.SearchResponse;
-import server.library.model.request.CategoriesRequest;
-import server.library.model.request.SearchRequest;
-import server.library.model.request.SuggestionsKeywordRequest;
+import server.library.model.request.GeoRequestCountry;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Scanner;
 
 public class MyClient {
@@ -55,7 +48,11 @@ public class MyClient {
                 /**
                  * get Suggestions keyword
                  */
-                transceiver.send(new SuggestionsKeywordRequest("trump"));
+//                transceiver.send(new SuggestionsKeywordRequest("trump"));
+                /**
+                 * get Geos
+                 */
+                transceiver.send(new GeoRequestCountry());
             }
 
             @Override
