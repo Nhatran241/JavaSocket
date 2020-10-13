@@ -45,8 +45,8 @@ public class MyClient {
             @Override
             public void onReceive(SocketTransceiver transceiver, String message) {
                 System.out.println(message);
-                if(message.contains(SearchResponse.class.getName())){
-                
+                if(message.contains(SearchRequest.class.getName())){
+                    
                 }
             }
 
