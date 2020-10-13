@@ -15,7 +15,6 @@ public abstract class SocketTransceiver implements Runnable {
 	private boolean runFlag;
 	private String nameTag;
 
-
 	public SocketTransceiver(Socket socket) {
 		this.socket = socket;
 		this.addr = socket.getInetAddress();
