@@ -3,6 +3,7 @@ package client;
 import server.library.SocketTransceiver;
 import server.library.model.reponse.SearchResponse;
 import server.library.model.request.GeoRequestCountry;
+import server.library.model.request.RelatedTopicRequest;
 
 import java.util.Scanner;
 
@@ -52,8 +53,12 @@ public class MyClient {
                 /**
                  * get Geos
                  */
-                transceiver.send(new GeoRequestCountry());
+//                transceiver.send(new GeoRequestCountry());
+                RelatedTopicRequest relatedTopicRequest = new RelatedTopicRequest();
+                relatedTopicRequest.setRelatedTopicQuery("Lien minh");
+                transceiver.send(relatedTopicRequest);
             }
+
 
             @Override
             public void onConnectFailed() {
@@ -62,6 +67,7 @@ public class MyClient {
 
             @Override
             public void onReceive(SocketTransceiver transceiver, String message) {
+
                 System.out.println(message);
                 if(message.contains(SearchResponse.class.getName())){
 

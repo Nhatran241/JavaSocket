@@ -28,6 +28,7 @@ public class MyServer{
                     requestManager.requestSearchTrend(request, socketTransceiver::send);
                 }else if(message.contains(RelatedTopicRequest.class.getName())){
                     RelatedTopicRequest request = new Gson().fromJson(message,RelatedTopicRequest.class);
+                    requestManager.requestRelatedTopic(request, socketTransceiver::send);
                 }else if(message.contains(CategoriesRequest.class.getName())){
                     requestManager.requestCategories(socketTransceiver::send);
                 }else if(message.contains(SuggestionsKeywordRequest.class.getName())){
