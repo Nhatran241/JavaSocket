@@ -1,5 +1,4 @@
 # Project exclude paths
-/out/
 /.idea/
 /Client/test
 /JavaApplication2/nbproject/private/
