@@ -23,17 +23,17 @@ public class MyServer{
             @Override
             public void onReceiver(SocketTransceiver socketTransceiver, String message) {
                 System.out.println(message);
-                if(message.contains(SearchRequest.class.getName())){
+                if(message.contains(SearchRequest.class.getSimpleName())){
                     SearchRequest request = new Gson().fromJson(message,SearchRequest.class);
                     requestManager.requestSearchTrend(request, socketTransceiver::send);
-                }else if(message.contains(RelatedTopicRequest.class.getName())){
+                }else if(message.contains(RelatedTopicRequest.class.getSimpleName())){
                     RelatedTopicRequest request = new Gson().fromJson(message,RelatedTopicRequest.class);
                     requestManager.requestRelatedTopic(request, socketTransceiver::send);
-                }else if(message.contains(CategoriesRequest.class.getName())){
+                }else if(message.contains(CategoriesRequest.class.getSimpleName())){
                     requestManager.requestCategories(socketTransceiver::send);
-                }else if(message.contains(SuggestionsKeywordRequest.class.getName())){
+                }else if(message.contains(SuggestionsKeywordRequest.class.getSimpleName())){
                     requestManager.requestSuggestions(new Gson().fromJson(message,SuggestionsKeywordRequest.class),socketTransceiver::send);
-                }else if(message.contains(GeoRequestCountry.class.getName())){
+                }else if(message.contains(GeoRequestCountry.class.getSimpleName())){
                     requestManager.requestGeoCountry(socketTransceiver::send);
                 }
             }
