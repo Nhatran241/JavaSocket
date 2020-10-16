@@ -1,4 +1,4 @@
-package server.library.model.request;
+package library.model.request;
 
 public class SuggestionsKeywordRequest extends BaseRequest {
     private String keyword;
@@ -17,6 +17,6 @@ public class SuggestionsKeywordRequest extends BaseRequest {
 
     @Override
     public String setRequestType() {
-        return this.getClass().getName();
+        return this.getClass().getSimpleName();
     }
 }

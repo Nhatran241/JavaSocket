@@ -1,4 +1,4 @@
-package server.library.model.reponse;
+package library.model.reponse;
 
 public abstract class BaseResponse {
     private int responseCode;

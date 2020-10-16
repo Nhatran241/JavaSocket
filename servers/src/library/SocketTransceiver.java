@@ -1,4 +1,4 @@
-package server.library;
+package library;
 
 
 import com.google.gson.Gson;
@@ -6,7 +6,6 @@ import com.google.gson.Gson;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 
 public abstract class SocketTransceiver implements Runnable {
 

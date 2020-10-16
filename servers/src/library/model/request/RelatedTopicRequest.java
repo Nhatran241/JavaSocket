@@ -1,4 +1,4 @@
-package server.library.model.request;
+package library.model.request;
 
 public class RelatedTopicRequest extends BaseRequest {
     public static String apiKeyGoogle = "AIzaSyByAfwF3d7h79pzRcxiz8c6fqW-0PK6Avo";
@@ -14,7 +14,7 @@ public class RelatedTopicRequest extends BaseRequest {
 
     @Override
     public String setRequestType() {
-        return this.getClass().getName();
+        return this.getClass().getSimpleName();
     }
 
     public String getRelatedTopicQuery() {

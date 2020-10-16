@@ -1,9 +1,8 @@
 package client;
 
-import server.library.SocketTransceiver;
-import server.library.model.reponse.SearchResponse;
-import server.library.model.request.GeoRequestCountry;
-import server.library.model.request.RelatedTopicRequest;
+import library.SocketTransceiver;
+import library.model.reponse.SearchResponse;
+import library.model.request.RelatedTopicRequest;
 
 import java.util.Scanner;
 

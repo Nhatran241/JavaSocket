@@ -1,6 +1,6 @@
 package client;
 
-import server.library.SocketTransceiver;
+import library.SocketTransceiver;
 
 import java.net.InetAddress;
 import java.net.Socket;

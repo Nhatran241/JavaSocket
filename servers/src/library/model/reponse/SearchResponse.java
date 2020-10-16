@@ -1,4 +1,4 @@
-package server.library.model.reponse;
+package library.model.reponse;
 
 import java.util.List;
 

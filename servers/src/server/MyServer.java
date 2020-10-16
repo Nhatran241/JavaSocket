@@ -2,8 +2,8 @@ package server;
 
 
 import com.google.gson.Gson;
-import server.library.SocketTransceiver;
-import server.library.model.request.*;
+import library.SocketTransceiver;
+import library.model.request.*;
 
 public class MyServer{
     public static void main(String[] args){

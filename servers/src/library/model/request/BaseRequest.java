@@ -1,4 +1,4 @@
-package server.library.model.request;
+package library.model.request;
 
 public abstract class BaseRequest {
     private Long timestamp= System.currentTimeMillis();

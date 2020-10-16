@@ -1,7 +1,7 @@
-package server.library.model.request;
+package library.model.request;
 
-import server.library.model.Category;
-import server.library.model.Geo;
+import library.model.Category;
+import library.model.Geo;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -70,6 +70,6 @@ public class SearchRequest extends BaseRequest{
 
     @Override
     public String setRequestType() {
-        return this.getClass().getName();
+        return this.getClass().getSimpleName();
     }
 }
