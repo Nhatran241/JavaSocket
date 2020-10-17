@@ -3,35 +3,35 @@ package library.model;
 import java.util.List;
 
 public class Geo {
-    private String geoName;
-    private String geoCode;
+    private String name;
+    private String id;
     private List<Geo> subList;
 
-    public Geo(String geoName, String geoCode,List<Geo> subList) {
-        this.geoName = geoName;
-        this.geoCode = geoCode;
+    public Geo(String name, String id, List<Geo> subList) {
+        this.name = name;
+        this.id = id;
         this.subList = subList;
     }
 
-    public Geo(String geoName, String geoCode) {
-        this.geoName = geoName;
-        this.geoCode = geoCode;
+    public Geo(String name, String id) {
+        this.name = name;
+        this.id = id;
     }
 
-    public String getGeoName() {
-        return geoName;
+    public String getName() {
+        return name;
     }
 
-    public void setGeoName(String geoName) {
-        this.geoName = geoName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getGeoCode() {
-        return geoCode;
+    public String getId() {
+        return id;
     }
 
-    public void setGeoCode(String geoCode) {
-        this.geoCode = geoCode;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public List<Geo> getSubList() {
@@ -45,8 +45,9 @@ public class Geo {
     @Override
     public String toString() {
         return "Geo{" +
-                "geoName='" + geoName + '\'' +
-                ", geoCode='" + geoCode + '\'' +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", subList=" + subList +
                 '}';
     }
 }

@@ -3,34 +3,34 @@ package library.model;
 import java.util.List;
 
 public class Category {
-    private String categoryName;
-    private String categoryCode;
+    private String name;
+    private String id;
     private List<Category> subList;
 
-    public Category(String categoryName, String categoryCode, List<Category> subList) {
-        this.categoryName = categoryName;
-        this.categoryCode = categoryCode;
+    public Category(String name, String id, List<Category> subList) {
+        this.name = name;
+        this.id = id;
         this.subList = subList;
     }
-    public Category(String categoryName, String categoryCode) {
-        this.categoryName = categoryName;
-        this.categoryCode = categoryCode;
+    public Category(String name, String id) {
+        this.name = name;
+        this.id = id;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public String getName() {
+        return name;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCategoryCode() {
-        return categoryCode;
+    public String getId() {
+        return id;
     }
 
-    public void setCategoryCode(String categoryCode) {
-        this.categoryCode = categoryCode;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public List<Category> getSubList() {
@@ -44,8 +44,8 @@ public class Category {
     @Override
     public String toString() {
         return "Category{" +
-                "categoryName='" + categoryName + '\'' +
-                ", categoryCode='" + categoryCode + '\'' +
+                "categoryName='" + name + '\'' +
+                ", categoryCode='" + id + '\'' +
                 '}';
     }
 }
