@@ -64,9 +64,9 @@ public class RequestManager {
         String param = requestSearchPath + "?";
         param += "q=" + searchRequest.getSearchQuery();
         if (searchRequest.getCategory() != null)
-            param += "&cat=" + searchRequest.getCategory().getCategoryCode();
+            param += "&cat=" + searchRequest.getCategory().getId();
         if (searchRequest.getGeo() != null)
-            param += "&geo=" + searchRequest.getGeo().getGeoCode();
+            param += "&geo=" + searchRequest.getGeo().getId();
         param += "&from=" + searchRequest.getFromDate() + "&to=" + searchRequest.getToDate();
         return param;
     }
