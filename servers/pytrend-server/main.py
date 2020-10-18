@@ -7,14 +7,13 @@ api = Flask(__name__)
 
 @api.route('/search')
 def trend():
-  rkeyword = request.args.get("q", default = "", type = str).replace("'", "")
+  rkeyword = request.args.get("q", default = "", type = str).split(',')
   rcat = request.args.get('cat', default = "", type = str)
   rgeo = request.args.get('geo', default = "", type = str)
   rdatefrom = request.args.get('from', type = str).replace("'", "")
   rdateto = request.args.get('to', type = str).replace("'", "")
-
   pytrend = TrendReq(hl='en-US', tz=360)
-  pytrend.build_payload(kw_list=['trump'],geo=rgeo,cat=rcat,timeframe=rdatefrom+' '+rdateto)
+  pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom+' '+rdateto)
   # Interest by Region
   result='[{interest_by_region:'
   interest_by_region_df = pytrend.interest_by_region()

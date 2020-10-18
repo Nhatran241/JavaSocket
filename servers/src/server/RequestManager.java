@@ -15,6 +15,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -62,7 +63,11 @@ public class RequestManager {
 
     private String mappingSearchParam(SearchRequest searchRequest) {
         String param = requestSearchPath + "?";
-        param += "q=" + searchRequest.getSearchQuery();
+        StringBuilder tempq = new StringBuilder();
+        for (String q :searchRequest.getSearchQuery()){
+            tempq.append(q).append(",");
+        }
+        param += "q=" + tempq.deleteCharAt(tempq.length()-1);
         if (searchRequest.getCategory() != null)
             param += "&cat=" + searchRequest.getCategory().getId();
         if (searchRequest.getGeo() != null)
@@ -74,7 +79,7 @@ public class RequestManager {
     private void sendRequestToPythonServer(String urlRequest, RequestListener requestListener) {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(urlRequest))
+                .uri(URI.create(urlRequest.replace(" ","%20")))
                 .build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

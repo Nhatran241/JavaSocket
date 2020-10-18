@@ -1,10 +1,15 @@
 package client;
 
 import library.SocketTransceiver;
+import library.model.Category;
+import library.model.Geo;
 import library.model.reponse.SearchResponse;
 import library.model.request.RelatedTopicRequest;
+import library.model.request.SearchRequest;
+import library.model.request.SuggestionsKeywordRequest;
 
-import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class MyClient {
 
@@ -17,7 +22,12 @@ public class MyClient {
                  * localhost:5000/search?q=Trump&geo=VN&cat=0&from=2019-10-6&to=2020-20-6
                  * */
 //                SearchRequest searchRequest = new SearchRequest();
-//                searchRequest.setSearchQuery("Trump");
+//                List<String> list = new ArrayList<>();
+//                list.add("Trump");
+//                list.add("Biden");
+//                list.add("John Cena");
+//                list.add("Son Tung");
+//                searchRequest.setSearchQuery(list);
 //                searchRequest.setGeo(new Geo("Viet Name","VN"));
 //                searchRequest.setCategory(new Category("Doanh nghiep","12"));
 //                Calendar c = Calendar.getInstance();
@@ -25,7 +35,7 @@ public class MyClient {
 //                c.setTime(dt);
 //                c.add(Calendar.YEAR, -1);
 //                searchRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
-
+//                transceiver.send(searchRequest);
                 /**
                 * localhost:5000/search?q=Trump&geo=VN&cat=19&from=2019-10-6&to=2020-20-6
                 */
@@ -48,14 +58,14 @@ public class MyClient {
                 /**
                  * get Suggestions keyword
                  */
-//                transceiver.send(new SuggestionsKeywordRequest("trump"));
+                transceiver.send(new SuggestionsKeywordRequest("trump and biden"));
                 /**
                  * get Geos
                  */
 //                transceiver.send(new GeoRequestCountry());
-                RelatedTopicRequest relatedTopicRequest = new RelatedTopicRequest();
-                relatedTopicRequest.setRelatedTopicQuery("Lien minh");
-                transceiver.send(relatedTopicRequest);
+//                RelatedTopicRequest relatedTopicRequest = new RelatedTopicRequest();
+//                relatedTopicRequest.setRelatedTopicQuery("Lien minh");
+//                transceiver.send(relatedTopicRequest);
             }
 
 

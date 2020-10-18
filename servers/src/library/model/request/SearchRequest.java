@@ -5,9 +5,10 @@ import library.model.Geo;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 public class SearchRequest extends BaseRequest{
-    private String searchQuery;
+    private List<String> searchQuery;
     private Geo geo;
     private Category category;
     private String fromDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
@@ -17,11 +18,11 @@ public class SearchRequest extends BaseRequest{
         super();
     }
 
-    public String getSearchQuery() {
+    public List<String> getSearchQuery() {
         return searchQuery;
     }
 
-    public void setSearchQuery(String searchQuery) {
+    public void setSearchQuery(List<String> searchQuery) {
         this.searchQuery = searchQuery;
     }
 
@@ -60,11 +61,11 @@ public class SearchRequest extends BaseRequest{
     @Override
     public String toString() {
         return "SearchRequest{" +
-                "searchQuery='" + searchQuery + '\'' +
+                "searchQuery=" + searchQuery +
                 ", geo=" + geo +
                 ", category=" + category +
-                ", fromDate=" + fromDate +
-                ", toDate=" + toDate +
+                ", fromDate='" + fromDate + '\'' +
+                ", toDate='" + toDate + '\'' +
                 '}';
     }
 
