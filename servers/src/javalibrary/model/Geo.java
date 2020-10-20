@@ -1,18 +1,19 @@
-package library.model;
+package javalibrary.model;
 
 import java.util.List;
 
-public class Category {
+public class Geo {
     private String name;
     private String id;
-    private List<Category> subList;
+    private List<Geo> subList;
 
-    public Category(String name, String id, List<Category> subList) {
+    public Geo(String name, String id, List<Geo> subList) {
         this.name = name;
         this.id = id;
         this.subList = subList;
     }
-    public Category(String name, String id) {
+
+    public Geo(String name, String id) {
         this.name = name;
         this.id = id;
     }
@@ -33,19 +34,20 @@ public class Category {
         this.id = id;
     }
 
-    public List<Category> getSubList() {
+    public List<Geo> getSubList() {
         return subList;
     }
 
-    public void setSubList(List<Category> subList) {
+    public void setSubList(List<Geo> subList) {
         this.subList = subList;
     }
 
     @Override
     public String toString() {
-        return "Category{" +
-                "categoryName='" + name + '\'' +
-                ", categoryCode='" + id + '\'' +
+        return "Geo{" +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", subList=" + subList +
                 '}';
     }
 }

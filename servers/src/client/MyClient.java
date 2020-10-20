@@ -1,17 +1,8 @@
 package client;
 
-import library.SocketTransceiver;
-import library.model.Category;
-import library.model.Geo;
-import library.model.reponse.SearchResponse;
-import library.model.request.RelatedTopicRequest;
-import library.model.request.SearchRequest;
-import library.model.request.SuggestionsKeywordRequest;
-import server.library.model.request.CategoriesRequest;
-import server.library.model.request.GeoRequestCountry;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import javalibrary.*;
+import javalibrary.model.request.CategoriesRequest;
 
 public class MyClient {
 
@@ -80,9 +71,6 @@ public class MyClient {
             public void onReceive(SocketTransceiver transceiver, String message) {
 
                 System.out.println(message);
-                if(message.contains(SearchResponse.class.getName())){
-
-                }
             }
 
 
@@ -96,10 +84,4 @@ public class MyClient {
 
     }
 
-    private static void sendMessageLoop(TcpClient tcpClient, SocketTransceiver transceiver) {
-        Scanner scanner = new Scanner(System.in);
-        while (tcpClient.isConnected()){
-            transceiver.send(scanner.nextLine()+"");
-        }
-    }
 }  

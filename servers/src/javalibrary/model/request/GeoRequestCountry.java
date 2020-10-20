@@ -1,6 +1,6 @@
-package library.model.request;
+package javalibrary.model.request;
 
-public class CategoriesRequest extends BaseRequest {
+public class GeoRequestCountry extends BaseRequest {
     @Override
     public String setRequestType() {
         return this.getClass().getSimpleName();

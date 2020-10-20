@@ -1,4 +1,4 @@
-package library.model.reponse;
+package javalibrary.model.reponse;
 
 public abstract class BaseResponse {
     private int responseCode;
