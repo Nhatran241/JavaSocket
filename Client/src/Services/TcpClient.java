@@ -2,7 +2,7 @@ package Services;
 
 import java.net.InetAddress;
 import java.net.Socket;
-import library.SocketTransceiver;
+import javalibrary.SocketTransceiver;
 
 public abstract class TcpClient implements Runnable {
 

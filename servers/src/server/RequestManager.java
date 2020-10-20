@@ -5,17 +5,16 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import library.model.reponse.BaseResponse;
-import library.model.request.RelatedTopicRequest;
-import library.model.request.SearchRequest;
-import library.model.request.SuggestionsKeywordRequest;
+import javalibrary.model.reponse.BaseResponse;
+import javalibrary.model.request.RelatedTopicRequest;
+import javalibrary.model.request.SearchRequest;
+import javalibrary.model.request.SuggestionsKeywordRequest;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 

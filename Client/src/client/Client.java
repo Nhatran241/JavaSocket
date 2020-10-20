@@ -3,8 +3,7 @@ package client;
 import Services.MyClient;
 import View.HomeJFrame;
 import java.util.List;
-import library.model.Category;
-import library.model.Geo;
+import javalibrary.model.Category;
 
 
 public class Client {
