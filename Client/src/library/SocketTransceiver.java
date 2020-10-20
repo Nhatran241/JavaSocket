@@ -1,4 +1,5 @@
-package Models;
+package library;
+
 
 import com.google.gson.Gson;
 
@@ -14,6 +15,7 @@ public abstract class SocketTransceiver implements Runnable {
 	protected DataOutputStream out;
 	private boolean runFlag;
 	private String nameTag;
+
 
 	public SocketTransceiver(Socket socket) {
 		this.socket = socket;
@@ -50,7 +52,9 @@ public abstract class SocketTransceiver implements Runnable {
 	public boolean send(String s) {
 		if (out != null) {
 			try {
-				out.writeUTF(s);
+				byte[] data=s.getBytes("UTF-8");
+				out.writeInt(data.length);
+				out.write(data);
 				out.flush();
 				return true;
 			} catch (Exception e) {
@@ -63,7 +67,9 @@ public abstract class SocketTransceiver implements Runnable {
 	public boolean send(Object object) {
 		if (out != null) {
 			try {
-				out.writeUTF(new Gson().toJson(object));
+				byte[] data=new Gson().toJson(object).getBytes("UTF-8");
+				out.writeInt(data.length);
+				out.write(data);
 				out.flush();
 				return true;
 			} catch (Exception e) {
@@ -87,9 +93,15 @@ public abstract class SocketTransceiver implements Runnable {
 		onThreadStartSuccess();
 		while (runFlag) {
 			try {
-				final String s = in.readUTF();
-				this.onReceive(addr, s);
+				int length=in.readInt();
+				if(length>0) {
+					byte[] data = new byte[length];
+					in.readFully(data);
+					String str = new String(data, "UTF-8");
+					this.onReceive(addr, str);
+				}
 			} catch (IOException e) {
+				System.out.println(e.toString());
 				runFlag = false;
 			}
 		}
