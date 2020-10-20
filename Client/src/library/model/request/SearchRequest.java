@@ -1,14 +1,13 @@
-package Models;
+package library.model.request;
 
+import library.model.Category;
+import library.model.Geo;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 public class SearchRequest extends BaseRequest{
-    private List<String> searchQuery;
+    private String searchQuery;
     private Geo geo;
     private Category category;
     private String fromDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
@@ -18,11 +17,11 @@ public class SearchRequest extends BaseRequest{
         super();
     }
 
-    public List<String> getSearchQuery() {
+    public String getSearchQuery() {
         return searchQuery;
     }
 
-    public void setSearchQuery(List<String> searchQuery) {
+    public void setSearchQuery(String searchQuery) {
         this.searchQuery = searchQuery;
     }
 
@@ -71,7 +70,6 @@ public class SearchRequest extends BaseRequest{
 
     @Override
     public String setRequestType() {
-        return this.getClass().getName();
+        return this.getClass().getSimpleName();
     }
 }
-
