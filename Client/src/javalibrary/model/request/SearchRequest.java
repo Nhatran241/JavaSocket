@@ -1,7 +1,7 @@
-package library.model.request;
+package javalibrary.model.request;
 
-import library.model.Category;
-import library.model.Geo;
+import javalibrary.model.Category;
+import javalibrary.model.Geo;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

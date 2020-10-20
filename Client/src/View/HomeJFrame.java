@@ -5,11 +5,6 @@
  */
 package View;
 
-import Services.MyClient;
-import Services.MyClient.IGetGeoListener;
-import java.util.List;
-import library.model.Geo;
-
 /**
  *
  * @author phung

@@ -6,16 +6,15 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
-import library.SocketTransceiver;
-import library.model.Category;
-import library.model.Geo;
-import library.model.request.CategoriesRequest;
-import library.model.request.GeoRequestCountry;
-import library.model.request.SearchRequest;
+import javalibrary.SocketTransceiver;
+import javalibrary.model.Category;
+import javalibrary.model.Geo;
+import javalibrary.model.request.CategoriesRequest;
+import javalibrary.model.request.GeoRequestCountry;
+import javalibrary.model.request.SearchRequest;
 
 public class MyClient {
     private SocketTransceiver transceiver;

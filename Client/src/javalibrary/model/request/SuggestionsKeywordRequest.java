@@ -1,4 +1,4 @@
-package library.model.request;
+package javalibrary.model.request;
 
 public class SuggestionsKeywordRequest extends BaseRequest {
     private String keyword;
