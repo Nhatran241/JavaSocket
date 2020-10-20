@@ -7,6 +7,8 @@ import library.model.reponse.SearchResponse;
 import library.model.request.RelatedTopicRequest;
 import library.model.request.SearchRequest;
 import library.model.request.SuggestionsKeywordRequest;
+import server.library.model.request.CategoriesRequest;
+import server.library.model.request.GeoRequestCountry;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -53,12 +55,12 @@ public class MyClient {
                 /**
                  * get Categories
                  */
-//                transceiver.send(new CategoriesRequest());
+                transceiver.send(new CategoriesRequest());
 
                 /**
                  * get Suggestions keyword
                  */
-                transceiver.send(new SuggestionsKeywordRequest("trump and biden"));
+//                transceiver.send(new SuggestionsKeywordRequest("trump and biden"));
                 /**
                  * get Geos
                  */

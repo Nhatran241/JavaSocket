@@ -30,11 +30,11 @@ public class MyServer{
                     RelatedTopicRequest request = new Gson().fromJson(message,RelatedTopicRequest.class);
                     requestManager.requestRelatedTopic(request, (RequestManager.RequestListener) s -> socketTransceiver.send(RelatedTopicRequest.class.getSimpleName()+s));
                 }else if(message.contains(CategoriesRequest.class.getSimpleName())){
-                    requestManager.requestCategories((RequestManager.RequestListener) s -> socketTransceiver.send(CategoriesRequest.class.getSimpleName()+s));
+                    requestManager.requestCategories(s -> socketTransceiver.send(CategoriesRequest.class.getSimpleName()+s));
                 }else if(message.contains(SuggestionsKeywordRequest.class.getSimpleName())){
                     requestManager.requestSuggestions(new Gson().fromJson(message,SuggestionsKeywordRequest.class),(RequestManager.RequestListener) s -> socketTransceiver.send(SuggestionsKeywordRequest.class.getSimpleName()+s));
                 }else if(message.contains(GeoRequestCountry.class.getSimpleName())){
-                    requestManager.requestGeoCountry((RequestManager.RequestListener) s -> socketTransceiver.send(GeoRequestCountry.class.getSimpleName()+s));
+                    requestManager.requestGeoCountry(s -> socketTransceiver.send(GeoRequestCountry.class.getSimpleName()+s));
                 }
             }
 
