@@ -25,16 +25,16 @@ public class MyServer{
                 System.out.println(message);
                 if(message.contains(SearchRequest.class.getSimpleName())){
                     SearchRequest request = new Gson().fromJson(message,SearchRequest.class);
-                    requestManager.requestSearchTrend(request, socketTransceiver::send);
+                    requestManager.requestSearchTrend(request, (RequestManager.RequestListener) s -> socketTransceiver.send(SearchRequest.class.getSimpleName()+s));
                 }else if(message.contains(RelatedTopicRequest.class.getSimpleName())){
                     RelatedTopicRequest request = new Gson().fromJson(message,RelatedTopicRequest.class);
-                    requestManager.requestRelatedTopic(request, socketTransceiver::send);
+                    requestManager.requestRelatedTopic(request, (RequestManager.RequestListener) s -> socketTransceiver.send(RelatedTopicRequest.class.getSimpleName()+s));
                 }else if(message.contains(CategoriesRequest.class.getSimpleName())){
-                    requestManager.requestCategories(socketTransceiver::send);
+                    requestManager.requestCategories((RequestManager.RequestListener) s -> socketTransceiver.send(CategoriesRequest.class.getSimpleName()+s));
                 }else if(message.contains(SuggestionsKeywordRequest.class.getSimpleName())){
-                    requestManager.requestSuggestions(new Gson().fromJson(message,SuggestionsKeywordRequest.class),socketTransceiver::send);
+                    requestManager.requestSuggestions(new Gson().fromJson(message,SuggestionsKeywordRequest.class),(RequestManager.RequestListener) s -> socketTransceiver.send(SuggestionsKeywordRequest.class.getSimpleName()+s));
                 }else if(message.contains(GeoRequestCountry.class.getSimpleName())){
-                    requestManager.requestGeoCountry(socketTransceiver::send);
+                    requestManager.requestGeoCountry((RequestManager.RequestListener) s -> socketTransceiver.send(GeoRequestCountry.class.getSimpleName()+s));
                 }
             }
 

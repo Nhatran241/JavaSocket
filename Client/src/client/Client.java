@@ -39,7 +39,7 @@ public class Client {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-//                new HomeJFrame().setVisible(true);
+                new HomeJFrame().setVisible(true);
                 MyClient myClient = new MyClient();
 //                myClient.getGeo(new MyClient.IGetGeoListener(){
 //                    @Override
