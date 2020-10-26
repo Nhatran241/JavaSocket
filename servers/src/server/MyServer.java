@@ -23,9 +23,12 @@ public class MyServer{
             @Override
             public void onReceiver(SocketTransceiver socketTransceiver, String message) {
                 System.out.println(message);
-                if(message.contains(SearchRequest.class.getSimpleName())){
-                    SearchRequest request = new Gson().fromJson(message,SearchRequest.class);
-                    requestManager.requestSearchTrend(request, (RequestManager.RequestListener) s -> socketTransceiver.send(SearchRequest.class.getSimpleName()+s));
+                if(message.contains(SearchRegionRequest.class.getSimpleName())){
+                    SearchRegionRequest request = new Gson().fromJson(message, SearchRegionRequest.class);
+                    requestManager.requestSearchInterestRegion(request, (RequestManager.RequestListener) s -> socketTransceiver.send(SearchRegionRequest.class.getSimpleName()+s));
+                }else if(message.contains(SearchRelatedQueryRequest.class.getSimpleName())){
+                    SearchRelatedQueryRequest request = new Gson().fromJson(message, SearchRelatedQueryRequest.class);
+                    requestManager.requestSearchRelatedQuery(request, (RequestManager.RequestListener) s -> socketTransceiver.send(SearchRelatedQueryRequest.class.getSimpleName()+s.replace("\""," ").replace("\\","")));
                 }else if(message.contains(RelatedTopicRequest.class.getSimpleName())){
                     RelatedTopicRequest request = new Gson().fromJson(message,RelatedTopicRequest.class);
                     requestManager.requestRelatedTopic(request, (RequestManager.RequestListener) s -> socketTransceiver.send(RelatedTopicRequest.class.getSimpleName()+s));

@@ -2,7 +2,15 @@ package client;
 
 
 import javalibrary.*;
-import javalibrary.model.request.CategoriesRequest;
+import javalibrary.model.Category;
+import javalibrary.model.Geo;
+import javalibrary.model.request.SearchRegionRequest;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class MyClient {
 
@@ -14,21 +22,19 @@ public class MyClient {
                 /**
                  * localhost:5000/search?q=Trump&geo=VN&cat=0&from=2019-10-6&to=2020-20-6
                  * */
-//                SearchRequest searchRequest = new SearchRequest();
-//                List<String> list = new ArrayList<>();
-//                list.add("Trump");
-//                list.add("Biden");
-//                list.add("John Cena");
-//                list.add("Son Tung");
-//                searchRequest.setSearchQuery(list);
-//                searchRequest.setGeo(new Geo("Viet Name","VN"));
-//                searchRequest.setCategory(new Category("Doanh nghiep","12"));
-//                Calendar c = Calendar.getInstance();
-//                Date dt = new Date();
-//                c.setTime(dt);
-//                c.add(Calendar.YEAR, -1);
-//                searchRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
-//                transceiver.send(searchRequest);
+                SearchRegionRequest searchRegionRequest = new SearchRegionRequest();
+                List<String> list = new ArrayList<>();
+                list.add("Trump");
+                list.add("Biden");
+                searchRegionRequest.setSearchQuery(list);
+                searchRegionRequest.setGeo(new Geo("Viet Name","VN"));
+                searchRegionRequest.setCategory(new Category("Doanh nghiep","12"));
+                Calendar c = Calendar.getInstance();
+                Date dt = new Date();
+                c.setTime(dt);
+                c.add(Calendar.YEAR, -1);
+                searchRegionRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+                transceiver.send(searchRegionRequest);
                 /**
                 * localhost:5000/search?q=Trump&geo=VN&cat=19&from=2019-10-6&to=2020-20-6
                 */
@@ -46,7 +52,7 @@ public class MyClient {
                 /**
                  * get Categories
                  */
-                transceiver.send(new CategoriesRequest());
+//                transceiver.send(new CategoriesRequest());
 
                 /**
                  * get Suggestions keyword
