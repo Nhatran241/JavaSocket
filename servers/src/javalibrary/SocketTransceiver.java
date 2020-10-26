@@ -2,17 +2,24 @@ package javalibrary;
 
 
 import com.google.gson.Gson;
+import javalibrary.securedata.SecureDataManager;
 
+import javax.crypto.SecretKey;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.security.Key;
+import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 
 public abstract class SocketTransceiver implements Runnable {
-
 	protected Socket socket;
 	protected InetAddress addr;
 	protected DataInputStream in;
 	protected DataOutputStream out;
+	public KeyPair localKeyPair;
+	public SecretKey secretKey;
 	private boolean runFlag;
 	private String nameTag;
 
@@ -63,6 +70,19 @@ public abstract class SocketTransceiver implements Runnable {
 		}
 		return false;
 	}
+	public boolean send(byte[] data) {
+		if (out != null) {
+			try {
+				out.writeInt(data.length);
+				out.write(data);
+				out.flush();
+				return true;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
 
 	public boolean send(Object object) {
 		if (out != null) {
@@ -97,8 +117,8 @@ public abstract class SocketTransceiver implements Runnable {
 				if(length>0) {
 					byte[] data = new byte[length];
 					in.readFully(data);
-					String str = new String(data, "UTF-8");
-					this.onReceive(addr, str);
+						//String str = new String(data, "UTF-8");
+					this.onReceive(addr, data);
 				}
 			} catch (IOException e) {
 				System.out.println(e.toString());
@@ -118,7 +138,7 @@ public abstract class SocketTransceiver implements Runnable {
 		this.onDisconnect(addr);
 	}
 
-	public abstract void onReceive(InetAddress addr,String message);
+	public abstract void onReceive(InetAddress addr,byte[] data);
 
 	public abstract void onDisconnect(InetAddress addr);
 

@@ -2,7 +2,9 @@ package client;
 
 
 import javalibrary.*;
-import javalibrary.model.request.CategoriesRequest;
+import javalibrary.securedata.SecureDataManager;
+
+import javax.crypto.Cipher;
 
 public class MyClient {
 
@@ -11,6 +13,7 @@ public class MyClient {
             @Override
             public void onConnect(SocketTransceiver transceiver) {
                 System.out.println("Connected to"+transceiver.getInetAddress());
+                transceiver.send(new String(SecureDataManager.getInstance().EncrpytMessage("Hello",transceiver.secretKey)));
                 /**
                  * localhost:5000/search?q=Trump&geo=VN&cat=0&from=2019-10-6&to=2020-20-6
                  * */
@@ -46,7 +49,7 @@ public class MyClient {
                 /**
                  * get Categories
                  */
-                transceiver.send(new CategoriesRequest());
+//                transceiver.send(new CategoriesRequest());
 
                 /**
                  * get Suggestions keyword
@@ -69,7 +72,6 @@ public class MyClient {
 
             @Override
             public void onReceive(SocketTransceiver transceiver, String message) {
-
                 System.out.println(message);
             }
 
