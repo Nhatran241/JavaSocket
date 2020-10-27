@@ -1,14 +1,12 @@
 package server;
 
 
+import javalibrary.model.request.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import javalibrary.model.reponse.BaseResponse;
-import javalibrary.model.request.RelatedTopicRequest;
-import javalibrary.model.request.SearchRequest;
-import javalibrary.model.request.SuggestionsKeywordRequest;
 
 import java.io.IOException;
 import java.net.URI;
@@ -22,7 +20,9 @@ public class RequestManager {
     private final String baseUrlPythonServer = "http://localhost:5000/";
     private final String requestCategoriesPath = "categories";
     private final String requestSuggestionPath = "suggestions";
-    private final String requestSearchPath = "search";
+    private final String requestSearchInterestRegionPath = "searchinterest";
+    private final String requestSearchRelatedQueryPath = "searchrelatedquery";
+    private final String requestSearchRelatedTopicPath = "searchrelatedtopic";
     private static RequestManager instance;
 
     public static RequestManager getInstance() {
@@ -31,11 +31,15 @@ public class RequestManager {
         return instance;
     }
 
-    public void requestSearchTrend(SearchRequest searchRequest, RequestListener requestListener) {
-        /**
-         *  Gui request den server Python
-         */
-        sendRequestToPythonServer(baseUrlPythonServer + mappingSearchParam(searchRequest), requestListener);
+    public void requestSearchInterestRegion(SearchRegionRequest searchRegionRequest, RequestListener requestListener) {
+        sendRequestToPythonServer(baseUrlPythonServer + mappingSearchInterestRegionParam(searchRegionRequest), requestListener);
+    }
+    public void requestSearchRelatedTopic(SearchRelatedTopicRequest searchRelatedTopicRequest, RequestListener requestListener) {
+        sendRequestToPythonServer(baseUrlPythonServer + mappingSearchRelatedTopicParam(searchRelatedTopicRequest), requestListener);
+    }
+
+    public void requestSearchRelatedQuery(SearchRelatedQueryRequest searchRelatedQueryRequest, RequestListener requestListener) {
+        sendRequestToPythonServer(baseUrlPythonServer + mappingSearchRelatedQueryParam(searchRelatedQueryRequest), requestListener);
     }
 
     public void requestCategories(RequestListener requestListener) {
@@ -60,18 +64,46 @@ public class RequestManager {
         return param;
     }
 
-    private String mappingSearchParam(SearchRequest searchRequest) {
-        String param = requestSearchPath + "?";
+    private String mappingSearchInterestRegionParam(SearchRegionRequest searchRegionRequest) {
+        String param = requestSearchInterestRegionPath + "?";
         StringBuilder tempq = new StringBuilder();
-        for (String q :searchRequest.getSearchQuery()){
+        for (String q : searchRegionRequest.getSearchQuery()){
             tempq.append(q).append(",");
         }
         param += "q=" + tempq.deleteCharAt(tempq.length()-1);
-        if (searchRequest.getCategory() != null)
-            param += "&cat=" + searchRequest.getCategory().getId();
-        if (searchRequest.getGeo() != null)
-            param += "&geo=" + searchRequest.getGeo().getId();
-        param += "&from=" + searchRequest.getFromDate() + "&to=" + searchRequest.getToDate();
+        if (searchRegionRequest.getCategory() != null)
+            param += "&cat=" + searchRegionRequest.getCategory().getId();
+        if (searchRegionRequest.getGeo() != null)
+            param += "&geo=" + searchRegionRequest.getGeo().getId();
+        param += "&from=" + searchRegionRequest.getFromDate() + "&to=" + searchRegionRequest.getToDate();
+        return param;
+    }
+    private String mappingSearchRelatedQueryParam(SearchRelatedQueryRequest searchRelatedQueryRequest) {
+        String param = requestSearchRelatedQueryPath + "?";
+        StringBuilder tempq = new StringBuilder();
+        for (String q : searchRelatedQueryRequest.getSearchQuery()){
+            tempq.append(q).append(",");
+        }
+        param += "q=" + tempq.deleteCharAt(tempq.length()-1);
+        if (searchRelatedQueryRequest.getCategory() != null)
+            param += "&cat=" + searchRelatedQueryRequest.getCategory().getId();
+        if (searchRelatedQueryRequest.getGeo() != null)
+            param += "&geo=" + searchRelatedQueryRequest.getGeo().getId();
+        param += "&from=" + searchRelatedQueryRequest.getFromDate() + "&to=" + searchRelatedQueryRequest.getToDate();
+        return param;
+    }
+    private String mappingSearchRelatedTopicParam(SearchRelatedTopicRequest searchRelatedTopicRequest) {
+        String param = requestSearchRelatedTopicPath + "?";
+        StringBuilder tempq = new StringBuilder();
+        for (String q : searchRelatedTopicRequest.getSearchQuery()){
+            tempq.append(q).append(",");
+        }
+        param += "q=" + tempq.deleteCharAt(tempq.length()-1);
+        if (searchRelatedTopicRequest.getCategory() != null)
+            param += "&cat=" + searchRelatedTopicRequest.getCategory().getId();
+        if (searchRelatedTopicRequest.getGeo() != null)
+            param += "&geo=" + searchRelatedTopicRequest.getGeo().getId();
+        param += "&from=" + searchRelatedTopicRequest.getFromDate() + "&to=" + searchRelatedTopicRequest.getToDate();
         return param;
     }
 
