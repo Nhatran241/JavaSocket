@@ -5,6 +5,8 @@ import javalibrary.*;
 import javalibrary.model.Category;
 import javalibrary.model.Geo;
 import javalibrary.model.request.SearchRegionRequest;
+import javalibrary.model.request.SearchRelatedQueryRequest;
+import javalibrary.model.request.SearchRelatedTopicRequest;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public class MyClient {
                 /**
                  * localhost:5000/search?q=Trump&geo=VN&cat=0&from=2019-10-6&to=2020-20-6
                  * */
-                SearchRegionRequest searchRegionRequest = new SearchRegionRequest();
+                SearchRelatedQueryRequest searchRegionRequest = new SearchRelatedQueryRequest();
                 List<String> list = new ArrayList<>();
                 list.add("Trump");
                 list.add("Biden");

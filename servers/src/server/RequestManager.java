@@ -22,6 +22,7 @@ public class RequestManager {
     private final String requestSuggestionPath = "suggestions";
     private final String requestSearchInterestRegionPath = "searchinterest";
     private final String requestSearchRelatedQueryPath = "searchrelatedquery";
+    private final String requestSearchRelatedTopicPath = "searchrelatedtopic";
     private static RequestManager instance;
 
     public static RequestManager getInstance() {
@@ -32,6 +33,9 @@ public class RequestManager {
 
     public void requestSearchInterestRegion(SearchRegionRequest searchRegionRequest, RequestListener requestListener) {
         sendRequestToPythonServer(baseUrlPythonServer + mappingSearchInterestRegionParam(searchRegionRequest), requestListener);
+    }
+    public void requestSearchRelatedTopic(SearchRelatedTopicRequest searchRelatedTopicRequest, RequestListener requestListener) {
+        sendRequestToPythonServer(baseUrlPythonServer + mappingSearchRelatedTopicParam(searchRelatedTopicRequest), requestListener);
     }
 
     public void requestSearchRelatedQuery(SearchRelatedQueryRequest searchRelatedQueryRequest, RequestListener requestListener) {
@@ -86,6 +90,20 @@ public class RequestManager {
         if (searchRelatedQueryRequest.getGeo() != null)
             param += "&geo=" + searchRelatedQueryRequest.getGeo().getId();
         param += "&from=" + searchRelatedQueryRequest.getFromDate() + "&to=" + searchRelatedQueryRequest.getToDate();
+        return param;
+    }
+    private String mappingSearchRelatedTopicParam(SearchRelatedTopicRequest searchRelatedTopicRequest) {
+        String param = requestSearchRelatedTopicPath + "?";
+        StringBuilder tempq = new StringBuilder();
+        for (String q : searchRelatedTopicRequest.getSearchQuery()){
+            tempq.append(q).append(",");
+        }
+        param += "q=" + tempq.deleteCharAt(tempq.length()-1);
+        if (searchRelatedTopicRequest.getCategory() != null)
+            param += "&cat=" + searchRelatedTopicRequest.getCategory().getId();
+        if (searchRelatedTopicRequest.getGeo() != null)
+            param += "&geo=" + searchRelatedTopicRequest.getGeo().getId();
+        param += "&from=" + searchRelatedTopicRequest.getFromDate() + "&to=" + searchRelatedTopicRequest.getToDate();
         return param;
     }
 

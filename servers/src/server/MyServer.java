@@ -29,6 +29,9 @@ public class MyServer{
                 }else if(message.contains(SearchRelatedQueryRequest.class.getSimpleName())){
                     SearchRelatedQueryRequest request = new Gson().fromJson(message, SearchRelatedQueryRequest.class);
                     requestManager.requestSearchRelatedQuery(request, (RequestManager.RequestListener) s -> socketTransceiver.send(SearchRelatedQueryRequest.class.getSimpleName()+s.replace("\""," ").replace("\\","")));
+                }else if(message.contains(SearchRelatedTopicRequest.class.getSimpleName())){
+                    SearchRelatedTopicRequest request = new Gson().fromJson(message, SearchRelatedTopicRequest.class);
+                    requestManager.requestSearchRelatedTopic(request, (RequestManager.RequestListener) s -> socketTransceiver.send(SearchRelatedTopicRequest.class.getSimpleName()+s.replace("\"","").replace("\\","\"").replace("\"\"","")));
                 }else if(message.contains(RelatedTopicRequest.class.getSimpleName())){
                     RelatedTopicRequest request = new Gson().fromJson(message,RelatedTopicRequest.class);
                     requestManager.requestRelatedTopic(request, (RequestManager.RequestListener) s -> socketTransceiver.send(RelatedTopicRequest.class.getSimpleName()+s));
