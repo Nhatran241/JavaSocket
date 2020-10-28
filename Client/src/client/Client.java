@@ -1,10 +1,21 @@
 package client;
 
+import Services.Interfaces.Interfaces;
+import Services.Interfaces.Interfaces.IConnectListener;
 import Services.MyClient;
 import View.HomeJFrame;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javalibrary.model.Category;
-
+import javalibrary.model.reponse.SearchRegionReponse;
+import javalibrary.model.reponse.SearchRelatedTopicReponse;
+import javalibrary.model.request.RelatedTopicRequest;
+import javalibrary.model.request.SearchRegionRequest;
+import javalibrary.model.request.SearchRelatedQueryRequest;
+import javalibrary.model.request.SearchRelatedTopicRequest;
 
 public class Client {
 
@@ -38,29 +49,102 @@ public class Client {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HomeJFrame().setVisible(true);
-                MyClient myClient = new MyClient();
-//                myClient.getGeo(new MyClient.IGetGeoListener(){
-//                    @Override
-//                    public void onGetGeoSuccess(List<Geo> geos) {
-//                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//                    }
-//
-//                    @Override
-//                    public void onGetGeoFailed() {
-//                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//                    }
-//                });
-                
-                myClient.getCategory(new MyClient.IGetCategoryListener() {
+//                new HomeJFrame().setVisible(true);
+                MyClient myClient = MyClient.getInstance();
+                myClient.connect(new IConnectListener() {
                     @Override
-                    public void onGetCategorySuccess(List<Category> category) {
-                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    public void onConnectSuccess() {
+                        SearchRegionRequest searchRegionRequest = new SearchRegionRequest();
+                        List<String> list = new ArrayList<>();
+//                        list.add("covid-19");
+                        list.add("trump");
+                        searchRegionRequest.setSearchQuery(list);
+                        searchRegionRequest.setCategory(new Category("All catagories", "0"));
+                        Calendar c = Calendar.getInstance();
+                        Date dt = new Date();
+                        c.setTime(dt);
+                        c.add(Calendar.YEAR, -1);
+                        searchRegionRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+                        
+                        SearchRelatedQueryRequest searchRelatedQueryRequest = new SearchRelatedQueryRequest();
+                        searchRelatedQueryRequest.setSearchQuery(list);
+                        searchRelatedQueryRequest.setCategory(new Category("All catagories", "0"));
+                        searchRelatedQueryRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+                        
+                        SearchRelatedTopicRequest searchRelatedTopicRequest = new SearchRelatedTopicRequest();
+                        searchRelatedTopicRequest.setSearchQuery(list);
+                        searchRelatedTopicRequest.setCategory(new Category("All catagories", "0"));
+                        searchRelatedTopicRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+                        
+                        RelatedTopicRequest relatedTopicRequest = new RelatedTopicRequest("trump");
+                        
+//                        myClient.getRelatedTopic(relatedTopicRequest, new Interfaces.IRelatedTopicListener() {
+//                            @Override
+//                            public void OnGetRelatedTopicSuccess() {
+//                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                            }
+//
+//                            @Override
+//                            public void OnGetRelatedTopicFailed() {
+//                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                            }
+//                        });
+                        
+                        myClient.getSearchRelatedTopic(searchRelatedTopicRequest, new Interfaces.ISearchRelatedTopicListener() {
+                            @Override
+                            public void OnGetSearchRelatedTopicSuccess(List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
+                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                            }
+
+                            @Override
+                            public void OnGetSearchRelatedTopicFailed() {
+                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                            }
+                        });
+                        
+//                        myClient.getSearchRegion(searchRegionRequest, new Interfaces.IGetSearchRegionListener() {
+//                            @Override
+//                            public void OnGetSearchRegionSuccess(List<SearchRegionReponse> searchRegionReponses) {
+//                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                            }
+//
+//                            @Override
+//                            public void OnGetSearchRegionFailed() {
+//                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                            }
+//                        });
+
+//                        myClient.getGeo(new MyClient.IGetGeoListener() {
+//                            @Override
+//                            public void onGetGeoSuccess(List<Geo> geo) {
+//                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                            }
+//
+//                            @Override
+//                            public void onGetGeoFailed() {
+//                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                            }
+//                        });
+
+//                        myClient.getCategory(new MyClient.IGetCategoryListener() {
+//                            @Override
+//                            public void onGetCategorySuccess(List<Category> categorys) {
+//                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                            }
+//
+//                            @Override
+//                            public void onGetCategoryFailed() {
+//                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                            }
+//                        });
                     }
 
                     @Override
-                    public void onGetCategoryFailed() {
-                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    public void onConnectFailed() {
+                    }
+
+                    @Override
+                    public void onDisconnect() {
                     }
                 });
             }
