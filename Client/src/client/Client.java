@@ -10,6 +10,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javalibrary.model.Category;
+import javalibrary.model.Geo;
+import javalibrary.model.reponse.RelatedTopicReponse;
 import javalibrary.model.reponse.SearchRegionReponse;
 import javalibrary.model.reponse.SearchRelatedTopicReponse;
 import javalibrary.model.request.RelatedTopicRequest;
@@ -49,7 +51,7 @@ public class Client {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-//                new HomeJFrame().setVisible(true);
+                new HomeJFrame().setVisible(true);
                 MyClient myClient = MyClient.getInstance();
                 myClient.connect(new IConnectListener() {
                     @Override
@@ -57,7 +59,7 @@ public class Client {
                         SearchRegionRequest searchRegionRequest = new SearchRegionRequest();
                         List<String> list = new ArrayList<>();
 //                        list.add("covid-19");
-                        list.add("trump");
+//                        list.add("trump");
                         searchRegionRequest.setSearchQuery(list);
                         searchRegionRequest.setCategory(new Category("All catagories", "0"));
                         Calendar c = Calendar.getInstance();
@@ -78,30 +80,30 @@ public class Client {
                         
                         RelatedTopicRequest relatedTopicRequest = new RelatedTopicRequest("trump");
                         
-//                        myClient.getRelatedTopic(relatedTopicRequest, new Interfaces.IRelatedTopicListener() {
-//                            @Override
-//                            public void OnGetRelatedTopicSuccess() {
-//                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//                            }
-//
-//                            @Override
-//                            public void OnGetRelatedTopicFailed() {
-//                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//                            }
-//                        });
-                        
-                        myClient.getSearchRelatedTopic(searchRelatedTopicRequest, new Interfaces.ISearchRelatedTopicListener() {
+                        myClient.getRelatedTopic(relatedTopicRequest, new Interfaces.IRelatedTopicListener() {
                             @Override
-                            public void OnGetSearchRelatedTopicSuccess(List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
+                            public void OnGetRelatedTopicSuccess(List<RelatedTopicReponse> relatedTopicReponses) {
                                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                             }
 
                             @Override
-                            public void OnGetSearchRelatedTopicFailed() {
+                            public void OnGetRelatedTopicFailed() {
                                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                             }
                         });
                         
+//                        myClient.getSearchRelatedTopic(searchRelatedTopicRequest, new Interfaces.ISearchRelatedTopicListener() {
+//                            @Override
+//                            public void OnGetSearchRelatedTopicSuccess(List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
+//                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                            }
+//
+//                            @Override
+//                            public void OnGetSearchRelatedTopicFailed() {
+//                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                            }
+//                        });
+//                        
 //                        myClient.getSearchRegion(searchRegionRequest, new Interfaces.IGetSearchRegionListener() {
 //                            @Override
 //                            public void OnGetSearchRegionSuccess(List<SearchRegionReponse> searchRegionReponses) {
@@ -114,7 +116,7 @@ public class Client {
 //                            }
 //                        });
 
-//                        myClient.getGeo(new MyClient.IGetGeoListener() {
+//                        myClient.getGeo(new Interfaces.IGetGeoListener() {
 //                            @Override
 //                            public void onGetGeoSuccess(List<Geo> geo) {
 //                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -126,7 +128,7 @@ public class Client {
 //                            }
 //                        });
 
-//                        myClient.getCategory(new MyClient.IGetCategoryListener() {
+//                        myClient.getCategory(new Interfaces.IGetCategoryListener() {
 //                            @Override
 //                            public void onGetCategorySuccess(List<Category> categorys) {
 //                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

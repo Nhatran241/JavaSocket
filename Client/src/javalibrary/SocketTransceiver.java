@@ -7,13 +7,17 @@ import com.google.gson.Gson;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.security.KeyPair;
+import javax.crypto.SecretKey;
+import securedata.SecureDataManager;
 
 public abstract class SocketTransceiver implements Runnable {
-
 	protected Socket socket;
 	protected InetAddress addr;
 	protected DataInputStream in;
 	protected DataOutputStream out;
+	public KeyPair localKeyPair;
+	public SecretKey secretKey;
 	private boolean runFlag;
 	private String nameTag;
 
@@ -64,6 +68,19 @@ public abstract class SocketTransceiver implements Runnable {
 		}
 		return false;
 	}
+	public boolean send(byte[] data) {
+		if (out != null) {
+			try {
+				out.writeInt(data.length);
+				out.write(data);
+				out.flush();
+				return true;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
 
 	public boolean send(Object object) {
 		if (out != null) {
@@ -79,11 +96,33 @@ public abstract class SocketTransceiver implements Runnable {
 		}
 		return false;
 	}
+	public boolean sendWithEncrypt(Object object){
+		try {
+			byte[] data=new Gson().toJson(object).getBytes("UTF-8");
+			if(secretKey!=null){
+				return send(SecureDataManager.getInstance().EncrpytMessage(data,secretKey));
+			}else return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	public boolean sendWithEncrypt(String string){
+		try {
+			byte[] data=string.getBytes("UTF-8");
+			if(secretKey!=null){
+				return send(SecureDataManager.getInstance().EncrpytMessage(data,secretKey));
+			}else return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 
 	@Override
 	public void run() {
-		System.out.println("This client use thead name"+Thread.currentThread().getName());
+//		System.out.println("This client use thead name"+Thread.currentThread().getName());
 		try {
 			in = new DataInputStream(this.socket.getInputStream());
 			out = new DataOutputStream(this.socket.getOutputStream());
@@ -98,8 +137,8 @@ public abstract class SocketTransceiver implements Runnable {
 				if(length>0) {
 					byte[] data = new byte[length];
 					in.readFully(data);
-					String str = new String(data, "UTF-8");
-					this.onReceive(addr, str);
+						//String str = new String(data, "UTF-8");
+					this.onReceive(addr, data);
 				}
 			} catch (IOException e) {
 				System.out.println(e.toString());
@@ -119,7 +158,7 @@ public abstract class SocketTransceiver implements Runnable {
 		this.onDisconnect(addr);
 	}
 
-	public abstract void onReceive(InetAddress addr,String message);
+	public abstract void onReceive(InetAddress addr,byte[] data);
 
 	public abstract void onDisconnect(InetAddress addr);
 
