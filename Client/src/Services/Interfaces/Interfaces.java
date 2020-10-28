@@ -8,6 +8,7 @@ package Services.Interfaces;
 import java.util.List;
 import javalibrary.model.Category;
 import javalibrary.model.Geo;
+import javalibrary.model.reponse.RelatedTopicReponse;
 import javalibrary.model.reponse.SearchRegionReponse;
 import javalibrary.model.reponse.SearchRelatedReponse;
 import javalibrary.model.reponse.SearchRelatedTopicReponse;
@@ -62,7 +63,7 @@ public class Interfaces {
     }
     
     public interface IRelatedTopicListener {
-        void OnGetRelatedTopicSuccess();
+        void OnGetRelatedTopicSuccess(List<RelatedTopicReponse> relatedTopicReponses);
         
         void OnGetRelatedTopicFailed();
     }
