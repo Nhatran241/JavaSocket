@@ -2,11 +2,12 @@ package client;
 
 
 import javalibrary.*;
+import javalibrary.model.request.*;
+import javalibrary.securedata.SecureDataManager;
+
+import javax.crypto.Cipher;
 import javalibrary.model.Category;
 import javalibrary.model.Geo;
-import javalibrary.model.request.SearchRegionRequest;
-import javalibrary.model.request.SearchRelatedQueryRequest;
-import javalibrary.model.request.SearchRelatedTopicRequest;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class MyClient {
             @Override
             public void onConnect(SocketTransceiver transceiver) {
                 System.out.println("Connected to"+transceiver.getInetAddress());
+//                transceiver.send("Hello serrver việt nam");
                 /**
                  * localhost:5000/search?q=Trump&geo=VN&cat=0&from=2019-10-6&to=2020-20-6
                  * */
@@ -36,7 +38,7 @@ public class MyClient {
                 c.setTime(dt);
                 c.add(Calendar.YEAR, -1);
                 searchRegionRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
-                transceiver.send(searchRegionRequest);
+                transceiver.sendWithEncrypt(searchRegionRequest);
                 /**
                 * localhost:5000/search?q=Trump&geo=VN&cat=19&from=2019-10-6&to=2020-20-6
                 */
@@ -54,7 +56,7 @@ public class MyClient {
                 /**
                  * get Categories
                  */
-//                transceiver.send(new CategoriesRequest());
+//                transceiver.sendWithEncrypt(new CategoriesRequest());
 
                 /**
                  * get Suggestions keyword
@@ -63,7 +65,8 @@ public class MyClient {
                 /**
                  * get Geos
                  */
-//                transceiver.send(new GeoRequestCountry());
+//                transceiver.sendWithEncrypt(new GeoRequestCountry());
+
 //                RelatedTopicRequest relatedTopicRequest = new RelatedTopicRequest();
 //                relatedTopicRequest.setRelatedTopicQuery("Lien minh");
 //                transceiver.send(relatedTopicRequest);
@@ -77,7 +80,6 @@ public class MyClient {
 
             @Override
             public void onReceive(SocketTransceiver transceiver, String message) {
-
                 System.out.println(message);
             }
 
