@@ -56,7 +56,19 @@ public class SecureDataManager {
         try {
             Cipher aesCipher = Cipher.getInstance("AES");
             aesCipher.init(Cipher.ENCRYPT_MODE, secretKey);
-            return aesCipher.doFinal(message.getBytes());
+            return aesCipher.doFinal(Base64.getDecoder().decode(message));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public byte[] EncrpytMessage(byte[] message, SecretKey secretKey){
+        try {
+            Cipher aesCipher = Cipher.getInstance("AES");
+            aesCipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            byte[] bytePlainText = aesCipher.doFinal(message);
+            System.out.println("Sau mã hóa :"+new String(bytePlainText));
+            return bytePlainText;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -68,11 +80,11 @@ public class SecureDataManager {
         try {
             Cipher aesCipher = Cipher.getInstance("AES");
             aesCipher.init(Cipher.DECRYPT_MODE, secretKey);
+            System.out.println("Trước giải mã :"+new String(data));
             byte[] bytePlainText = aesCipher.doFinal(data);
             return new String(bytePlainText, "UTF-8");
         } catch (Exception e) {
-            e.printStackTrace();
-            return "";
+            return "Giải mã thất bại (có thể message không được mã hóa)"+new String(data);
         }
     }
     public byte[] DecrpytMessage(byte[] message, PrivateKey privateKey){

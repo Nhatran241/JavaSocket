@@ -49,11 +49,7 @@ public abstract class TcpClient implements Runnable {
 						}
 
 					}else {
-						try {
-							TcpClient.this.onReceive(transceiver,new String(data, "UTF-8"));
-						} catch (UnsupportedEncodingException e) {
-							e.printStackTrace();
-						}
+						TcpClient.this.onReceive(transceiver,SecureDataManager.getInstance().DecrpytMessage(data,secretKey));
 					}
 				}
 

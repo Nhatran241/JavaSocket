@@ -86,6 +86,7 @@ public abstract class TcpServer implements Runnable {
                     try {
                         TcpServer.this.onReceiver(this,SecureDataManager.getInstance().DecrpytMessage(data,secretKey));
                     } catch (Exception e) {
+                        TcpServer.this.onReceiver(this,new String(data));
                         e.printStackTrace();
                     }
                 }

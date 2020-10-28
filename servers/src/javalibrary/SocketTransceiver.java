@@ -12,6 +12,7 @@ import java.security.Key;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.Base64;
 
 public abstract class SocketTransceiver implements Runnable {
 	protected Socket socket;
@@ -95,6 +96,28 @@ public abstract class SocketTransceiver implements Runnable {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+		return false;
+	}
+	public boolean sendWithEncrypt(Object object){
+		try {
+			byte[] data=new Gson().toJson(object).getBytes("UTF-8");
+			if(secretKey!=null){
+				return send(SecureDataManager.getInstance().EncrpytMessage(data,secretKey));
+			}else return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	public boolean sendWithEncrypt(String string){
+		try {
+			byte[] data=string.getBytes("UTF-8");
+			if(secretKey!=null){
+				return send(SecureDataManager.getInstance().EncrpytMessage(data,secretKey));
+			}else return false;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}
