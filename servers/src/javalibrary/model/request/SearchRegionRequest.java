@@ -11,8 +11,8 @@ public class SearchRegionRequest extends BaseRequest{
     private List<String> searchQuery;
     private Geo geo;
     private Category category;
-    private String fromDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
-    private String toDate =  new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+    private String fromDate = "";
+    private String toDate = "";
 
     public SearchRegionRequest() {
         super();

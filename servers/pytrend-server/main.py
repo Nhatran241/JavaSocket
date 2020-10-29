@@ -14,7 +14,36 @@ def searchi():
   rdatefrom = request.args.get('from', type = str).replace("'", "")
   rdateto = request.args.get('to', type = str).replace("'", "")
   pytrend = TrendReq(hl='en-US', tz=360)
-  pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom+' '+rdateto)
+  if rdatefrom != "" and rdateto != "" :
+      if rgeo !="" and rcat != "" :
+        print("full")
+        pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom+" "+rdateto)
+      else :
+        if rgeo != "" :
+          print("no cat")
+          pytrend.build_payload(kw_list=rkeyword,geo=rgeo,timeframe=rdatefrom+' '+rdateto)
+        else :
+          if rcat != "" :
+            print("no geo")
+            pytrend.build_payload(kw_list=rkeyword,cat=rcat,timeframe=rdatefrom+' '+rdateto)
+          else :
+            print("no geo no cat")
+            pytrend.build_payload(kw_list=rkeyword,timeframe=rdatefrom+' '+rdateto) 
+  else :
+        if rgeo !="" and rcat != "" :
+          print("full no date")
+          pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat)
+        else :
+          if rgeo != "" :
+            print("no cat no date")
+            pytrend.build_payload(kw_list=rkeyword,geo=rgeo)
+          else :
+            if rcat != "" :
+              print("no geo no date")
+              pytrend.build_payload(kw_list=rkeyword,cat=rcat)
+            else :
+              print("no geo no cat nodate")
+              pytrend.build_payload(kw_list=rkeyword)
   # Interest by Region
   result=interest_by_region_df = pytrend.interest_by_region().to_json(orient="split")
   return result
@@ -27,7 +56,36 @@ def searcht():
   rdatefrom = request.args.get('from', type = str).replace("'", "")
   rdateto = request.args.get('to', type = str).replace("'", "")
   pytrend = TrendReq(hl='en-US', tz=360)
-  pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom+' '+rdateto)
+  if rdatefrom != "" and rdateto != "" :
+      if rgeo !="" and rcat != "" :
+        print("full")
+        pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom+" "+rdateto)
+      else :
+        if rgeo != "" :
+          print("no cat")
+          pytrend.build_payload(kw_list=rkeyword,geo=rgeo,timeframe=rdatefrom+' '+rdateto)
+        else :
+          if rcat != "" :
+            print("no geo")
+            pytrend.build_payload(kw_list=rkeyword,cat=rcat,timeframe=rdatefrom+' '+rdateto)
+          else :
+            print("no geo no cat")
+            pytrend.build_payload(kw_list=rkeyword,timeframe=rdatefrom+' '+rdateto) 
+  else :
+        if rgeo !="" and rcat != "" :
+          print("full no date")
+          pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat)
+        else :
+          if rgeo != "" :
+            print("no cat no date")
+            pytrend.build_payload(kw_list=rkeyword,geo=rgeo)
+          else :
+            if rcat != "" :
+              print("no geo no date")
+              pytrend.build_payload(kw_list=rkeyword,cat=rcat)
+            else :
+              print("no geo no cat nodate")
+              pytrend.build_payload(kw_list=rkeyword)
  
   # Related topic, returns a dictionary of dataframes
   related_queries_dict = pytrend.related_topics()
@@ -43,8 +101,36 @@ def searchr():
   rdatefrom = request.args.get('from', type = str).replace("'", "")
   rdateto = request.args.get('to', type = str).replace("'", "")
   pytrend = TrendReq(hl='en-US', tz=360)
-  pytrend.build_payload(kw_list=rkeyword)
- 
+  if rdatefrom != "" and rdateto != "" :
+    if rgeo !="" and rcat != "" :
+      print("full")
+      pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom+" "+rdateto)
+    else :
+      if rgeo != "" :
+        print("no cat")
+        pytrend.build_payload(kw_list=rkeyword,geo=rgeo,timeframe=rdatefrom+' '+rdateto)
+      else :
+        if rcat != "" :
+          print("no geo")
+          pytrend.build_payload(kw_list=rkeyword,cat=rcat,timeframe=rdatefrom+' '+rdateto)
+        else :
+          print("no geo no cat")
+          pytrend.build_payload(kw_list=rkeyword,timeframe=rdatefrom+' '+rdateto) 
+  else :
+      if rgeo !="" and rcat != "" :
+        print("full no date")
+        pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat)
+      else :
+        if rgeo != "" :
+          print("no cat no date")
+          pytrend.build_payload(kw_list=rkeyword,geo=rgeo)
+        else :
+          if rcat != "" :
+            print("no geo no date")
+            pytrend.build_payload(kw_list=rkeyword,cat=rcat)
+          else :
+            print("no geo no cat nodate")
+            pytrend.build_payload(kw_list=rkeyword)
   # Related Queries, returns a dictionary of dataframes
   related_queries_dict = pytrend.related_queries()
   result=''

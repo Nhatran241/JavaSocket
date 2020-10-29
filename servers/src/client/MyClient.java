@@ -26,16 +26,19 @@ public class MyClient {
                 /**
                  * localhost:5000/search?q=Trump&geo=VN&cat=0&from=2019-10-6&to=2020-20-6
                  * */
-                SearchRelatedQueryRequest searchRegionRequest = new SearchRelatedQueryRequest();
+                SearchRegionRequest searchRegionRequest = new SearchRegionRequest();
                 List<String> list = new ArrayList<>();
-                list.add("league of");
-                list.add("covid 19");
+                list.add("trump");
                 searchRegionRequest.setSearchQuery(list);
-                Calendar c = Calendar.getInstance();
-                Date dt = new Date();
-                c.setTime(dt);
-                c.add(Calendar.YEAR, -1);
-                searchRegionRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+                searchRegionRequest.setCategory(new Category("na","45"));
+                searchRegionRequest.setGeo(new Geo("vn","VN"));
+//                Calendar c = Calendar.getInstance();
+//                Date dt = new Date();
+//                c.setTime(dt);
+//                c.add(Calendar.YEAR, -11);
+//                searchRegionRequest.setToDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+//                c.add(Calendar.YEAR, -12);
+//                searchRegionRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
                 transceiver.sendWithEncrypt(searchRegionRequest);
                 /**
                 * localhost:5000/search?q=Trump&geo=VN&cat=19&from=2019-10-6&to=2020-20-6
