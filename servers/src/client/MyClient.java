@@ -28,11 +28,9 @@ public class MyClient {
                  * */
                 SearchRelatedQueryRequest searchRegionRequest = new SearchRelatedQueryRequest();
                 List<String> list = new ArrayList<>();
-                list.add("Trump");
-                list.add("Biden");
+                list.add("league of");
+                list.add("covid 19");
                 searchRegionRequest.setSearchQuery(list);
-                searchRegionRequest.setGeo(new Geo("Viet Name","VN"));
-                searchRegionRequest.setCategory(new Category("Doanh nghiep","12"));
                 Calendar c = Calendar.getInstance();
                 Date dt = new Date();
                 c.setTime(dt);

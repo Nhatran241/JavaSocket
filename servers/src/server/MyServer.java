@@ -31,7 +31,7 @@ public class MyServer{
                     requestManager.requestSearchInterestRegion(request, (RequestManager.RequestListener) s -> socketTransceiver.sendWithEncrypt(SearchRegionRequest.class.getSimpleName()+s));
                 }else if(message.contains(SearchRelatedQueryRequest.class.getSimpleName())){
                     SearchRelatedQueryRequest request = new Gson().fromJson(message, SearchRelatedQueryRequest.class);
-                    requestManager.requestSearchRelatedQuery(request, (RequestManager.RequestListener) s -> socketTransceiver.sendWithEncrypt(SearchRelatedQueryRequest.class.getSimpleName()+s.replace("\""," ").replace("\\","")));
+                    requestManager.requestSearchRelatedQuery(request, (RequestManager.RequestListener) s -> socketTransceiver.sendWithEncrypt(SearchRelatedQueryRequest.class.getSimpleName()+s.replace("\":\"","\":").replace("\\","\"").replace("\"\"","\"").replace("}\",\"","},\"").replace("}\"}","}}")));
                 }else if(message.contains(SearchRelatedTopicRequest.class.getSimpleName())){
                     SearchRelatedTopicRequest request = new Gson().fromJson(message, SearchRelatedTopicRequest.class);
                     requestManager.requestSearchRelatedTopic(request, (RequestManager.RequestListener) s -> socketTransceiver.sendWithEncrypt(SearchRelatedTopicRequest.class.getSimpleName()+s.replace("\"","").replace("\\","\"").replace("\"\"","")));

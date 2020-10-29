@@ -31,7 +31,6 @@ def searcht():
  
   # Related topic, returns a dictionary of dataframes
   related_queries_dict = pytrend.related_topics()
-  print(related_queries_dict)
   result=''
   d = nested_dicts(copy.deepcopy(related_queries_dict))
   return d
@@ -44,7 +43,7 @@ def searchr():
   rdatefrom = request.args.get('from', type = str).replace("'", "")
   rdateto = request.args.get('to', type = str).replace("'", "")
   pytrend = TrendReq(hl='en-US', tz=360)
-  pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom+' '+rdateto)
+  pytrend.build_payload(kw_list=rkeyword)
  
   # Related Queries, returns a dictionary of dataframes
   related_queries_dict = pytrend.related_queries()
