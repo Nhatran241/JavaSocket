@@ -2,11 +2,11 @@ package server;
 
 
 import com.google.gson.Gson;
-import server.library.SocketTransceiver;
-import server.library.model.request.CategoriesRequest;
-import server.library.model.request.RelatedTopicRequest;
-import server.library.model.request.SearchRequest;
-import server.library.model.request.SuggestionsKeywordRequest;
+import javalibrary.SocketTransceiver;
+import javalibrary.model.request.*;
+import javalibrary.securedata.SecureDataManager;
+
+import java.security.KeyPair;
 
 public class MyServer{
     public static void main(String[] args){
@@ -26,15 +26,24 @@ public class MyServer{
             @Override
             public void onReceiver(SocketTransceiver socketTransceiver, String message) {
                 System.out.println(message);
-                if(message.contains(SearchRequest.class.getName())){
-                    SearchRequest request = new Gson().fromJson(message,SearchRequest.class);
-                    requestManager.requestSearchTrend(request, socketTransceiver::send);
-                }else if(message.contains(RelatedTopicRequest.class.getName())){
+                if(message.contains(SearchRegionRequest.class.getSimpleName())){
+                    SearchRegionRequest request = new Gson().fromJson(message, SearchRegionRequest.class);
+                    requestManager.requestSearchInterestRegion(request, (RequestManager.RequestListener) s -> socketTransceiver.sendWithEncrypt(SearchRegionRequest.class.getSimpleName()+s));
+                }else if(message.contains(SearchRelatedQueryRequest.class.getSimpleName())){
+                    SearchRelatedQueryRequest request = new Gson().fromJson(message, SearchRelatedQueryRequest.class);
+                    requestManager.requestSearchRelatedQuery(request, (RequestManager.RequestListener) s -> socketTransceiver.sendWithEncrypt(SearchRelatedQueryRequest.class.getSimpleName()+s.replace("\":\"","\":").replace("\\","\"").replace("\"\"","\"").replace("}\",\"","},\"").replace("}\"}","}}")));
+                }else if(message.contains(SearchRelatedTopicRequest.class.getSimpleName())){
+                    SearchRelatedTopicRequest request = new Gson().fromJson(message, SearchRelatedTopicRequest.class);
+                    requestManager.requestSearchRelatedTopic(request, (RequestManager.RequestListener) s -> socketTransceiver.sendWithEncrypt(SearchRelatedTopicRequest.class.getSimpleName()+s.replace("\":\"","\":").replace("\\","\"").replace("\"\"","\"").replace("}\",\"","},\"").replace("}\"}","}}").replace("\"/","")));
+                }else if(message.contains(RelatedTopicRequest.class.getSimpleName())){
                     RelatedTopicRequest request = new Gson().fromJson(message,RelatedTopicRequest.class);
-                }else if(message.contains(CategoriesRequest.class.getName())){
-                    requestManager.requestCategories(socketTransceiver::send);
-                }else if(message.contains(SuggestionsKeywordRequest.class.getName())){
-                    requestManager.requestSuggestions(new Gson().fromJson(message,SuggestionsKeywordRequest.class),socketTransceiver::send);
+                    requestManager.requestRelatedTopic(request, (RequestManager.RequestListener) s -> socketTransceiver.sendWithEncrypt(RelatedTopicRequest.class.getSimpleName()+s));
+                }else if(message.contains(CategoriesRequest.class.getSimpleName())){
+                    requestManager.requestCategories(s -> socketTransceiver.sendWithEncrypt(CategoriesRequest.class.getSimpleName()+s));
+                }else if(message.contains(SuggestionsKeywordRequest.class.getSimpleName())){
+                    requestManager.requestSuggestions(new Gson().fromJson(message,SuggestionsKeywordRequest.class),(RequestManager.RequestListener) s -> socketTransceiver.sendWithEncrypt(SuggestionsKeywordRequest.class.getSimpleName()+s));
+                }else if(message.contains(GeoRequestCountry.class.getSimpleName())){
+                    requestManager.requestGeoCountry(s -> socketTransceiver.sendWithEncrypt(GeoRequestCountry.class.getSimpleName()+s));
                 }
             }
 

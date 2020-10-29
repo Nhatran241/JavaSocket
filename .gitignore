@@ -1,7 +1,11 @@
 # Project exclude paths
-/out/
 /.idea/
 /Client/test
 /JavaApplication2/nbproject/private/
 /Client/nbproject/private/
 /Client/build/
+/Client/out/
+/Client/.idea/
+/out/
+/servers/out/
+/servers/.idea/

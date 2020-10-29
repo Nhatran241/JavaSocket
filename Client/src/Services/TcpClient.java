@@ -1,8 +1,9 @@
 package Services;
 
-import Models.SocketTransceiver;
 import java.net.InetAddress;
 import java.net.Socket;
+import javalibrary.SocketTransceiver;
+import securedata.SecureDataManager;
 
 public abstract class TcpClient implements Runnable {
 
@@ -10,6 +11,7 @@ public abstract class TcpClient implements Runnable {
 	private String hostIP;
 	private boolean connect = false;
 	private SocketTransceiver transceiver;
+	private boolean publicKeyServer;
 	public void connect(String hostIP, int port) {
 		this.hostIP = hostIP;
 		this.port = port;
@@ -22,8 +24,22 @@ public abstract class TcpClient implements Runnable {
 			Socket socket = new Socket(hostIP, port);
 			transceiver = new SocketTransceiver(socket) {
 				@Override
-				public void onReceive(InetAddress addr, String message) {
-					TcpClient.this.onReceive(transceiver,message);
+				public void onReceive(InetAddress addr, byte[] data) {
+					if(secretKey==null){
+						try {
+							/**
+							 * Mã hóa Secretkey bằng Privatekey
+							 */
+//							System.out.println("nhân Secretkey");
+							byte[] decryptedKey = SecureDataManager.getInstance().DecrpytMessage(data, localKeyPair.getPrivate());
+							secretKey = SecureDataManager.getInstance().createSecretKeyFromBytes(decryptedKey);
+							onConnect(this);
+						} catch (Exception e){
+						}
+
+					}else {
+						TcpClient.this.onReceive(transceiver,SecureDataManager.getInstance().DecrpytMessage(data,secretKey));
+					}
 				}
 
 				@Override
@@ -35,13 +51,30 @@ public abstract class TcpClient implements Runnable {
 
 				@Override
 				public void onThreadStartSuccess() {
+					this.localKeyPair= SecureDataManager.getInstance().getKeyPair();
 					connect = true;
-					TcpClient.this.onConnect(this);
+					if(secretKey==null){
+						this.send(localKeyPair.getPublic().getEncoded());
+					}else TcpClient.this.onConnect(this);
 				}
+
+//                            @Override
+//                            public void onReceive(InetAddress addr, String message) {
+//                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                            }
+//
+//                            @Override
+//                            public void onReceive(InetAddress addr, byte[] data) {
+//                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                            }
+//
+//                            @Override
+//                            public void onDisconnect(InetAddress addr) {
+//                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                            }
 			};
 			transceiver.start();
 		} catch (Exception e) {
-			e.printStackTrace();
 			this.onConnectFailed();
 		}
 	}

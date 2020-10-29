@@ -1,17 +1,19 @@
 package client;
 
-import server.library.SocketTransceiver;
-import server.library.model.Category;
-import server.library.model.Geo;
-import server.library.model.reponse.SearchResponse;
-import server.library.model.request.CategoriesRequest;
-import server.library.model.request.SearchRequest;
-import server.library.model.request.SuggestionsKeywordRequest;
+
+import javalibrary.*;
+import javalibrary.model.request.*;
+import javalibrary.securedata.SecureDataManager;
+
+import javax.crypto.Cipher;
+import javalibrary.model.Category;
+import javalibrary.model.Geo;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Scanner;
+import java.util.List;
 
 public class MyClient {
 
@@ -20,19 +22,24 @@ public class MyClient {
             @Override
             public void onConnect(SocketTransceiver transceiver) {
                 System.out.println("Connected to"+transceiver.getInetAddress());
+//                transceiver.send("Hello serrver việt nam");
                 /**
                  * localhost:5000/search?q=Trump&geo=VN&cat=0&from=2019-10-6&to=2020-20-6
                  * */
-//                SearchRequest searchRequest = new SearchRequest();
-//                searchRequest.setSearchQuery("Trump");
-//                searchRequest.setGeo(new Geo("Viet Name","VN"));
-//                searchRequest.setCategory(new Category("Doanh nghiep","12"));
+                SearchRegionRequest searchRegionRequest = new SearchRegionRequest();
+                List<String> list = new ArrayList<>();
+                list.add("trump");
+                searchRegionRequest.setSearchQuery(list);
+                searchRegionRequest.setCategory(new Category("na","45"));
+                searchRegionRequest.setGeo(new Geo("vn","VN"));
 //                Calendar c = Calendar.getInstance();
 //                Date dt = new Date();
 //                c.setTime(dt);
-//                c.add(Calendar.YEAR, -1);
-//                searchRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
-
+//                c.add(Calendar.YEAR, -11);
+//                searchRegionRequest.setToDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+//                c.add(Calendar.YEAR, -12);
+//                searchRegionRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+                transceiver.sendWithEncrypt(searchRegionRequest);
                 /**
                 * localhost:5000/search?q=Trump&geo=VN&cat=19&from=2019-10-6&to=2020-20-6
                 */
@@ -50,13 +57,22 @@ public class MyClient {
                 /**
                  * get Categories
                  */
-//                transceiver.send(new CategoriesRequest());
+//                transceiver.sendWithEncrypt(new CategoriesRequest());
 
                 /**
                  * get Suggestions keyword
                  */
-                transceiver.send(new SuggestionsKeywordRequest("trump"));
+//                transceiver.send(new SuggestionsKeywordRequest("trump and biden"));
+                /**
+                 * get Geos
+                 */
+//                transceiver.sendWithEncrypt(new GeoRequestCountry());
+
+//                RelatedTopicRequest relatedTopicRequest = new RelatedTopicRequest();
+//                relatedTopicRequest.setRelatedTopicQuery("Lien minh");
+//                transceiver.send(relatedTopicRequest);
             }
+
 
             @Override
             public void onConnectFailed() {
@@ -66,9 +82,6 @@ public class MyClient {
             @Override
             public void onReceive(SocketTransceiver transceiver, String message) {
                 System.out.println(message);
-                if(message.contains(SearchResponse.class.getName())){
-
-                }
             }
 
 
@@ -82,10 +95,4 @@ public class MyClient {
 
     }
 
-    private static void sendMessageLoop(TcpClient tcpClient, SocketTransceiver transceiver) {
-        Scanner scanner = new Scanner(System.in);
-        while (tcpClient.isConnected()){
-            transceiver.send(scanner.nextLine()+"");
-        }
-    }
 }  

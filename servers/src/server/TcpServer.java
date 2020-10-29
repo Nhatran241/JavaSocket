@@ -1,11 +1,18 @@
 package server;
 
-import server.library.SocketTransceiver;
+import client.TcpClient;
+import com.google.gson.Gson;
+import javalibrary.SocketTransceiver;
+import javalibrary.securedata.SecureDataManager;
 
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,8 +70,26 @@ public abstract class TcpServer implements Runnable {
     private void handleClientConnect(Socket socket) {
         SocketTransceiver client = new SocketTransceiver(socket) {
             @Override
-            public void onReceive(InetAddress addr, String message) {
-                TcpServer.this.onReceiver(this,message);
+            public void onReceive(InetAddress addr, byte[] data) {
+                if(secretKey==null){
+                  secretKey = SecureDataManager.getInstance().getSecretKey();
+                    try {
+                        /**
+                         * Nhận publickey từ client và dùng nó để mã hóa secretkey
+                         */
+                        PublicKey publicKey = SecureDataManager.getInstance().createPublicKeyFromBytes(data);
+                        send(SecureDataManager.getInstance().EncrpytMessage(secretKey.getEncoded(),publicKey));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    try {
+                        TcpServer.this.onReceiver(this,SecureDataManager.getInstance().DecrpytMessage(data,secretKey));
+                    } catch (Exception e) {
+                        TcpServer.this.onReceiver(this,new String(data));
+                        e.printStackTrace();
+                    }
+                }
 
             }
 
@@ -76,6 +101,7 @@ public abstract class TcpServer implements Runnable {
 
             @Override
             public void onThreadStartSuccess() {
+                this.localKeyPair=SecureDataManager.getInstance().getKeyPair();
                 TcpServer.this.clients.add(this);
                 TcpServer.this.onConnect(this);
             }
