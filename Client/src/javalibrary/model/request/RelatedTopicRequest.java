@@ -11,6 +11,12 @@ public class RelatedTopicRequest extends BaseRequest {
         super();
         pageNumber = 0;
     }
+    
+    public RelatedTopicRequest(String relatedTopicQuery) {
+        super();
+        pageNumber = 0;
+        this.relatedTopicQuery = relatedTopicQuery;
+    }
 
     @Override
     public String setRequestType() {

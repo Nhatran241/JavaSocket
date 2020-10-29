@@ -7,14 +7,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-public class SearchRegionRequest extends BaseRequest{
+public class SearchRelatedTopicRequest extends BaseRequest{
     private List<String> searchQuery;
     private Geo geo;
     private Category category;
-    private String fromDate = "";
-    private String toDate = "";
+    private String fromDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+    private String toDate =  new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
 
-    public SearchRegionRequest() {
+    public SearchRelatedTopicRequest() {
         super();
     }
 

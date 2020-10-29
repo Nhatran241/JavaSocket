@@ -1,75 +1,57 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package javalibrary.model.request;
 
-import javalibrary.model.Category;
-import javalibrary.model.Geo;
+import java.util.List;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-public class SearchRequest extends BaseRequest{
-    private String searchQuery;
-    private Geo geo;
-    private Category category;
-    private String fromDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
-    private String toDate =  new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
-
+/**
+ *
+ * @author phung
+ */
+public class SearchRequest {
+    List<String> keySearch;
+    SearchRegionRequest searchRegionRequest;
+    SearchRelatedQueryRequest searchRelatedQueryRequest;
+    SearchRelatedTopicRequest searchRelatedTopicRequest;
+    
     public SearchRequest() {
-        super();
+        
     }
 
-    public String getSearchQuery() {
-        return searchQuery;
+    public List<String> getKeySearch() {
+        return keySearch;
     }
 
-    public void setSearchQuery(String searchQuery) {
-        this.searchQuery = searchQuery;
+    public void setKeySearch(List<String> keySearch) {
+        this.keySearch = keySearch;
     }
 
-    public Geo getGeo() {
-        return geo;
+    public SearchRegionRequest getSearchRegionRequest() {
+        return searchRegionRequest;
     }
 
-    public void setGeo(Geo geo) {
-        this.geo = geo;
+    public void setSearchRegionRequest(SearchRegionRequest searchRegionRequest) {
+        this.searchRegionRequest = searchRegionRequest;
     }
 
-    public Category getCategory() {
-        return category;
+    public SearchRelatedQueryRequest getSearchRelatedQueryRequest() {
+        return searchRelatedQueryRequest;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setSearchRelatedQueryRequest(SearchRelatedQueryRequest searchRelatedQueryRequest) {
+        this.searchRelatedQueryRequest = searchRelatedQueryRequest;
     }
 
-    public String getFromDate() {
-        return fromDate;
+    public SearchRelatedTopicRequest getSearchRelatedTopicRequest() {
+        return searchRelatedTopicRequest;
     }
 
-    public void setFromDate(String fromDate) {
-        this.fromDate = fromDate;
+    public void setSearchRelatedTopicRequest(SearchRelatedTopicRequest searchRelatedTopicRequest) {
+        this.searchRelatedTopicRequest = searchRelatedTopicRequest;
     }
-
-    public String getToDate() {
-        return toDate;
-    }
-
-    public void setToDate(String toDate) {
-        this.toDate = toDate;
-    }
-
-    @Override
-    public String toString() {
-        return "SearchRequest{" +
-                "searchQuery='" + searchQuery + '\'' +
-                ", geo=" + geo +
-                ", category=" + category +
-                ", fromDate=" + fromDate +
-                ", toDate=" + toDate +
-                '}';
-    }
-
-    @Override
-    public String setRequestType() {
-        return this.getClass().getSimpleName();
-    }
+    
+    
 }
