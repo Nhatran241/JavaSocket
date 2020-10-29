@@ -186,6 +186,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
         homejLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         homejLabel.setForeground(new java.awt.Color(255, 255, 255));
+        homejLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_home_25px.png"))); // NOI18N
         homejLabel.setText("Trang chủ");
 
         javax.swing.GroupLayout homejPanelLayout = new javax.swing.GroupLayout(homejPanel);

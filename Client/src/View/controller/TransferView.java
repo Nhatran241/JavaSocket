@@ -45,7 +45,6 @@ public class TransferView {
     }
 
     public void setEvent(List<MenuBean> listItem) {
-        System.out.println(listItem.toString());
         this.listItem = listItem;
         listItem.forEach((item) -> {
             item.getjLabel().addMouseListener(new LabelEvent(item.getKind(), item.getjPanel(), item.getjLabel()));
