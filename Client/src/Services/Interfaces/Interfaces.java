@@ -8,6 +8,8 @@ package Services.Interfaces;
 import java.util.List;
 import javalibrary.model.Category;
 import javalibrary.model.Geo;
+import javalibrary.model.reponse.ListSearchRegionReponse;
+import javalibrary.model.reponse.ListSearchRelatedReponse;
 import javalibrary.model.reponse.RelatedTopicReponse;
 import javalibrary.model.reponse.SearchRegionReponse;
 import javalibrary.model.reponse.SearchRelatedReponse;
@@ -45,13 +47,13 @@ public class Interfaces {
 
     public interface IGetSearchRegionListener {
 
-        void OnGetSearchRegionSuccess(List<SearchRegionReponse> searchRegionReponses);
+        void OnGetSearchRegionSuccess(List<ListSearchRegionReponse> listSearchRegionReponses);
 
         void OnGetSearchRegionFailed();
     }
     
     public interface ISearchRelatedListener {
-        void OnGetSearchRelatedSuccess(List<SearchRelatedReponse> searchRelatedReponses);
+        void OnGetSearchRelatedSuccess(List<ListSearchRelatedReponse> listSearchRelatedReponses);
 
         void OnGetSearchRelatedFailed();
     }

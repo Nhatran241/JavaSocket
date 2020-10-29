@@ -13,7 +13,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -21,6 +20,8 @@ import java.util.List;
 import javalibrary.SocketTransceiver;
 import javalibrary.model.Category;
 import javalibrary.model.Geo;
+import javalibrary.model.reponse.ListSearchRegionReponse;
+import javalibrary.model.reponse.ListSearchRelatedReponse;
 import javalibrary.model.reponse.RelatedTopicReponse;
 import javalibrary.model.reponse.SearchRegionReponse;
 import javalibrary.model.reponse.SearchRelatedReponse;
@@ -31,7 +32,6 @@ import javalibrary.model.request.RelatedTopicRequest;
 import javalibrary.model.request.SearchRegionRequest;
 import javalibrary.model.request.SearchRelatedQueryRequest;
 import javalibrary.model.request.SearchRelatedTopicRequest;
-import javalibrary.model.request.SearchRequest;
 
 public class MyClient {
 
@@ -70,7 +70,6 @@ public class MyClient {
 
             @Override
             public void onReceive(SocketTransceiver transceiver, String message) {
-                System.out.println(message);
                 if (message.contains(GeoRequestCountry.class.getSimpleName())) {
 
                     iGetGeoListener.onGetGeoSuccess(SetGeo(message));
@@ -85,7 +84,7 @@ public class MyClient {
                     iGetSearchRegionListener.OnGetSearchRegionSuccess(SetSearchRegion(message));
                 } else if (message.contains(SearchRelatedQueryRequest.class.getSimpleName())) {
 
-                    SetSearchRelated(message);
+                    iSearchRelatedListener.OnGetSearchRelatedSuccess(SetSearchRelated(message));
                 } else if (message.contains(SearchRelatedTopicRequest.class.getSimpleName())) {
 
                     iSearchRelatedTopicListener.OnGetSearchRelatedTopicSuccess(SetSearchRelatedTopic(message));
@@ -93,7 +92,6 @@ public class MyClient {
 
                     iRelatedTopicListener.OnGetRelatedTopicSuccess(SetRelatedTopic(message));
                 }
-
             }
 
             @Override
@@ -114,15 +112,9 @@ public class MyClient {
         myClientTranceiver.send(new CategoriesRequest());
     }
 
-    public void getSearch(SearchRequest searchRequest, ISearchListener i) {
-
-        this.iSearchListener = i;
-        if (true) {
-
-        }
-    }
-
     public void getSearchRegion(SearchRegionRequest searchRequest, IGetSearchRegionListener i) {
+        this.keySearchs.clear();
+        keySearchs.addAll(searchRequest.getSearchQuery());
         this.iGetSearchRegionListener = i;
         myClientTranceiver.send(searchRequest);
     }
@@ -183,36 +175,58 @@ public class MyClient {
         return categorys;
     }
 
-    public List<SearchRegionReponse> SetSearchRegion(String inputString) {
+    public List<ListSearchRegionReponse> SetSearchRegion(String inputString) {
         inputString = inputString.replace(SearchRegionRequest.class.getSimpleName(), "");
-        List<SearchRegionReponse> searchRegionReponses = new ArrayList<>();
+        List<ListSearchRegionReponse> listSearchRegionReponses = new ArrayList<>();
+        JsonObject jsonObject = (JsonObject) new JsonParser().parse(inputString).getAsJsonObject();
 
-        JsonObject jsonObject = new JsonParser().parse(inputString).getAsJsonObject();
-        JsonArray nameArray = (JsonArray) jsonObject.get("index");
-        JsonArray totalArray = (JsonArray) jsonObject.get("data");
-        for (int i = 0; i < nameArray.size(); i++) {
-            String name = nameArray.get(i).toString();
-            String total = totalArray.get(i).toString();
-            SearchRegionReponse searchRegionReponse = new SearchRegionReponse(total, name);
-            searchRegionReponses.add(searchRegionReponse);
+        for (int i = 0; i < keySearchs.size(); i++) {
+            SearchRegionReponse searchRegionReponse = new SearchRegionReponse();
+
+            JsonArray dataArray = (JsonArray) jsonObject.get("data");
+            JsonArray indexArray = (JsonArray) jsonObject.get("index");
+            for (int j = 0; j < indexArray.size(); j++) {
+
+                String name = indexArray.get(j).toString();
+                JsonArray item = (JsonArray) dataArray.get(j);
+                String total = item.get(i).toString();
+
+                searchRegionReponse.setName(name);
+                searchRegionReponse.setTotal(total);
+            }
+            ListSearchRegionReponse listSearchRegionReponse = new ListSearchRegionReponse(keySearchs.get(i), searchRegionReponse);
+            listSearchRegionReponses.add(listSearchRegionReponse);
         }
-        return searchRegionReponses;
+        return listSearchRegionReponses;
     }
 
-    public List<SearchRelatedReponse> SetSearchRelated(String inputString) {
-        List<SearchRelatedReponse> searchRelatedReponses = new ArrayList<>();
+    public List<ListSearchRelatedReponse> SetSearchRelated(String inputString) {
+        List<ListSearchRelatedReponse> listSearchRelatedReponses = new ArrayList<>();
 
         inputString = inputString.replace(SearchRelatedQueryRequest.class.getSimpleName(), "");
-        System.out.println("inputString: " + inputString);
+        System.out.println("input String: " + inputString);
 
-        
+        for (int i = 0; i < keySearchs.size(); i++) {
+            SearchRelatedReponse searchRelatedReponse = new SearchRelatedReponse();
 
-        try {
+            JsonObject jsonObject = (JsonObject) new JsonParser().parse(inputString).getAsJsonObject().get(keySearchs.get(i)).getAsJsonObject().get("rising");
+            JsonArray jsonArray = (JsonArray) jsonObject.get("data");
+            for (int j = 0; j < jsonArray.size(); j++) {
+                JsonArray item = (JsonArray) jsonArray.get(j);
+                
+                String name = item.get(0).toString();
+                String total = item.get(1).toString();
 
-        } catch (Exception e) {
+                System.out.println("item: " + name + total);
+
+                searchRelatedReponse.setName(name);
+                searchRelatedReponse.setTotal(total);
+            }
+            ListSearchRelatedReponse listSearchRelatedReponse = new ListSearchRelatedReponse(keySearchs.get(i), searchRelatedReponse);
+            listSearchRelatedReponses.add(listSearchRelatedReponse);
         }
 
-        return searchRelatedReponses;
+        return listSearchRelatedReponses;
     }
 
     public List<SearchRelatedTopicReponse> SetSearchRelatedTopic(String inputString) {
@@ -264,7 +278,6 @@ public class MyClient {
 
             RelatedTopicReponse relatedTopicReponse = new RelatedTopicReponse(image, title, url, description);
             relatedTopicReponses.add(relatedTopicReponse);
-//            System.out.println(relatedTopicReponse.getDescription() + relatedTopicReponse.getTitle() + relatedTopicReponse.getUrl() + relatedTopicReponse.getImage());
         }
         return relatedTopicReponses;
     }
