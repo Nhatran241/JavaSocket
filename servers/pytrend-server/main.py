@@ -45,7 +45,7 @@ def searchi():
               print("no geo no cat nodate")
               pytrend.build_payload(kw_list=rkeyword)
   # Interest by Region
-  result=interest_by_region_df = pytrend.interest_by_region().to_json(orient="split")
+  result=interest_by_region_df = pytrend.interest_by_region().to_json(orient="split", force_ascii=False)
   return result
 
 @api.route('/searchrelatedtopic')
@@ -135,6 +135,7 @@ def searchr():
   related_queries_dict = pytrend.related_queries()
   result=''
   d = nested_dicts(copy.deepcopy(related_queries_dict))
+  print(d)
   return d
 
 @api.route('/categories')
@@ -154,7 +155,7 @@ def nested_dicts(d):
   try:
     for k, v in d.items():
         if isinstance(v, pd.DataFrame):
-            d[k] = v.to_json(orient="split")
+            d[k] = v.to_json(orient="split", force_ascii=False)
         else:
             d[k] = nested_dicts(v)
     return d
@@ -173,4 +174,5 @@ def iterdict(d,result):
               result+=k+':'+v.to_json(orient="split")+','
     return result
 if __name__ == '__main__':
+    api.config['JSON_AS_ASCII'] = False
     api.run()
