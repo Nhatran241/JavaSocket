@@ -7,6 +7,7 @@ package View.controller;
 
 import View.TrendsOfDayJPanel;
 import View.bean.MenuBean;
+import View.homeJPanel;
 import View.searchJPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -32,7 +33,7 @@ public class TransferView {
     }
 
     public void setView(JPanel jPanelItem, JLabel jLabelItem) {
-        kindSelected = "search";
+        kindSelected = "home";
         jPanelItem.setBackground(new Color(0, 0, 204));
         jLabelItem.setBackground(new Color(0, 0, 204));
 
@@ -67,6 +68,9 @@ public class TransferView {
         @Override
         public void mouseClicked(MouseEvent e) {
             switch (kind) {
+                case "home":
+                    nodeJPanel = new homeJPanel();
+                    break;
                 case "search":
                     nodeJPanel = new searchJPanel();
                     break;

@@ -8,7 +8,6 @@ package View;
 import View.bean.MenuBean;
 import View.controller.TransferView;
 import java.util.ArrayList;
-import static java.util.Collections.list;
 import java.util.List;
 
 /**
@@ -25,9 +24,10 @@ public class MainJFrame extends javax.swing.JFrame {
         setTitle("Google Trends");
         
         TransferView transferView = new TransferView(viewjPanel);
-        transferView.setView(searchjPanel, searchjLabel);
+        transferView.setView(homejPanel, homejLabel);
         
         List<MenuBean> listItem = new ArrayList<>();
+        listItem.add(new MenuBean("home", homejPanel, homejLabel));
         listItem.add(new MenuBean("search", searchjPanel, searchjLabel));
         listItem.add(new MenuBean("trendsday", TrendsDayjPanel, TrendsDayjLabel));
         
@@ -55,6 +55,8 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
+        homejPanel = new javax.swing.JPanel();
+        homejLabel = new javax.swing.JLabel();
         viewjPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -180,25 +182,54 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(15, 15, 15))
         );
 
+        homejPanel.setBackground(new java.awt.Color(102, 102, 255));
+
+        homejLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        homejLabel.setForeground(new java.awt.Color(255, 255, 255));
+        homejLabel.setText("Trang chủ");
+
+        javax.swing.GroupLayout homejPanelLayout = new javax.swing.GroupLayout(homejPanel);
+        homejPanel.setLayout(homejPanelLayout);
+        homejPanelLayout.setHorizontalGroup(
+            homejPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homejPanelLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(homejLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
+        );
+        homejPanelLayout.setVerticalGroup(
+            homejPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homejPanelLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(homejLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
+        );
+
         javax.swing.GroupLayout menujPanelLayout = new javax.swing.GroupLayout(menujPanel);
         menujPanel.setLayout(menujPanelLayout);
         menujPanelLayout.setHorizontalGroup(
             menujPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(menujPanelLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menujPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(menujPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TrendsDayjPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchjPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10))
+                .addContainerGap())
+            .addGroup(menujPanelLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(homejPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         menujPanelLayout.setVerticalGroup(
             menujPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menujPanelLayout.createSequentialGroup()
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23)
+                .addComponent(homejPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
                 .addComponent(searchjPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
                 .addComponent(TrendsDayjPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -206,7 +237,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 519, Short.MAX_VALUE))
+                .addGap(0, 434, Short.MAX_VALUE))
         );
 
         viewjPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -215,7 +246,7 @@ public class MainJFrame extends javax.swing.JFrame {
         viewjPanel.setLayout(viewjPanelLayout);
         viewjPanelLayout.setHorizontalGroup(
             viewjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1419, Short.MAX_VALUE)
+            .addGap(0, 1415, Short.MAX_VALUE)
         );
         viewjPanelLayout.setVerticalGroup(
             viewjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,6 +289,8 @@ public class MainJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel TrendsDayjLabel;
     private javax.swing.JPanel TrendsDayjPanel;
+    private javax.swing.JLabel homejLabel;
+    private javax.swing.JPanel homejPanel;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel9;
