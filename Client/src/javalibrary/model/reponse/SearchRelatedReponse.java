@@ -1,40 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package javalibrary.model.reponse;
 
-/**
- *
- * @author phung
- */
+import java.util.List;
+
 public class SearchRelatedReponse {
-    String name, total;
+    String colunm;
+    List<RelatedReponse> relatedReponses;
+
     public SearchRelatedReponse() {
-        
-    }
-    
-    public SearchRelatedReponse(String name, String total) {
-        this.name = name;
-        this.total = total;
     }
 
-    public String getName() {
-        return name;
+    public String getColunm() {
+        return colunm;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setColunm(String colunm) {
+        this.colunm = colunm;
     }
 
-    public String getTotal() {
-        return total;
+    public List<RelatedReponse> getRelatedReponses() {
+        return relatedReponses;
     }
 
-    public void setTotal(String total) {
-        this.total = total;
+    public void setRelatedReponses(List<RelatedReponse> relatedReponses) {
+        this.relatedReponses = relatedReponses;
     }
-    
-    
+
+    public SearchRelatedReponse(String colunm, List<RelatedReponse> relatedReponses) {
+        this.colunm = colunm;
+        this.relatedReponses = relatedReponses;
+    }
 }

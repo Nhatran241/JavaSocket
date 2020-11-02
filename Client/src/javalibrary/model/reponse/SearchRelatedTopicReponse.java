@@ -1,24 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package javalibrary.model.reponse;
 
-/**
- *
- * @author phung
- */
 public class SearchRelatedTopicReponse {
-    String name, total;
+    String name, top, rising;
     
     public SearchRelatedTopicReponse() {
         
     }
-    
-    public SearchRelatedTopicReponse(String name, String total) {
+
+    public SearchRelatedTopicReponse(String name, String rising) {
         this.name = name;
-        this.total = total;
+        this.rising = rising;
+    }
+
+    public SearchRelatedTopicReponse(String name, String top, String rising) {
+        this.name = name;
+        this.top = top;
+        this.rising = rising;
     }
 
     public String getName() {
@@ -29,12 +26,21 @@ public class SearchRelatedTopicReponse {
         this.name = name;
     }
 
-    public String getTotal() {
-        return total;
+    public String getTop() {
+        return top;
     }
 
-    public void setTotal(String total) {
-        this.total = total;
+    public void setTop(String top) {
+        this.top = top;
     }
+
+    public String getRising() {
+        return rising;
+    }
+
+    public void setRising(String rising) {
+        this.rising = rising;
+    }
+
     
 }

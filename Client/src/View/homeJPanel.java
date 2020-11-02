@@ -74,7 +74,7 @@ public class homeJPanel extends javax.swing.JPanel {
                 .addGap(38, 38, 38))
         );
 
-        jPanel2.setBackground(new java.awt.Color(121, 196, 71));
+        jPanel2.setBackground(new java.awt.Color(102, 255, 102));
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_search_100px_1.png"))); // NOI18N
@@ -154,7 +154,7 @@ public class homeJPanel extends javax.swing.JPanel {
         homejPanelLayout.setVerticalGroup(
             homejPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(homejPanelLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addGap(55, 55, 55)
                 .addGroup(homejPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

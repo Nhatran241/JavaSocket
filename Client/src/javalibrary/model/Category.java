@@ -16,7 +16,11 @@ public class Category {
         this.name = name;
         this.id = id;
     }
-    
+
+    public Category(String id) {
+        this.id = id;
+    }
+
     public Category() {
         
     }
@@ -47,10 +51,6 @@ public class Category {
 
     @Override
     public String toString() {
-        return "{" +
-                "name=" + name +
-                ", id=" + id +
-                ", children=" + children +
-                "}";
+        return id + " " + name ;
     }
 }
