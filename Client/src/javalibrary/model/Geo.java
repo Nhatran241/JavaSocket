@@ -17,6 +17,10 @@ public class Geo {
         this.name = name;
         this.id = id;
     }
+    
+    public Geo(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -44,10 +48,6 @@ public class Geo {
 
     @Override
     public String toString() {
-        return "Geo{" +
-                "name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                ", subList=" + subList +
-                '}';
+        return id + " " + name ;
     }
 }

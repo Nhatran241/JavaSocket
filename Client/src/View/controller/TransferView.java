@@ -39,7 +39,7 @@ public class TransferView {
 
         jPanelRoot.removeAll();
         jPanelRoot.setLayout(new BorderLayout());
-        jPanelRoot.add(new searchJPanel());
+        jPanelRoot.add(new homeJPanel());
         jPanelRoot.validate();
         jPanelRoot.repaint();
     }

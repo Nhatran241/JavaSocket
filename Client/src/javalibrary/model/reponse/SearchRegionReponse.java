@@ -5,35 +5,40 @@
  */
 package javalibrary.model.reponse;
 
+import java.util.List;
+
 /**
  *
  * @author phung
  */
 public class SearchRegionReponse {
-    String total, name;
-    
+    String column;
+    List<RegionReponse> regionReponses;
+
     public SearchRegionReponse() {
-        
-    }
-    public SearchRegionReponse(String total, String name) {
-        this.total = total;
-        this.name = name;
     }
 
-    public String getTotal() {
-        return total;
+    public String getColumn() {
+        return column;
     }
 
-    public void setTotal(String total) {
-        this.total = total;
+    public void setColumn(String column) {
+        this.column = column;
     }
 
-    public String getName() {
-        return name;
+    public List<RegionReponse> getRegionReponses() {
+        return regionReponses;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRegionReponses(List<RegionReponse> regionReponses) {
+        this.regionReponses = regionReponses;
     }
+
+    public SearchRegionReponse(String column, List<RegionReponse> regionReponses) {
+        this.column = column;
+        this.regionReponses = regionReponses;
+    }
+
+    
     
 }

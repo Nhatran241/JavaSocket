@@ -5,23 +5,19 @@ import Services.Interfaces.Interfaces.IGetCategoryListener;
 import Services.Interfaces.Interfaces.IGetGeoListener;
 import Services.Interfaces.Interfaces.IGetSearchRegionListener;
 import Services.Interfaces.Interfaces.IRelatedTopicListener;
-import Services.Interfaces.Interfaces.ISearchListener;
 import Services.Interfaces.Interfaces.ISearchRelatedListener;
 import Services.Interfaces.Interfaces.ISearchRelatedTopicListener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonArray;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
+import com.google.gson.JsonElement;
 import java.util.ArrayList;
 import java.util.List;
 import javalibrary.SocketTransceiver;
 import javalibrary.model.Category;
 import javalibrary.model.Geo;
-import javalibrary.model.reponse.ListSearchRegionReponse;
-import javalibrary.model.reponse.ListSearchRelatedReponse;
+import javalibrary.model.reponse.RegionReponse;
+import javalibrary.model.reponse.RelatedReponse;
 import javalibrary.model.reponse.RelatedTopicReponse;
 import javalibrary.model.reponse.SearchRegionReponse;
 import javalibrary.model.reponse.SearchRelatedReponse;
@@ -42,7 +38,6 @@ public class MyClient {
     private ISearchRelatedListener iSearchRelatedListener;
     private ISearchRelatedTopicListener iSearchRelatedTopicListener;
     private IRelatedTopicListener iRelatedTopicListener;
-    private ISearchListener iSearchListener;
 
     List<String> keySearchs = new ArrayList<>();
 
@@ -70,27 +65,31 @@ public class MyClient {
 
             @Override
             public void onReceive(SocketTransceiver transceiver, String message) {
-                if (message.contains(GeoRequestCountry.class.getSimpleName())) {
+                System.out.println("message: " + message);
 
-                    iGetGeoListener.onGetGeoSuccess(SetGeo(message));
-                } else if (message.contains(CategoriesRequest.class.getSimpleName())) {
-                    message = message.replace(CategoriesRequest.class.getSimpleName(), "");
-                    JsonObject jsonObject = new JsonParser().parse(message).getAsJsonObject();
-                    String jsonArray = jsonObject.get("children").toString();
+                if (!message.isEmpty()) {
+                    if (message.contains(GeoRequestCountry.class.getSimpleName())) {
 
-                    iGetCategoryListener.onGetCategorySuccess(SetCategoryrecursive(jsonArray));
-                } else if (message.contains(SearchRegionRequest.class.getSimpleName())) {
+                        iGetGeoListener.onGetGeoSuccess(SetGeo(message));
+                    } else if (message.contains(CategoriesRequest.class.getSimpleName())) {
+                        message = message.replace(CategoriesRequest.class.getSimpleName(), "");
+                        JsonObject jsonObject = new JsonParser().parse(message).getAsJsonObject();
+                        String jsonArray = jsonObject.get("children").toString();
 
-                    iGetSearchRegionListener.OnGetSearchRegionSuccess(SetSearchRegion(message));
-                } else if (message.contains(SearchRelatedQueryRequest.class.getSimpleName())) {
+                        iGetCategoryListener.onGetCategorySuccess(SetCategoryrecursive(jsonArray));
+                    } else if (message.contains(SearchRegionRequest.class.getSimpleName())) {
 
-                    iSearchRelatedListener.OnGetSearchRelatedSuccess(SetSearchRelated(message));
-                } else if (message.contains(SearchRelatedTopicRequest.class.getSimpleName())) {
+                        iGetSearchRegionListener.OnGetSearchRegionSuccess(SetSearchRegion(message));
+                    } else if (message.contains(SearchRelatedQueryRequest.class.getSimpleName())) {
 
-                    iSearchRelatedTopicListener.OnGetSearchRelatedTopicSuccess(SetSearchRelatedTopic(message));
-                } else if (message.contains(RelatedTopicRequest.class.getSimpleName())) {
+                        iSearchRelatedListener.OnGetSearchRelatedSuccess(SetSearchRelated(message));
+                    } else if (message.contains(SearchRelatedTopicRequest.class.getSimpleName())) {
 
-                    iRelatedTopicListener.OnGetRelatedTopicSuccess(SetRelatedTopic(message));
+                        iSearchRelatedTopicListener.OnGetSearchRelatedTopicSuccess(SetSearchRelatedTopic(message));
+                    } else if (message.contains(RelatedTopicRequest.class.getSimpleName())) {
+
+                        iRelatedTopicListener.OnGetRelatedTopicSuccess(SetRelatedTopic(message));
+                    }
                 }
             }
 
@@ -139,34 +138,39 @@ public class MyClient {
 
     }
 
-    public List<Geo> SetGeo(String inpuString) {
-        inpuString = inpuString.replace(GeoRequestCountry.class.getSimpleName(), "");
+    public List<Geo> SetGeo(String inputString) {
+        inputString = inputString.replace(GeoRequestCountry.class.getSimpleName(), "");
         List<Geo> geos = new ArrayList<>();
+        geos.add(new Geo("All over the world", "AA"));
 
-        GsonBuilder builder = new GsonBuilder();
-        builder.setPrettyPrinting();
+        JsonArray jsonArray = new JsonParser().parse(inputString).getAsJsonArray();
+        for (int i = 0; i < jsonArray.size(); i++) {
+            String id = jsonArray.get(i).getAsJsonObject().get("id").toString();
+            String name = jsonArray.get(i).getAsJsonObject().get("name").toString();
 
-        Gson gson = builder.create();
-        Type collectionType = new TypeToken<List<Geo>>() {
-        }.getType();
-        geos = gson.fromJson(inpuString, collectionType);
+            id = id.replace("\"", "");
+            name = name.replace("\"", "");
+            geos.add(new Geo(name, id));
+        }
 
         return geos;
     }
 
     public List<Category> SetCategoryrecursive(String inputString) {
         List<Category> categorys = new ArrayList<>();
+        categorys.add(new Category("All catagories", "0"));
         JsonArray jsonArray = new JsonParser().parse(inputString).getAsJsonArray();
 
         for (int i = 0; i < jsonArray.size(); i++) {
 
             String id = jsonArray.get(i).getAsJsonObject().get("id").toString();
             String name = jsonArray.get(i).getAsJsonObject().get("name").toString();
+            id = id.replace("\"", "");
+            name = name.replace("\"", "");
 
             if (jsonArray.get(i).getAsJsonObject().get("children") != null) {
                 String children = jsonArray.get(i).getAsJsonObject().get("children").toString();
-                Category category = new Category(name, id, SetCategoryrecursive(children));
-                categorys.add(category);
+                categorys.add(new Category(name, id, SetCategoryrecursive(children)));
             } else {
                 Category category = new Category(name, id);
                 categorys.add(category);
@@ -175,13 +179,13 @@ public class MyClient {
         return categorys;
     }
 
-    public List<ListSearchRegionReponse> SetSearchRegion(String inputString) {
+    public List<SearchRegionReponse> SetSearchRegion(String inputString) {
         inputString = inputString.replace(SearchRegionRequest.class.getSimpleName(), "");
-        List<ListSearchRegionReponse> listSearchRegionReponses = new ArrayList<>();
+        List<SearchRegionReponse> searchRegionReponses = new ArrayList<>();
         JsonObject jsonObject = (JsonObject) new JsonParser().parse(inputString).getAsJsonObject();
 
         for (int i = 0; i < keySearchs.size(); i++) {
-            SearchRegionReponse searchRegionReponse = new SearchRegionReponse();
+            List<RegionReponse> regionReponses = new ArrayList<>();
 
             JsonArray dataArray = (JsonArray) jsonObject.get("data");
             JsonArray indexArray = (JsonArray) jsonObject.get("index");
@@ -191,42 +195,45 @@ public class MyClient {
                 JsonArray item = (JsonArray) dataArray.get(j);
                 String total = item.get(i).toString();
 
-                searchRegionReponse.setName(name);
-                searchRegionReponse.setTotal(total);
+                regionReponses.add(new RegionReponse(total, name));
             }
-            ListSearchRegionReponse listSearchRegionReponse = new ListSearchRegionReponse(keySearchs.get(i), searchRegionReponse);
-            listSearchRegionReponses.add(listSearchRegionReponse);
+            searchRegionReponses.add(new SearchRegionReponse(keySearchs.get(i), regionReponses));
         }
-        return listSearchRegionReponses;
+        return searchRegionReponses;
     }
 
-    public List<ListSearchRelatedReponse> SetSearchRelated(String inputString) {
-        List<ListSearchRelatedReponse> listSearchRelatedReponses = new ArrayList<>();
-
+    public List<SearchRelatedReponse> SetSearchRelated(String inputString) {
+        List<SearchRelatedReponse> searchRelatedReponses = new ArrayList<>();
         inputString = inputString.replace(SearchRelatedQueryRequest.class.getSimpleName(), "");
-        System.out.println("input String: " + inputString);
 
         for (int i = 0; i < keySearchs.size(); i++) {
-            SearchRelatedReponse searchRelatedReponse = new SearchRelatedReponse();
+            List<RelatedReponse> relatedReponses = new ArrayList<>();
 
             JsonObject jsonObject = (JsonObject) new JsonParser().parse(inputString).getAsJsonObject().get(keySearchs.get(i)).getAsJsonObject().get("rising");
             JsonArray jsonArray = (JsonArray) jsonObject.get("data");
             for (int j = 0; j < jsonArray.size(); j++) {
                 JsonArray item = (JsonArray) jsonArray.get(j);
-                
+
                 String name = item.get(0).toString();
-                String total = item.get(1).toString();
+                String rising = item.get(1).toString();
 
-                System.out.println("item: " + name + total);
-
-                searchRelatedReponse.setName(name);
-                searchRelatedReponse.setTotal(total);
+                relatedReponses.add(new RelatedReponse(name, rising));
             }
-            ListSearchRelatedReponse listSearchRelatedReponse = new ListSearchRelatedReponse(keySearchs.get(i), searchRelatedReponse);
-            listSearchRelatedReponses.add(listSearchRelatedReponse);
+            jsonObject = (JsonObject) new JsonParser().parse(inputString).getAsJsonObject().get(keySearchs.get(i)).getAsJsonObject().get("top");
+            jsonArray = (JsonArray) jsonObject.get("data");
+            for (JsonElement jsonElement : jsonArray) {
+                JsonArray item = (JsonArray) jsonElement;
+                String name = item.get(0).toString();
+                String top = item.get(1).toString();
+                for (RelatedReponse relatedReponse : relatedReponses) {
+                    if (relatedReponse.getName().equalsIgnoreCase(name)) {
+                        relatedReponse.setTop(top);
+                    }
+                }
+            }
+            searchRelatedReponses.add(new SearchRelatedReponse(keySearchs.get(i), relatedReponses));
         }
-
-        return listSearchRelatedReponses;
+        return searchRelatedReponses;
     }
 
     public List<SearchRelatedTopicReponse> SetSearchRelatedTopic(String inputString) {
@@ -238,12 +245,23 @@ public class MyClient {
         JsonArray jsonArray = (JsonArray) jsonObject.get("data");
         for (int i = 0; i < jsonArray.size(); i++) {
             JsonArray item = (JsonArray) jsonArray.get(i);
-            String total = item.get(0).toString();
+            String rising = item.get(0).toString();
             String name = item.get(4).toString();
-            SearchRelatedTopicReponse searchRelatedTopicReponse = new SearchRelatedTopicReponse(name, total);
-            searchRelatedTopicReponses.add(searchRelatedTopicReponse);
+            searchRelatedTopicReponses.add(new SearchRelatedTopicReponse(name, rising));
         }
-
+        jsonObject = (JsonObject) new JsonParser().parse(inputString).getAsJsonObject().get(keySearchs.get(0)).getAsJsonObject().get("top");
+        jsonArray = (JsonArray) jsonObject.get("data");
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JsonArray item = (JsonArray) jsonArray.get(i);
+            String top = item.get(0).toString();
+            String name = item.get(5).toString();
+            
+            for (SearchRelatedTopicReponse searchRelatedTopicReponse : searchRelatedTopicReponses) {
+                if (searchRelatedTopicReponse.getName().equalsIgnoreCase(name)) {
+                    searchRelatedTopicReponse.setTop(top);
+                }
+            }
+        }
         return searchRelatedTopicReponses;
     }
 
@@ -276,8 +294,7 @@ public class MyClient {
                 description = "";
             }
 
-            RelatedTopicReponse relatedTopicReponse = new RelatedTopicReponse(image, title, url, description);
-            relatedTopicReponses.add(relatedTopicReponse);
+            relatedTopicReponses.add(new RelatedTopicReponse(image, title, url, description));
         }
         return relatedTopicReponses;
     }
