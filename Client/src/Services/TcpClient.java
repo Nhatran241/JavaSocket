@@ -57,21 +57,6 @@ public abstract class TcpClient implements Runnable {
 						this.send(localKeyPair.getPublic().getEncoded());
 					}else TcpClient.this.onConnect(this);
 				}
-
-//                            @Override
-//                            public void onReceive(InetAddress addr, String message) {
-//                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//                            }
-//
-//                            @Override
-//                            public void onReceive(InetAddress addr, byte[] data) {
-//                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//                            }
-//
-//                            @Override
-//                            public void onDisconnect(InetAddress addr) {
-//                                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//                            }
 			};
 			transceiver.start();
 		} catch (Exception e) {

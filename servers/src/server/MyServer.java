@@ -29,7 +29,12 @@ public class MyServer{
                 if(message.contains(SearchRegionRequest.class.getSimpleName())){
                     SearchRegionRequest request = new Gson().fromJson(message, SearchRegionRequest.class);
                     requestManager.requestSearchInterestRegion(request, (RequestManager.RequestListener) s -> socketTransceiver.sendWithEncrypt(SearchRegionRequest.class.getSimpleName()+s));
-                }else if(message.contains(SearchRelatedQueryRequest.class.getSimpleName())){
+                }
+                else if(message.contains(SearchOvertimeRequest.class.getSimpleName())){
+                    SearchOvertimeRequest request = new Gson().fromJson(message,SearchOvertimeRequest.class);
+                    requestManager.requestSearchOvertime(request, (RequestManager.RequestListener) s -> socketTransceiver.sendWithEncrypt(SearchOvertimeRequest.class.getSimpleName()+s));
+                }
+                else if(message.contains(SearchRelatedQueryRequest.class.getSimpleName())){
                     SearchRelatedQueryRequest request = new Gson().fromJson(message, SearchRelatedQueryRequest.class);
                     requestManager.requestSearchRelatedQuery(request, (RequestManager.RequestListener) s -> socketTransceiver.sendWithEncrypt(SearchRelatedQueryRequest.class.getSimpleName()+s.replace("\":\"","\":").replace("\\","\"").replace("\"\"","\"").replace("}\",\"","},\"").replace("}\"}","}}")));
                 }else if(message.contains(SearchRelatedTopicRequest.class.getSimpleName())){

@@ -39,13 +39,12 @@ public class TransferView {
 
         jPanelRoot.removeAll();
         jPanelRoot.setLayout(new BorderLayout());
-        jPanelRoot.add(new searchJPanel());
+        jPanelRoot.add(new homeJPanel());
         jPanelRoot.validate();
         jPanelRoot.repaint();
     }
 
     public void setEvent(List<MenuBean> listItem) {
-        System.out.println(listItem.toString());
         this.listItem = listItem;
         listItem.forEach((item) -> {
             item.getjLabel().addMouseListener(new LabelEvent(item.getKind(), item.getjPanel(), item.getjLabel()));

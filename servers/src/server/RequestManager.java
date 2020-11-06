@@ -21,6 +21,7 @@ public class RequestManager {
     private final String requestCategoriesPath = "categories";
     private final String requestSuggestionPath = "suggestions";
     private final String requestSearchInterestRegionPath = "searchinterest";
+    private final String requestSearchOvertimePath = "searchovertime";
     private final String requestSearchRelatedQueryPath = "searchrelatedquery";
     private final String requestSearchRelatedTopicPath = "searchrelatedtopic";
     private static RequestManager instance;
@@ -30,6 +31,12 @@ public class RequestManager {
             instance = new RequestManager();
         return instance;
     }
+
+    public void requestSearchOvertime(SearchOvertimeRequest request, RequestListener requestListener) {
+        sendRequestToPythonServer(baseUrlPythonServer + mappingSearchOvertimeParam(request), requestListener);
+    }
+
+
 
     public void requestSearchInterestRegion(SearchRegionRequest searchRegionRequest, RequestListener requestListener) {
         sendRequestToPythonServer(baseUrlPythonServer + mappingSearchInterestRegionParam(searchRegionRequest), requestListener);
@@ -63,7 +70,20 @@ public class RequestManager {
         param += "keyword=" + suggestionsKeywordRequest.getKeyword();
         return param;
     }
-
+    private String mappingSearchOvertimeParam(SearchOvertimeRequest request) {
+        String param = requestSearchOvertimePath + "?";
+        StringBuilder tempq = new StringBuilder();
+        for (String q : request.getSearchQuery()){
+            tempq.append(q).append(",");
+        }
+        param += "q=" + tempq.deleteCharAt(tempq.length()-1);
+        if (request.getCategory() != null)
+            param += "&cat=" + request.getCategory().getId();
+        if (request.getGeo() != null)
+            param += "&geo=" + request.getGeo().getId();
+        param += "&from=" + request.getFromDate() + "&to=" + request.getToDate();
+        return param;
+    }
     private String mappingSearchInterestRegionParam(SearchRegionRequest searchRegionRequest) {
         String param = requestSearchInterestRegionPath + "?";
         StringBuilder tempq = new StringBuilder();

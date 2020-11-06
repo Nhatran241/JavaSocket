@@ -48,7 +48,49 @@ def searchi():
   result=interest_by_region_df = pytrend.interest_by_region().to_json(orient="split", force_ascii=False)
   return result
 
-@api.route('/searchrelatedtopic')
+@api.route('/searchovertime')
+def searcho():
+  rkeyword = request.args.get("q", default = "", type = str).split(',')
+  rcat = request.args.get('cat', default = "", type = str)
+  rgeo = request.args.get('geo', default = "", type = str)
+  rdatefrom = request.args.get('from', type = str).replace("'", "")
+  rdateto = request.args.get('to', type = str).replace("'", "")
+  pytrend = TrendReq(hl='en-US', tz=360)
+  if rdatefrom != "" and rdateto != "" :
+      if rgeo !="" and rcat != "" :
+        print("full")
+        pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom+" "+rdateto)
+      else :
+        if rgeo != "" :
+          print("no cat")
+          pytrend.build_payload(kw_list=rkeyword,geo=rgeo,timeframe=rdatefrom+' '+rdateto)
+        else :
+          if rcat != "" :
+            print("no geo")
+            pytrend.build_payload(kw_list=rkeyword,cat=rcat,timeframe=rdatefrom+' '+rdateto)
+          else :
+            print("no geo no cat")
+            pytrend.build_payload(kw_list=rkeyword,timeframe=rdatefrom+' '+rdateto) 
+  else :
+        if rgeo !="" and rcat != "" :
+          print("full no date")
+          pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat)
+        else :
+          if rgeo != "" :
+            print("no cat no date")
+            pytrend.build_payload(kw_list=rkeyword,geo=rgeo)
+          else :
+            if rcat != "" :
+              print("no geo no date")
+              pytrend.build_payload(kw_list=rkeyword,cat=rcat)
+            else :
+              print("no geo no cat nodate")
+              pytrend.build_payload(kw_list=rkeyword)
+  # Interest by Region
+  result=interest_by_region_df = pytrend.interest_over_time().to_json(orient="split", force_ascii=False)
+  return result
+
+@api.route('/searchovertime')
 def searcht():
   rkeyword = request.args.get("q", default = "", type = str).split(',')
   rcat = request.args.get('cat', default = "", type = str)
