@@ -54,6 +54,7 @@ public class MyClient {
         TcpClient tcpClient = new TcpClient() {
             @Override
             public void onConnect(SocketTransceiver tra) {
+                System.out.println("Connect success");
                 myClientTranceiver = tra;
                 iConnectListener.onConnectSuccess();
             }

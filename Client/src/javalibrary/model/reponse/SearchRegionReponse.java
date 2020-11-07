@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package javalibrary.model.reponse;
 
 import java.util.List;
 
-/**
- *
- * @author phung
- */
 public class SearchRegionReponse {
     String column;
     List<RegionReponse> regionReponses;
