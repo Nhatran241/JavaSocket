@@ -13,10 +13,13 @@ import javalibrary.model.Geo;
 import javalibrary.model.reponse.SearchRegionReponse;
 import javalibrary.model.reponse.SearchRelatedReponse;
 import javalibrary.model.reponse.SearchRelatedTopicReponse;
+import javalibrary.model.request.SearchOvertimeRequest;
 import javalibrary.model.request.SearchRegionRequest;
 import javalibrary.model.request.SearchRelatedQueryRequest;
 import javalibrary.model.request.SearchRelatedTopicRequest;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 public class searchJPanel extends javax.swing.JPanel {
 
@@ -24,7 +27,7 @@ public class searchJPanel extends javax.swing.JPanel {
     String[] dateStrings = {"The past 12 months", "Hours passed", "Last 4 hours", "Last day", "Last 7 days", "30 days", "90 days", "The past 5 years"};
 
     public searchJPanel() {
-        
+
         initComponents();
 
         myClient.connect(new Interfaces.IConnectListener() {
@@ -278,15 +281,14 @@ public class searchJPanel extends javax.swing.JPanel {
                 myClient.getSearchRegion(searchRegionRequest, new Interfaces.IGetSearchRegionListener() {
                     @Override
                     public void OnGetSearchRegionSuccess(List<SearchRegionReponse> searchRegionReponses) {
-                        searchRegionReponses.addAll(searchRegionReponses);
+                        System.out.println("searchRelatedQueryRequest: " + searchRelatedQueryRequest.toString());
                         myClient.getSearchRelated(searchRelatedQueryRequest, new Interfaces.ISearchRelatedListener() {
                             @Override
                             public void OnGetSearchRelatedSuccess(List<SearchRelatedReponse> searchRelatedReponses) {
-                                searchRelatedReponses.addAll(searchRelatedReponses);
+                                System.out.println("searchRelatedTopicRequest: " + searchRelatedTopicRequest.toString());
                                 myClient.getSearchRelatedTopic(searchRelatedTopicRequest, new Interfaces.ISearchRelatedTopicListener() {
                                     @Override
                                     public void OnGetSearchRelatedTopicSuccess(List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
-                                        searchRelatedTopicReponses.addAll(searchRelatedTopicReponses);
                                         searchReponseJPanel.removeAll();
                                         searchReponseJPanel.setLayout(new BorderLayout());
                                         searchReponseJPanel.add(new searchOneKeyJPanel(searchRegionReponses, searchRelatedReponses, searchRelatedTopicReponses));
@@ -310,8 +312,32 @@ public class searchJPanel extends javax.swing.JPanel {
                     public void OnGetSearchRegionFailed() {
                     }
                 });
-            }
+            } else {
+                myClient.getSearchRegion(searchRegionRequest, new Interfaces.IGetSearchRegionListener() {
+                    @Override
+                    public void OnGetSearchRegionSuccess(List<SearchRegionReponse> searchRegionReponses) {
+                        myClient.getSearchRelated(searchRelatedQueryRequest, new Interfaces.ISearchRelatedListener() {
+                            @Override
+                            public void OnGetSearchRelatedSuccess(List<SearchRelatedReponse> searchRelatedReponses) {
+                                JScrollPane jScrollPane = new JScrollPane(new searchReponsesJPanel(searchRegionReponses, searchRelatedReponses), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                                searchReponseJPanel.removeAll();
+                                searchReponseJPanel.setLayout(new BorderLayout());
+                                searchReponseJPanel.add(jScrollPane);
+                                searchReponseJPanel.validate();
+                                searchReponseJPanel.repaint();
+                            }
 
+                            @Override
+                            public void OnGetSearchRelatedFailed() {
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void OnGetSearchRegionFailed() {
+                    }
+                });
+            }
         } else {
             JOptionPane.showMessageDialog(jPanel1, "You have not entered keywords");
         }

@@ -60,4 +60,10 @@ public class Interfaces {
         
         void OnGetRelatedTopicFailed();
     }
+    
+    public interface ISearchOvertimeListener {
+        void OnGetSearchOvertimeSuccess();
+        
+        void OnGetSearchOvertimeFailed();
+    }
 }
