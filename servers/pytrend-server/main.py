@@ -90,7 +90,7 @@ def searcho():
   result=interest_by_region_df = pytrend.interest_over_time().to_json(orient="split", force_ascii=False)
   return result
 
-@api.route('/searchovertime')
+@api.route('/searchrelatedtopic')
 def searcht():
   rkeyword = request.args.get("q", default = "", type = str).split(',')
   rcat = request.args.get('cat', default = "", type = str)

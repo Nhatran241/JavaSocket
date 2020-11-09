@@ -26,10 +26,9 @@ public class MyClient {
                 /**
                  * localhost:5000/search?q=Trump&geo=VN&cat=0&from=2019-10-6&to=2020-20-6
                  * */
-                SearchOvertimeRequest searchRegionRequest = new SearchOvertimeRequest();
+                SearchRelatedTopicRequest searchRegionRequest = new SearchRelatedTopicRequest();
                 List<String> list = new ArrayList<>();
                 list.add("trump");
-                list.add("covid-19");
                 searchRegionRequest.setSearchQuery(list);
 //                searchRegionRequest.setCategory(new Category("na","45"));
 //                searchRegionRequest.setGeo(new Geo("vn","VN"));
