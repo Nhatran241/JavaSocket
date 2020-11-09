@@ -9,12 +9,13 @@ import javalibrary.model.reponse.SearchRelatedReponse;
 import javalibrary.model.reponse.SearchRelatedTopicReponse;
 import javax.swing.table.DefaultTableModel;
 
-public class searchReponseJPanel extends javax.swing.JPanel {
-    
+public class searchOneKeyJPanel extends javax.swing.JPanel {
+
     List<SearchRegionReponse> searchRegionReponses = new ArrayList<>();
     List<SearchRelatedReponse> searchRelatedReponses = new ArrayList<>();
     List<SearchRelatedTopicReponse> searchRelatedTopicReponses = new ArrayList<>();
-    public searchReponseJPanel(List<SearchRegionReponse> searchRegionReponses, List<SearchRelatedReponse> searchRelatedReponses, List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
+
+    public searchOneKeyJPanel(List<SearchRegionReponse> searchRegionReponses, List<SearchRelatedReponse> searchRelatedReponses, List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
         initComponents();
         this.searchRegionReponses = searchRegionReponses;
         this.searchRelatedReponses = searchRelatedReponses;
@@ -143,8 +144,8 @@ public class searchReponseJPanel extends javax.swing.JPanel {
         jScrollPane3.setViewportView(tbRegion);
         if (tbRegion.getColumnModel().getColumnCount() > 0) {
             tbRegion.getColumnModel().getColumn(1).setMinWidth(80);
-            tbRegion.getColumnModel().getColumn(1).setPreferredWidth(80);
-            tbRegion.getColumnModel().getColumn(1).setMaxWidth(100);
+            tbRegion.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tbRegion.getColumnModel().getColumn(1).setMaxWidth(140);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -153,22 +154,24 @@ public class searchReponseJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(65, 65, 65)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE))
-                .addGap(87, 87, 87)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(83, 83, 83)
+                .addComponent(jScrollPane2)
                 .addGap(65, 65, 65))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(350, 350, 350)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
+                .addGap(350, 350, 350))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(60, 60, 60)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-                .addGap(43, 43, 43)
+                .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(50, 50, 50))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -193,14 +196,14 @@ public class searchReponseJPanel extends javax.swing.JPanel {
             row[1] = regionReponse.getTotal();
             regionModel.addRow(row);
         }
-        
+
         for (RelatedReponse relatedReponse : searchRelatedReponses.get(0).getRelatedReponses()) {
             row[0] = relatedReponse.getName();
             row[1] = relatedReponse.getRising();
             row[2] = relatedReponse.getTop();
             relatedModel.addRow(row);
         }
-        
+
         for (SearchRelatedTopicReponse object : searchRelatedTopicReponses) {
             row[0] = object.getName();
             row[1] = object.getRising();

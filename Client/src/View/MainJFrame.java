@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainJFrame extends javax.swing.JFrame {
-
+    
     public MainJFrame() {
         initComponents();
         setTitle("Google Trends");
@@ -20,7 +20,6 @@ public class MainJFrame extends javax.swing.JFrame {
         listItem.add(new MenuBean("trendsday", TrendsDayjPanel, TrendsDayjLabel));
         
         transferView.setEvent(listItem);
-        
     }
     
     @SuppressWarnings("unchecked")

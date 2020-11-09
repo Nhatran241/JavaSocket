@@ -5,12 +5,14 @@ import Services.Interfaces.Interfaces.IGetCategoryListener;
 import Services.Interfaces.Interfaces.IGetGeoListener;
 import Services.Interfaces.Interfaces.IGetSearchRegionListener;
 import Services.Interfaces.Interfaces.IRelatedTopicListener;
+import Services.Interfaces.Interfaces.ISearchOvertimeListener;
 import Services.Interfaces.Interfaces.ISearchRelatedListener;
 import Services.Interfaces.Interfaces.ISearchRelatedTopicListener;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonSyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import javalibrary.SocketTransceiver;
@@ -25,9 +27,14 @@ import javalibrary.model.reponse.SearchRelatedTopicReponse;
 import javalibrary.model.request.CategoriesRequest;
 import javalibrary.model.request.GeoRequestCountry;
 import javalibrary.model.request.RelatedTopicRequest;
+import javalibrary.model.request.SearchOvertimeRequest;
 import javalibrary.model.request.SearchRegionRequest;
 import javalibrary.model.request.SearchRelatedQueryRequest;
 import javalibrary.model.request.SearchRelatedTopicRequest;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class MyClient {
 
@@ -38,6 +45,7 @@ public class MyClient {
     private ISearchRelatedListener iSearchRelatedListener;
     private ISearchRelatedTopicListener iSearchRelatedTopicListener;
     private IRelatedTopicListener iRelatedTopicListener;
+    private ISearchOvertimeListener iSearchOvertimeListener;
 
     List<String> keySearchs = new ArrayList<>();
 
@@ -54,6 +62,7 @@ public class MyClient {
         TcpClient tcpClient = new TcpClient() {
             @Override
             public void onConnect(SocketTransceiver tra) {
+                System.out.println("Connect success");
                 myClientTranceiver = tra;
                 iConnectListener.onConnectSuccess();
             }
@@ -89,6 +98,9 @@ public class MyClient {
                     } else if (message.contains(RelatedTopicRequest.class.getSimpleName())) {
 
                         iRelatedTopicListener.OnGetRelatedTopicSuccess(SetRelatedTopic(message));
+                    } else if (message.contains(SearchOvertimeRequest.class.getSimpleName())) {
+
+                        setSearchOvertime(message);
                     }
                 }
             }
@@ -135,7 +147,11 @@ public class MyClient {
     public void getRelatedTopic(RelatedTopicRequest relatedTopicRequest, IRelatedTopicListener i) {
         this.iRelatedTopicListener = i;
         myClientTranceiver.send(relatedTopicRequest);
+    }
 
+    public void getSearchOvertime(SearchOvertimeRequest searchOvertimeRequest, ISearchOvertimeListener i) {
+        this.iSearchOvertimeListener = i;
+        myClientTranceiver.send(searchOvertimeRequest);
     }
 
     public List<Geo> SetGeo(String inputString) {
@@ -181,9 +197,9 @@ public class MyClient {
 
     public List<SearchRegionReponse> SetSearchRegion(String inputString) {
         inputString = inputString.replace(SearchRegionRequest.class.getSimpleName(), "");
+
         List<SearchRegionReponse> searchRegionReponses = new ArrayList<>();
         JsonObject jsonObject = (JsonObject) new JsonParser().parse(inputString).getAsJsonObject();
-
         for (int i = 0; i < keySearchs.size(); i++) {
             List<RegionReponse> regionReponses = new ArrayList<>();
 
@@ -206,32 +222,36 @@ public class MyClient {
         List<SearchRelatedReponse> searchRelatedReponses = new ArrayList<>();
         inputString = inputString.replace(SearchRelatedQueryRequest.class.getSimpleName(), "");
 
-        for (int i = 0; i < keySearchs.size(); i++) {
-            List<RelatedReponse> relatedReponses = new ArrayList<>();
+        try {
+            for (int i = 0; i < keySearchs.size(); i++) {
+                List<RelatedReponse> relatedReponses = new ArrayList<>();
 
-            JsonObject jsonObject = (JsonObject) new JsonParser().parse(inputString).getAsJsonObject().get(keySearchs.get(i)).getAsJsonObject().get("rising");
-            JsonArray jsonArray = (JsonArray) jsonObject.get("data");
-            for (int j = 0; j < jsonArray.size(); j++) {
-                JsonArray item = (JsonArray) jsonArray.get(j);
+                JsonObject jsonObject = (JsonObject) new JsonParser().parse(inputString).getAsJsonObject().get(keySearchs.get(i)).getAsJsonObject().get("rising");
+                JsonArray jsonArray = (JsonArray) jsonObject.get("data");
+                for (int j = 0; j < jsonArray.size(); j++) {
+                    JsonArray item = (JsonArray) jsonArray.get(j);
 
-                String name = item.get(0).toString();
-                String rising = item.get(1).toString();
+                    String name = item.get(0).toString();
+                    String rising = item.get(1).toString();
 
-                relatedReponses.add(new RelatedReponse(name, rising));
-            }
-            jsonObject = (JsonObject) new JsonParser().parse(inputString).getAsJsonObject().get(keySearchs.get(i)).getAsJsonObject().get("top");
-            jsonArray = (JsonArray) jsonObject.get("data");
-            for (JsonElement jsonElement : jsonArray) {
-                JsonArray item = (JsonArray) jsonElement;
-                String name = item.get(0).toString();
-                String top = item.get(1).toString();
-                for (RelatedReponse relatedReponse : relatedReponses) {
-                    if (relatedReponse.getName().equalsIgnoreCase(name)) {
-                        relatedReponse.setTop(top);
+                    relatedReponses.add(new RelatedReponse(name, rising));
+                }
+                jsonObject = (JsonObject) new JsonParser().parse(inputString).getAsJsonObject().get(keySearchs.get(i)).getAsJsonObject().get("top");
+                jsonArray = (JsonArray) jsonObject.get("data");
+                for (JsonElement jsonElement : jsonArray) {
+                    JsonArray item = (JsonArray) jsonElement;
+                    String name = item.get(0).toString();
+                    String top = item.get(1).toString();
+                    for (RelatedReponse relatedReponse : relatedReponses) {
+                        if (relatedReponse.getName().equalsIgnoreCase(name)) {
+                            relatedReponse.setTop(top);
+                        }
                     }
                 }
+                searchRelatedReponses.add(new SearchRelatedReponse(keySearchs.get(i), relatedReponses));
             }
-            searchRelatedReponses.add(new SearchRelatedReponse(keySearchs.get(i), relatedReponses));
+        } catch (JsonSyntaxException e) {
+            System.out.println(e);
         }
         return searchRelatedReponses;
     }
@@ -241,62 +261,82 @@ public class MyClient {
 
         inputString = inputString.replace(SearchRelatedTopicRequest.class.getSimpleName(), "");
 
-        JsonObject jsonObject = (JsonObject) new JsonParser().parse(inputString).getAsJsonObject().get(keySearchs.get(0)).getAsJsonObject().get("rising");
-        JsonArray jsonArray = (JsonArray) jsonObject.get("data");
-        for (int i = 0; i < jsonArray.size(); i++) {
-            JsonArray item = (JsonArray) jsonArray.get(i);
-            String rising = item.get(0).toString();
-            String name = item.get(4).toString();
-            searchRelatedTopicReponses.add(new SearchRelatedTopicReponse(name, rising));
-        }
-        jsonObject = (JsonObject) new JsonParser().parse(inputString).getAsJsonObject().get(keySearchs.get(0)).getAsJsonObject().get("top");
-        jsonArray = (JsonArray) jsonObject.get("data");
-        for (int i = 0; i < jsonArray.size(); i++) {
-            JsonArray item = (JsonArray) jsonArray.get(i);
-            String top = item.get(0).toString();
-            String name = item.get(5).toString();
-            
-            for (SearchRelatedTopicReponse searchRelatedTopicReponse : searchRelatedTopicReponses) {
-                if (searchRelatedTopicReponse.getName().equalsIgnoreCase(name)) {
-                    searchRelatedTopicReponse.setTop(top);
+        try {
+            JsonObject jsonObject = (JsonObject) new JsonParser().parse(inputString).getAsJsonObject().get(keySearchs.get(0)).getAsJsonObject().get("rising");
+            JsonArray jsonArray = (JsonArray) jsonObject.get("data");
+            for (int i = 0; i < jsonArray.size(); i++) {
+                JsonArray item = (JsonArray) jsonArray.get(i);
+                String rising = item.get(0).toString();
+                String name = item.get(4).toString();
+                searchRelatedTopicReponses.add(new SearchRelatedTopicReponse(name, rising));
+            }
+            jsonObject = (JsonObject) new JsonParser().parse(inputString).getAsJsonObject().get(keySearchs.get(0)).getAsJsonObject().get("top");
+            jsonArray = (JsonArray) jsonObject.get("data");
+            for (int i = 0; i < jsonArray.size(); i++) {
+                JsonArray item = (JsonArray) jsonArray.get(i);
+                String top = item.get(0).toString();
+                String name = item.get(5).toString();
+
+                for (SearchRelatedTopicReponse searchRelatedTopicReponse : searchRelatedTopicReponses) {
+                    if (searchRelatedTopicReponse.getName().equalsIgnoreCase(name)) {
+                        searchRelatedTopicReponse.setTop(top);
+                    }
                 }
             }
+        } catch (JsonSyntaxException e) {
+            System.out.println(e);
         }
         return searchRelatedTopicReponses;
     }
 
     public List<RelatedTopicReponse> SetRelatedTopic(String inputString) {
         List<RelatedTopicReponse> relatedTopicReponses = new ArrayList<>();
-
         inputString = inputString.replace(RelatedTopicRequest.class.getSimpleName(), "");
-        JsonArray jsonArray = new JsonParser().parse(inputString).getAsJsonArray();
-        for (int i = 1; i < jsonArray.size(); i++) {
-            String title, url, image, description;
+        String headData = "{\"data\":";
+        StringBuilder sb = new StringBuilder(headData);
+        sb.append(inputString);
+        sb.append("}");
 
-            if (!jsonArray.get(i).getAsJsonObject().get("og:title").toString().isEmpty()) {
-                title = jsonArray.get(i).getAsJsonObject().get("og:title").toString();
-            } else {
-                title = "";
-            }
-            if (!jsonArray.get(i).getAsJsonObject().get("og:url").toString().isEmpty()) {
-                url = jsonArray.get(i).getAsJsonObject().get("og:url").toString();
-            } else {
-                url = "";
-            }
-            if (!jsonArray.get(i).getAsJsonObject().get("og:image").toString().isEmpty()) {
-                image = jsonArray.get(i).getAsJsonObject().get("og:image").toString();
-            } else {
-                image = "";
-            }
-            if (!jsonArray.get(i).getAsJsonObject().get("og:description").toString().isEmpty()) {
-                description = jsonArray.get(i).getAsJsonObject().get("og:description").toString();
-            } else {
-                description = "";
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArrayTopic;
+        try {
+            jsonObject = (JSONObject) jsonParser.parse(sb.toString());
+            jsonArrayTopic = (JSONArray) jsonObject.get("data");
+
+            for (int i = 1; i < jsonArrayTopic.size(); i++) {
+                String title = "", url = "", image = "", description = "";
+                JSONObject jsonObjectItem = (JSONObject) jsonArrayTopic.get(i);
+                if (jsonObjectItem.get("og:title") != null) {
+                    title = jsonObjectItem.get("og:title").toString();
+                }
+
+                if (jsonObjectItem.get("og:description") != null) {
+                    description = jsonObjectItem.get("og:description").toString();
+                }
+
+                if (jsonObjectItem.get("og:url") != null) {
+                    url = jsonObjectItem.get("og:url").toString();
+                }
+
+                if (jsonObjectItem.get("og:image") != null) {
+                    image = jsonObjectItem.get("og:image").toString();
+                }
+
+                RelatedTopicReponse relatedTopicReponseItem = new RelatedTopicReponse(image, title, url, description);
+                relatedTopicReponses.add(relatedTopicReponseItem);
             }
 
-            relatedTopicReponses.add(new RelatedTopicReponse(image, title, url, description));
+        } catch (ParseException e) {
+            System.out.println("Data null");
         }
+
         return relatedTopicReponses;
+    }
+
+    public void setSearchOvertime(String inputString) {
+        inputString = inputString.replace(SearchOvertimeRequest.class.getSimpleName(), "");
+        System.out.println("input String: " + inputString);
     }
 
 }
