@@ -13,12 +13,10 @@ import javalibrary.model.Geo;
 import javalibrary.model.reponse.SearchRegionReponse;
 import javalibrary.model.reponse.SearchRelatedReponse;
 import javalibrary.model.reponse.SearchRelatedTopicReponse;
-import javalibrary.model.request.SearchOvertimeRequest;
 import javalibrary.model.request.SearchRegionRequest;
 import javalibrary.model.request.SearchRelatedQueryRequest;
 import javalibrary.model.request.SearchRelatedTopicRequest;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 public class searchJPanel extends javax.swing.JPanel {
@@ -319,7 +317,7 @@ public class searchJPanel extends javax.swing.JPanel {
                         myClient.getSearchRelated(searchRelatedQueryRequest, new Interfaces.ISearchRelatedListener() {
                             @Override
                             public void OnGetSearchRelatedSuccess(List<SearchRelatedReponse> searchRelatedReponses) {
-                                JScrollPane jScrollPane = new JScrollPane(new searchReponsesJPanel(searchRegionReponses, searchRelatedReponses), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                                JScrollPane jScrollPane = new JScrollPane(new searchReponsesJPanel(searchRegionReponses, searchRelatedReponses), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                                 searchReponseJPanel.removeAll();
                                 searchReponseJPanel.setLayout(new BorderLayout());
                                 searchReponseJPanel.add(jScrollPane);

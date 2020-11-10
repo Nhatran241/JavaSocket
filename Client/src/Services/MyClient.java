@@ -115,43 +115,43 @@ public class MyClient {
 
     public void getGeo(IGetGeoListener i) {
         this.iGetGeoListener = i;
-        this.myClientTranceiver.send(new GeoRequestCountry());
+        this.myClientTranceiver.sendWithEncrypt(new GeoRequestCountry());
     }
 
     public void getCategory(IGetCategoryListener i) {
         this.iGetCategoryListener = i;
-        myClientTranceiver.send(new CategoriesRequest());
+        myClientTranceiver.sendWithEncrypt(new CategoriesRequest());
     }
 
     public void getSearchRegion(SearchRegionRequest searchRequest, IGetSearchRegionListener i) {
         this.keySearchs.clear();
         keySearchs.addAll(searchRequest.getSearchQuery());
         this.iGetSearchRegionListener = i;
-        myClientTranceiver.send(searchRequest);
+        myClientTranceiver.sendWithEncrypt(searchRequest);
     }
 
     public void getSearchRelated(SearchRelatedQueryRequest searchRelatedQueryRequest, ISearchRelatedListener iSearchRelatedListener) {
         this.keySearchs.clear();
         keySearchs.addAll(searchRelatedQueryRequest.getSearchQuery());
         this.iSearchRelatedListener = iSearchRelatedListener;
-        myClientTranceiver.send(searchRelatedQueryRequest);
+        myClientTranceiver.sendWithEncrypt(searchRelatedQueryRequest);
     }
 
     public void getSearchRelatedTopic(SearchRelatedTopicRequest searchRelatedTopicRequest, ISearchRelatedTopicListener i) {
         this.keySearchs.clear();
         keySearchs.addAll(searchRelatedTopicRequest.getSearchQuery());
         this.iSearchRelatedTopicListener = i;
-        myClientTranceiver.send(searchRelatedTopicRequest);
+        myClientTranceiver.sendWithEncrypt(searchRelatedTopicRequest);
     }
 
     public void getRelatedTopic(RelatedTopicRequest relatedTopicRequest, IRelatedTopicListener i) {
         this.iRelatedTopicListener = i;
-        myClientTranceiver.send(relatedTopicRequest);
+        myClientTranceiver.sendWithEncrypt(relatedTopicRequest);
     }
 
     public void getSearchOvertime(SearchOvertimeRequest searchOvertimeRequest, ISearchOvertimeListener i) {
         this.iSearchOvertimeListener = i;
-        myClientTranceiver.send(searchOvertimeRequest);
+        myClientTranceiver.sendWithEncrypt(searchOvertimeRequest);
     }
 
     public List<Geo> SetGeo(String inputString) {
@@ -208,6 +208,7 @@ public class MyClient {
             for (int j = 0; j < indexArray.size(); j++) {
 
                 String name = indexArray.get(j).toString();
+                name = name.replace("\"", "");
                 JsonArray item = (JsonArray) dataArray.get(j);
                 String total = item.get(i).toString();
 
@@ -232,6 +233,7 @@ public class MyClient {
                     JsonArray item = (JsonArray) jsonArray.get(j);
 
                     String name = item.get(0).toString();
+                    name = name.replace("\"", "");
                     String rising = item.get(1).toString();
 
                     relatedReponses.add(new RelatedReponse(name, rising));
@@ -241,6 +243,7 @@ public class MyClient {
                 for (JsonElement jsonElement : jsonArray) {
                     JsonArray item = (JsonArray) jsonElement;
                     String name = item.get(0).toString();
+                    name = name.replace("\"", "");
                     String top = item.get(1).toString();
                     for (RelatedReponse relatedReponse : relatedReponses) {
                         if (relatedReponse.getName().equalsIgnoreCase(name)) {
@@ -268,6 +271,7 @@ public class MyClient {
                 JsonArray item = (JsonArray) jsonArray.get(i);
                 String rising = item.get(0).toString();
                 String name = item.get(4).toString();
+                name = name.replace("\"", "");
                 searchRelatedTopicReponses.add(new SearchRelatedTopicReponse(name, rising));
             }
             jsonObject = (JsonObject) new JsonParser().parse(inputString).getAsJsonObject().get(keySearchs.get(0)).getAsJsonObject().get("top");
@@ -276,6 +280,7 @@ public class MyClient {
                 JsonArray item = (JsonArray) jsonArray.get(i);
                 String top = item.get(0).toString();
                 String name = item.get(5).toString();
+                name = name.replace("\"", "");
 
                 for (SearchRelatedTopicReponse searchRelatedTopicReponse : searchRelatedTopicReponses) {
                     if (searchRelatedTopicReponse.getName().equalsIgnoreCase(name)) {
