@@ -22,6 +22,7 @@ public class SecureDataManager {
             generator.init(128); // The AES key size in number of bits
             return generator.generateKey();
         } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -45,6 +46,7 @@ public class SecureDataManager {
             cipher.init(Cipher.PUBLIC_KEY, publicKey);
             return cipher.doFinal(message);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -54,6 +56,7 @@ public class SecureDataManager {
             aesCipher.init(Cipher.ENCRYPT_MODE, secretKey);
             return aesCipher.doFinal(Base64.getDecoder().decode(message));
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -65,6 +68,7 @@ public class SecureDataManager {
             System.out.println("Sau mã hóa :"+new String(bytePlainText));
             return bytePlainText;
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -74,7 +78,7 @@ public class SecureDataManager {
         try {
             Cipher aesCipher = Cipher.getInstance("AES");
             aesCipher.init(Cipher.DECRYPT_MODE, secretKey);
-            System.out.println("Trước giải mã :"+new String(data));
+//            System.out.println("Trước giải mã :"+new String(data));
             byte[] bytePlainText = aesCipher.doFinal(data);
             return new String(bytePlainText, "UTF-8");
         } catch (Exception e) {
@@ -87,6 +91,7 @@ public class SecureDataManager {
             c.init(Cipher.PRIVATE_KEY, privateKey);
             return c.doFinal(message);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -96,6 +101,7 @@ public class SecureDataManager {
             KeyFactory factory= KeyFactory.getInstance("RSA");
             return factory.generatePublic(spec);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }

@@ -22,6 +22,9 @@ public class tbSearchRelatedJPanel extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tbRelated = new javax.swing.JTable();
 
+        setBackground(new java.awt.Color(204, 255, 255));
+
+        nameJLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         nameJLabel.setText("jLabel1");
 
         tbRelated.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -92,7 +95,7 @@ public class tbSearchRelatedJPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void showdata() {
-        nameJLabel.setName(searchRelatedReponse.getColunm());
+        nameJLabel.setText(searchRelatedReponse.getColunm());
         
         DefaultTableModel relatedModel = (DefaultTableModel) tbRelated.getModel();
         Object[] row = new Object[3];
