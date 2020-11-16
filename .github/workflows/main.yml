@@ -12,5 +12,5 @@ jobs:
         with: 
           host: "${{secrets.SSH_HOST}}"
           key: "${{secrets.SSH_KEY}}"
-          script: cd /
+          script: cd /&&cd root&&cd JavaSocket&&git pull origin develop&&cd servers&&pm2 reload javasocket.sh --name=javasocket&&pm2 reload servers/pytrend-server/main.py&&echo "deploy success"
           username: "${{ secrets.SSH_USERNAME }}"
