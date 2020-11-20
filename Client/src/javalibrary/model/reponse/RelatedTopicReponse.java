@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package javalibrary.model.reponse;
 
-/**
- *
- * @author phung
- */
 public class RelatedTopicReponse {
     String image, title, url, description;
     public RelatedTopicReponse() {
@@ -54,5 +45,13 @@ public class RelatedTopicReponse {
         this.description = description;
     }
     
-    
+    @Override
+    public String toString() {
+        return "RelatedTopicReponse{" +
+                image +
+                ","+title+
+                ","+url+
+                ","+description+
+                '}';
+    }
 }

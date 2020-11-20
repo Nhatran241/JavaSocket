@@ -58,7 +58,7 @@ public class SearchOvertimeRequest extends BaseRequest{
 
     @Override
     public String toString() {
-        return "SearchRequest{" +
+        return "SearchOvertimeRequest{" +
                 "searchQuery=" + searchQuery +
                 ", geo=" + geo +
                 ", category=" + category +

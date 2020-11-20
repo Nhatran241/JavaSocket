@@ -10,9 +10,13 @@ import java.util.Date;
 import java.util.List;
 import javalibrary.model.Category;
 import javalibrary.model.Geo;
+import javalibrary.model.reponse.ListRelatedTopicReponse;
+import javalibrary.model.reponse.SearchOverTimeReponse;
 import javalibrary.model.reponse.SearchRegionReponse;
 import javalibrary.model.reponse.SearchRelatedReponse;
 import javalibrary.model.reponse.SearchRelatedTopicReponse;
+import javalibrary.model.request.RelatedTopicRequest;
+import javalibrary.model.request.SearchOvertimeRequest;
 import javalibrary.model.request.SearchRegionRequest;
 import javalibrary.model.request.SearchRelatedQueryRequest;
 import javalibrary.model.request.SearchRelatedTopicRequest;
@@ -27,6 +31,10 @@ public class searchJPanel extends javax.swing.JPanel {
     public searchJPanel() {
 
         initComponents();
+        txSearch2.setEditable(false);
+        txSearch3.setEditable(false);
+        txSearch4.setEditable(false);
+        txSearch5.setEditable(false);
 
         myClient.connect(new Interfaces.IConnectListener() {
             @Override
@@ -60,6 +68,20 @@ public class searchJPanel extends javax.swing.JPanel {
 
             @Override
             public void onDisconnect() {
+                JOptionPane.showMessageDialog(jPanel1, "Disconnect to server, try to reconnect");
+                myClient.connect(new Interfaces.IConnectListener() {
+                    @Override
+                    public void onConnectSuccess() {
+                    }
+
+                    @Override
+                    public void onConnectFailed() {
+                    }
+
+                    @Override
+                    public void onDisconnect() {
+                    }
+                });
             }
         });
         showcbDateData();
@@ -83,26 +105,71 @@ public class searchJPanel extends javax.swing.JPanel {
         btnSearch = new javax.swing.JButton();
         cbDate = new javax.swing.JComboBox<>();
 
-        jPanel1.setBackground(new java.awt.Color(204, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(247, 247, 247));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Search:");
 
         txSearch1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txSearch1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txSearch1ActionPerformed(evt);
+            }
+        });
+        txSearch1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txSearch1KeyPressed(evt);
+            }
+        });
 
         txSearch2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txSearch2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txSearch2ActionPerformed(evt);
+            }
+        });
 
         txSearch3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txSearch3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txSearch3ActionPerformed(evt);
+            }
+        });
+        txSearch3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txSearch3KeyPressed(evt);
+            }
+        });
 
         txSearch4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txSearch4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txSearch4ActionPerformed(evt);
+            }
+        });
+        txSearch4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txSearch4KeyPressed(evt);
+            }
+        });
 
         txSearch5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txSearch5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txSearch5ActionPerformed(evt);
+            }
+        });
+        txSearch5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txSearch5KeyPressed(evt);
+            }
+        });
 
         cbCategory.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         cbGeo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        searchReponseJPanel.setBackground(new java.awt.Color(255, 255, 255));
+        searchReponseJPanel.setBackground(new java.awt.Color(247, 247, 247));
 
         javax.swing.GroupLayout searchReponseJPanelLayout = new javax.swing.GroupLayout(searchReponseJPanel);
         searchReponseJPanel.setLayout(searchReponseJPanelLayout);
@@ -115,16 +182,12 @@ public class searchJPanel extends javax.swing.JPanel {
             .addGap(0, 833, Short.MAX_VALUE)
         );
 
+        btnSearch.setBackground(new java.awt.Color(255, 255, 255));
         btnSearch.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnSearch.setText("Enter search");
         btnSearch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSearchMouseClicked(evt);
-            }
-        });
-        btnSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
             }
         });
 
@@ -134,10 +197,7 @@ public class searchJPanel extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(searchReponseJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(30, 30, 30))
+            .addComponent(searchReponseJPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jLabel1)
@@ -182,12 +242,11 @@ public class searchJPanel extends javax.swing.JPanel {
                             .addComponent(cbGeo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(34, 34, 34)
-                        .addComponent(searchReponseJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(25, 25, 25))
+                        .addComponent(searchReponseJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -203,6 +262,103 @@ public class searchJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseClicked
+        BtnSearch();
+    }//GEN-LAST:event_btnSearchMouseClicked
+
+    private void txSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txSearch1ActionPerformed
+        BtnSearch();
+    }//GEN-LAST:event_txSearch1ActionPerformed
+
+    private void txSearch2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txSearch2ActionPerformed
+        BtnSearch();
+    }//GEN-LAST:event_txSearch2ActionPerformed
+
+    private void txSearch3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txSearch3ActionPerformed
+        BtnSearch();
+    }//GEN-LAST:event_txSearch3ActionPerformed
+
+    private void txSearch4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txSearch4ActionPerformed
+        BtnSearch();
+    }//GEN-LAST:event_txSearch4ActionPerformed
+
+    private void txSearch5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txSearch5ActionPerformed
+        BtnSearch();
+    }//GEN-LAST:event_txSearch5ActionPerformed
+
+    private void txSearch1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txSearch1KeyPressed
+        if (!txSearch1.getText().isEmpty()) {
+            txSearch2.setEditable(true);
+        } else {
+            txSearch2.setText("");
+            txSearch2.setEditable(false);
+        }
+    }//GEN-LAST:event_txSearch1KeyPressed
+
+    private void txSearch3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txSearch3KeyPressed
+        if (!txSearch2.getText().isEmpty()) {
+            txSearch3.setEditable(true);
+        } else {
+            txSearch3.setText("");
+            txSearch3.setEditable(false);
+        }
+    }//GEN-LAST:event_txSearch3KeyPressed
+
+    private void txSearch4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txSearch4KeyPressed
+        if (!txSearch3.getText().isEmpty()) {
+            txSearch4.setEditable(true);
+        } else {
+            txSearch4.setText("");
+            txSearch4.setEditable(false);
+        }
+    }//GEN-LAST:event_txSearch4KeyPressed
+
+    private void txSearch5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txSearch5KeyPressed
+        if (!txSearch4.getText().isEmpty()) {
+            txSearch5.setEditable(true);
+        } else {
+            txSearch5.setText("");
+            txSearch5.setEditable(false);
+        }
+    }//GEN-LAST:event_txSearch5KeyPressed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JButton btnSearch;
+    private javax.swing.JComboBox<String> cbCategory;
+    private javax.swing.JComboBox<String> cbDate;
+    private javax.swing.JComboBox<String> cbGeo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel searchReponseJPanel;
+    public static javax.swing.JTextField txSearch1;
+    public static javax.swing.JTextField txSearch2;
+    public static javax.swing.JTextField txSearch3;
+    public static javax.swing.JTextField txSearch4;
+    public static javax.swing.JTextField txSearch5;
+    // End of variables declaration//GEN-END:variables
+
+    private void showcbGeoData(List<Geo> geos) {
+        geos.forEach((geo) -> {
+            cbGeo.addItem(geo.toString());
+        });
+        cbGeo.setSelectedItem(geos.get(0));
+    }
+
+    private void showcbCatetegoryData(List<Category> categorys) {
+        categorys.forEach((category) -> {
+            cbCategory.addItem(category.toString());
+        });
+        cbCategory.setSelectedItem(categorys.get(0));
+    }
+
+    private void showcbDateData() {
+        for (String dateString : dateStrings) {
+            cbDate.addItem(dateString);
+        }
+        cbDate.setSelectedIndex(0);
+    }
+
+    public void BtnSearch() {
         String txsearch1 = this.txSearch1.getText();
         String txsearch2 = this.txSearch2.getText();
         String txsearch3 = this.txSearch3.getText();
@@ -218,6 +374,8 @@ public class searchJPanel extends javax.swing.JPanel {
         SearchRegionRequest searchRegionRequest = new SearchRegionRequest();
         SearchRelatedQueryRequest searchRelatedQueryRequest = new SearchRelatedQueryRequest();
         SearchRelatedTopicRequest searchRelatedTopicRequest = new SearchRelatedTopicRequest();
+        SearchOvertimeRequest searchOvertimeRequest = new SearchOvertimeRequest();
+        RelatedTopicRequest relatedTopicRequest = new RelatedTopicRequest();
 
         List<String> listSearchs = new ArrayList<>();
         if (!txsearch1.isEmpty()) {
@@ -239,15 +397,18 @@ public class searchJPanel extends javax.swing.JPanel {
         searchRegionRequest.setSearchQuery(listSearchs);
         searchRelatedQueryRequest.setSearchQuery(listSearchs);
         searchRelatedTopicRequest.setSearchQuery(listSearchs);
+        searchOvertimeRequest.setSearchQuery(listSearchs);
 
         searchRegionRequest.setCategory(new Category(cbcategoty));
         searchRelatedQueryRequest.setCategory(new Category(cbcategoty));
         searchRelatedTopicRequest.setCategory(new Category(cbcategoty));
+        searchOvertimeRequest.setCategory(new Category(cbcategoty));
 
         if (!cbgeo.equalsIgnoreCase("AA")) {
             searchRegionRequest.setGeo(new Geo(cbgeo));
             searchRelatedQueryRequest.setGeo(new Geo(cbgeo));
             searchRelatedTopicRequest.setGeo(new Geo(cbgeo));
+            searchOvertimeRequest.setGeo(new Geo(cbgeo));
         }
 
         Calendar c = Calendar.getInstance();
@@ -273,25 +434,49 @@ public class searchJPanel extends javax.swing.JPanel {
         searchRegionRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
         searchRelatedQueryRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
         searchRelatedTopicRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+        searchOvertimeRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
 
         if (!txsearch1.isEmpty()) {
             if (txsearch2.isEmpty() && txsearch3.isEmpty() && txsearch4.isEmpty() && txsearch5.isEmpty()) {
                 myClient.getSearchRegion(searchRegionRequest, new Interfaces.IGetSearchRegionListener() {
                     @Override
                     public void OnGetSearchRegionSuccess(List<SearchRegionReponse> searchRegionReponses) {
-                        System.out.println("searchRelatedQueryRequest: " + searchRelatedQueryRequest.toString());
                         myClient.getSearchRelated(searchRelatedQueryRequest, new Interfaces.ISearchRelatedListener() {
                             @Override
                             public void OnGetSearchRelatedSuccess(List<SearchRelatedReponse> searchRelatedReponses) {
-                                System.out.println("searchRelatedTopicRequest: " + searchRelatedTopicRequest.toString());
                                 myClient.getSearchRelatedTopic(searchRelatedTopicRequest, new Interfaces.ISearchRelatedTopicListener() {
                                     @Override
                                     public void OnGetSearchRelatedTopicSuccess(List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
-                                        searchReponseJPanel.removeAll();
-                                        searchReponseJPanel.setLayout(new BorderLayout());
-                                        searchReponseJPanel.add(new searchOneKeyJPanel(searchRegionReponses, searchRelatedReponses, searchRelatedTopicReponses));
-                                        searchReponseJPanel.validate();
-                                        searchReponseJPanel.repaint();
+                                        myClient.getSearchOvertime(searchOvertimeRequest, new Interfaces.ISearchOvertimeListener() {
+                                            @Override
+                                            public void OnGetSearchOvertimeSuccess(SearchOverTimeReponse searchOverTimeReponse) {
+                                                relatedTopicRequest.setRelatedTopicQuery(txsearch1);
+                                                myClient.getRelatedTopic(relatedTopicRequest, new Interfaces.IRelatedTopicListener() {
+                                                    @Override
+                                                    public void OnGetRelatedTopicSuccess(ListRelatedTopicReponse listRelatedTopicReponse) {
+                                                        if (!searchRelatedReponses.isEmpty() && !searchRelatedTopicReponses.isEmpty()) {
+                                                            JScrollPane jScrollPane = new JScrollPane(new searchOneKeyJPanel(listRelatedTopicReponse, searchOverTimeReponse, searchRegionReponses, searchRelatedReponses, searchRelatedTopicReponses), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                                                            searchReponseJPanel.removeAll();
+                                                            searchReponseJPanel.setLayout(new BorderLayout());
+                                                            searchReponseJPanel.add(jScrollPane);
+                                                            searchReponseJPanel.validate();
+                                                            searchReponseJPanel.repaint();
+                                                        } else {
+                                                            JOptionPane.showMessageDialog(jPanel1, "Search results are empty");
+                                                        }
+
+                                                    }
+
+                                                    @Override
+                                                    public void OnGetRelatedTopicFailed() {
+                                                    }
+                                                });
+                                            }
+
+                                            @Override
+                                            public void OnGetSearchOvertimeFailed() {
+                                            }
+                                        });
                                     }
 
                                     @Override
@@ -317,12 +502,34 @@ public class searchJPanel extends javax.swing.JPanel {
                         myClient.getSearchRelated(searchRelatedQueryRequest, new Interfaces.ISearchRelatedListener() {
                             @Override
                             public void OnGetSearchRelatedSuccess(List<SearchRelatedReponse> searchRelatedReponses) {
-                                JScrollPane jScrollPane = new JScrollPane(new searchReponsesJPanel(searchRegionReponses, searchRelatedReponses), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-                                searchReponseJPanel.removeAll();
-                                searchReponseJPanel.setLayout(new BorderLayout());
-                                searchReponseJPanel.add(jScrollPane);
-                                searchReponseJPanel.validate();
-                                searchReponseJPanel.repaint();
+                                myClient.getSearchOvertime(searchOvertimeRequest, new Interfaces.ISearchOvertimeListener() {
+                                    @Override
+                                    public void OnGetSearchOvertimeSuccess(SearchOverTimeReponse searchOverTimeReponse) {
+                                        Boolean flag = false;
+                                        for (int i = 0; i < searchRelatedReponses.size(); i++) {
+                                            SearchRelatedReponse searchRelatedReponse = searchRelatedReponses.get(i);
+                                            if (!searchRelatedReponse.getRelatedReponses().isEmpty()) {
+                                                flag = true;
+                                                break;
+                                            }
+                                        }
+                                        
+                                        if (flag) {
+                                            JScrollPane jScrollPane = new JScrollPane(new searchReponsesJPanel(searchOverTimeReponse, searchRegionReponses, searchRelatedReponses), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                                            searchReponseJPanel.removeAll();
+                                            searchReponseJPanel.setLayout(new BorderLayout());
+                                            searchReponseJPanel.add(jScrollPane);
+                                            searchReponseJPanel.validate();
+                                            searchReponseJPanel.repaint();
+                                        } else {
+                                            JOptionPane.showMessageDialog(jPanel1, "Search results are empty");
+                                        }
+                                    }
+
+                                    @Override
+                                    public void OnGetSearchOvertimeFailed() {
+                                    }
+                                });
                             }
 
                             @Override
@@ -339,46 +546,5 @@ public class searchJPanel extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(jPanel1, "You have not entered keywords");
         }
-    }//GEN-LAST:event_btnSearchMouseClicked
-
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSearchActionPerformed
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSearch;
-    private javax.swing.JComboBox<String> cbCategory;
-    private javax.swing.JComboBox<String> cbDate;
-    private javax.swing.JComboBox<String> cbGeo;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel searchReponseJPanel;
-    private javax.swing.JTextField txSearch1;
-    private javax.swing.JTextField txSearch2;
-    private javax.swing.JTextField txSearch3;
-    private javax.swing.JTextField txSearch4;
-    private javax.swing.JTextField txSearch5;
-    // End of variables declaration//GEN-END:variables
-
-    private void showcbGeoData(List<Geo> geos) {
-        geos.forEach((geo) -> {
-            cbGeo.addItem(geo.toString());
-        });
-        cbGeo.setSelectedItem(geos.get(0));
-    }
-
-    private void showcbCatetegoryData(List<Category> categorys) {
-        categorys.forEach((category) -> {
-            cbCategory.addItem(category.toString());
-        });
-        cbCategory.setSelectedItem(categorys.get(0));
-    }
-
-    private void showcbDateData() {
-        for (String dateString : dateStrings) {
-            cbDate.addItem(dateString);
-        }
-        cbDate.setSelectedIndex(0);
     }
 }

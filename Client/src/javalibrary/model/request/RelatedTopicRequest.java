@@ -18,6 +18,11 @@ public class RelatedTopicRequest extends BaseRequest {
         this.relatedTopicQuery = relatedTopicQuery;
     }
 
+    public RelatedTopicRequest(String relatedTopicQuery, int pageNumber) {
+        this.relatedTopicQuery = relatedTopicQuery;
+        this.pageNumber = pageNumber;
+    }
+
     @Override
     public String setRequestType() {
         return this.getClass().getSimpleName();

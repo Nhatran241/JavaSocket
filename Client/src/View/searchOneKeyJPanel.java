@@ -1,9 +1,12 @@
 package View;
 
+import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
+import javalibrary.model.reponse.ListRelatedTopicReponse;
 import javalibrary.model.reponse.RegionReponse;
 import javalibrary.model.reponse.RelatedReponse;
+import javalibrary.model.reponse.SearchOverTimeReponse;
 import javalibrary.model.reponse.SearchRegionReponse;
 import javalibrary.model.reponse.SearchRelatedReponse;
 import javalibrary.model.reponse.SearchRelatedTopicReponse;
@@ -14,13 +17,19 @@ public class searchOneKeyJPanel extends javax.swing.JPanel {
     List<SearchRegionReponse> searchRegionReponses = new ArrayList<>();
     List<SearchRelatedReponse> searchRelatedReponses = new ArrayList<>();
     List<SearchRelatedTopicReponse> searchRelatedTopicReponses = new ArrayList<>();
+    SearchOverTimeReponse searchOverTimeReponse = new SearchOverTimeReponse();
+    ListRelatedTopicReponse listRelatedTopicReponse = new ListRelatedTopicReponse();
 
-    public searchOneKeyJPanel(List<SearchRegionReponse> searchRegionReponses, List<SearchRelatedReponse> searchRelatedReponses, List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
+    public searchOneKeyJPanel(ListRelatedTopicReponse listRelatedTopicReponse, SearchOverTimeReponse searchOverTimeReponse, List<SearchRegionReponse> searchRegionReponses, List<SearchRelatedReponse> searchRelatedReponses, List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
         initComponents();
         this.searchRegionReponses = searchRegionReponses;
         this.searchRelatedReponses = searchRelatedReponses;
         this.searchRelatedTopicReponses = searchRelatedTopicReponses;
+        this.searchOverTimeReponse = searchOverTimeReponse;
+        this.listRelatedTopicReponse = listRelatedTopicReponse;
         showData();
+        showGraph();
+        showRelatedTopic();
     }
 
     @SuppressWarnings("unchecked")
@@ -33,9 +42,10 @@ public class searchOneKeyJPanel extends javax.swing.JPanel {
         tbRelated = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbRegion = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
+        graphPanel = new javax.swing.JPanel();
+        relatedTopicPanel = new javax.swing.JPanel();
 
-        setBackground(new java.awt.Color(204, 255, 255));
+        setBackground(new java.awt.Color(247, 247, 247));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         tbRelatedTopic.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -66,6 +76,11 @@ public class searchOneKeyJPanel extends javax.swing.JPanel {
         tbRelatedTopic.setRowSelectionAllowed(false);
         tbRelatedTopic.setShowHorizontalLines(false);
         tbRelatedTopic.setShowVerticalLines(false);
+        tbRelatedTopic.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbRelatedTopicMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbRelatedTopic);
         if (tbRelatedTopic.getColumnModel().getColumnCount() > 0) {
             tbRelatedTopic.getColumnModel().getColumn(1).setMinWidth(80);
@@ -149,55 +164,83 @@ public class searchOneKeyJPanel extends javax.swing.JPanel {
             tbRegion.getColumnModel().getColumn(1).setMaxWidth(140);
         }
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        graphPanel.setBackground(new java.awt.Color(247, 247, 247));
+
+        javax.swing.GroupLayout graphPanelLayout = new javax.swing.GroupLayout(graphPanel);
+        graphPanel.setLayout(graphPanelLayout);
+        graphPanelLayout.setHorizontalGroup(
+            graphPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        graphPanelLayout.setVerticalGroup(
+            graphPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 453, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout relatedTopicPanelLayout = new javax.swing.GroupLayout(relatedTopicPanel);
+        relatedTopicPanel.setLayout(relatedTopicPanelLayout);
+        relatedTopicPanelLayout.setHorizontalGroup(
+            relatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
+        );
+        relatedTopicPanelLayout.setVerticalGroup(
+            relatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 409, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)))
-                .addGap(50, 50, 50))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(relatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(graphPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+                        .addGap(40, 40, 40)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+                        .addGap(40, 40, 40)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)))
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(50, 50, 50))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(graphPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(40, 40, 40)
+                .addComponent(relatedTopicPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tbRelatedTopicMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbRelatedTopicMouseClicked
+        int row = tbRelatedTopic.rowAtPoint(evt.getPoint());
+        int col = tbRelatedTopic.columnAtPoint(evt.getPoint());
+        String key = tbRelatedTopic.getValueAt(row, col).toString();
+        searchJPanel.txSearch1.setText(key);
+        searchJPanel.txSearch3.setText("");
+        searchJPanel.txSearch4.setText("");
+        searchJPanel.txSearch2.setText("");
+        searchJPanel.txSearch5.setText("");
+//        searchJPanel.BtnSearch();
+    }//GEN-LAST:event_tbRelatedTopicMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel graphPanel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JPanel relatedTopicPanel;
     private javax.swing.JTable tbRegion;
     private javax.swing.JTable tbRelated;
     private javax.swing.JTable tbRelatedTopic;
@@ -227,5 +270,26 @@ public class searchOneKeyJPanel extends javax.swing.JPanel {
             row[2] = object.getTop();
             regionTopicModel.addRow(row);
         }
+    }
+
+    private void showGraph() {
+        List<String> keySearchs = new ArrayList<>();
+        for (int i = 0; i < searchRelatedReponses.size(); i++) {
+            keySearchs.add(searchRelatedReponses.get(i).getColunm());
+
+        }
+        graphPanel.removeAll();
+        graphPanel.setLayout(new BorderLayout());
+        graphPanel.add(new lineGraph(keySearchs, searchOverTimeReponse));
+        graphPanel.validate();
+        graphPanel.repaint();
+    }
+
+    private void showRelatedTopic() {
+        relatedTopicPanel.removeAll();
+        relatedTopicPanel.setLayout(new BorderLayout());
+        relatedTopicPanel.add(new listRelatedTopicJPanel(listRelatedTopicReponse.getRelatedTopicReponses(), listRelatedTopicReponse.getColumn()));
+        relatedTopicPanel.validate();
+        relatedTopicPanel.repaint();
     }
 }
