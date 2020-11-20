@@ -1,9 +1,18 @@
 package View;
 
+import java.awt.Desktop;
+import java.awt.Image;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import javalibrary.model.reponse.RelatedTopicReponse;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 public class RelatedTopicJPanel extends javax.swing.JPanel {
+
     RelatedTopicReponse relatedTopicReponse = new RelatedTopicReponse();
+
     public RelatedTopicJPanel(RelatedTopicReponse relatedTopicReponse) {
         initComponents();
         this.relatedTopicReponse = relatedTopicReponse;
@@ -15,12 +24,17 @@ public class RelatedTopicJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        imgJLabel = new javax.swing.JLabel();
         titleJLabel = new javax.swing.JLabel();
         descriptionJLabel = new javax.swing.JLabel();
+        imgJLabel = new javax.swing.JLabel();
 
         titleJLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         titleJLabel.setText("jLabel1");
+        titleJLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                titleJLabelMouseClicked(evt);
+            }
+        });
 
         descriptionJLabel.setText("jLabel2");
 
@@ -29,7 +43,7 @@ public class RelatedTopicJPanel extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(imgJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(imgJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(titleJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
@@ -38,13 +52,13 @@ public class RelatedTopicJPanel extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(imgJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(titleJLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(descriptionJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                .addComponent(descriptionJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addComponent(imgJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -55,9 +69,17 @@ public class RelatedTopicJPanel extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void titleJLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titleJLabelMouseClicked
+        try {
+            Desktop.getDesktop().browse(new URL(relatedTopicReponse.getUrl()).toURI());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_titleJLabelMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -68,6 +90,16 @@ public class RelatedTopicJPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void showData() {
+        try {
+            URL url = new URL(relatedTopicReponse.getImage());
+            Image image = ImageIO.read(url);
+            imgJLabel.setIcon(new ImageIcon(image));
+        } catch (MalformedURLException ex) {
+            System.out.println(ex);
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+        
         titleJLabel.setText(relatedTopicReponse.getTitle());
         descriptionJLabel.setText(relatedTopicReponse.getDescription());
     }

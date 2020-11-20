@@ -55,6 +55,11 @@ public class tbSearchRelatedJPanel extends javax.swing.JPanel {
         tbRelated.setRowSelectionAllowed(false);
         tbRelated.setShowHorizontalLines(false);
         tbRelated.setShowVerticalLines(false);
+        tbRelated.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbRelatedMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tbRelated);
         if (tbRelated.getColumnModel().getColumnCount() > 0) {
             tbRelated.getColumnModel().getColumn(1).setMinWidth(100);
@@ -86,6 +91,18 @@ public class tbSearchRelatedJPanel extends javax.swing.JPanel {
                 .addGap(15, 15, 15))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tbRelatedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbRelatedMouseClicked
+        int row = tbRelated.rowAtPoint(evt.getPoint());
+        int col = tbRelated.columnAtPoint(evt.getPoint());
+        String key = tbRelated.getValueAt(row, col).toString();
+        searchJPanel.txSearch1.setText(key);
+        searchJPanel.txSearch3.setText("");
+        searchJPanel.txSearch4.setText("");
+        searchJPanel.txSearch2.setText("");
+        searchJPanel.txSearch5.setText("");
+        searchJPanel.btnSearch.doClick();
+    }//GEN-LAST:event_tbRelatedMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
