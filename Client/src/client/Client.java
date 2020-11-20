@@ -16,7 +16,6 @@ public class Client {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainJFrame().setVisible(true);
-                
             }
         });
     }

@@ -1,8 +1,6 @@
 package View.controller;
 
-import View.TrendsOfDayJPanel;
 import View.bean.MenuBean;
-import View.homeJPanel;
 import View.searchJPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -24,13 +22,13 @@ public class TransferView {
     }
 
     public void setView(JPanel jPanelItem, JLabel jLabelItem) {
-        kindSelected = "home";
+        kindSelected = "search";
         jPanelItem.setBackground(new Color(0, 0, 204));
         jLabelItem.setBackground(new Color(0, 0, 204));
 
         jPanelRoot.removeAll();
         jPanelRoot.setLayout(new BorderLayout());
-        jPanelRoot.add(new homeJPanel());
+        jPanelRoot.add(new searchJPanel());
         jPanelRoot.validate();
         jPanelRoot.repaint();
     }
@@ -58,14 +56,8 @@ public class TransferView {
         @Override
         public void mouseClicked(MouseEvent e) {
             switch (kind) {
-                case "home":
-                    nodeJPanel = new homeJPanel();
-                    break;
                 case "search":
                     nodeJPanel = new searchJPanel();
-                    break;
-                case "trendsday":
-                    nodeJPanel = new TrendsOfDayJPanel();
                     break;
                 default:
                     break;
@@ -98,8 +90,8 @@ public class TransferView {
         @Override
         public void mouseExited(MouseEvent e) {
             if (!kindSelected.equalsIgnoreCase(kind)) {
-                itemJPanel.setBackground(new Color(102, 102, 255));
-                itemJLabel.setBackground(new Color(102, 102, 255));
+                itemJPanel.setBackground(new Color(66,133,244));
+                itemJLabel.setBackground(new Color(66,133,244));
             }
         }
 
@@ -111,8 +103,8 @@ public class TransferView {
                 item.getjPanel().setBackground(new Color(0, 0, 204));
                 item.getjLabel().setBackground(new Color(0, 0, 204));
             } else {
-                item.getjPanel().setBackground(new Color(102, 102, 255));
-                item.getjLabel().setBackground(new Color(102, 102, 255));
+                item.getjPanel().setBackground(new Color(66,133,244));
+                item.getjLabel().setBackground(new Color(66,133,244));
             }
         });
     }

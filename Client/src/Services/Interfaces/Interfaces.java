@@ -3,9 +3,11 @@ package Services.Interfaces;
 import java.util.List;
 import javalibrary.model.Category;
 import javalibrary.model.Geo;
+import javalibrary.model.reponse.ListRelatedTopicReponse;
 import javalibrary.model.reponse.SearchRegionReponse;
 import javalibrary.model.reponse.SearchRelatedReponse;
 import javalibrary.model.reponse.RelatedTopicReponse;
+import javalibrary.model.reponse.SearchOverTimeReponse;
 import javalibrary.model.reponse.SearchRelatedTopicReponse;
 
 public class Interfaces {
@@ -56,13 +58,13 @@ public class Interfaces {
     
     public interface IRelatedTopicListener {
         
-        void OnGetRelatedTopicSuccess(List<RelatedTopicReponse> relatedTopicReponses);
+        void OnGetRelatedTopicSuccess(ListRelatedTopicReponse listRelatedTopicReponse);
         
         void OnGetRelatedTopicFailed();
     }
     
     public interface ISearchOvertimeListener {
-        void OnGetSearchOvertimeSuccess();
+        void OnGetSearchOvertimeSuccess(SearchOverTimeReponse searchOverTimeReponse);
         
         void OnGetSearchOvertimeFailed();
     }

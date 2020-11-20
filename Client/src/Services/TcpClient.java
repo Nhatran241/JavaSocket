@@ -27,10 +27,6 @@ public abstract class TcpClient implements Runnable {
 				public void onReceive(InetAddress addr, byte[] data) {
 					if(secretKey==null){
 						try {
-							/**
-							 * Mã hóa Secretkey bằng Privatekey
-							 */
-//							System.out.println("nhân Secretkey");
 							byte[] decryptedKey = SecureDataManager.getInstance().DecrpytMessage(data, localKeyPair.getPrivate());
 							secretKey = SecureDataManager.getInstance().createSecretKeyFromBytes(decryptedKey);
 							onConnect(this);
@@ -70,7 +66,6 @@ public abstract class TcpClient implements Runnable {
 			transceiver = null;
 		}
 	}
-
 
 	public boolean isConnected() {
 		return connect;
