@@ -15,7 +15,7 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
     List<SearchRelatedReponse> searchRelatedReponses = new ArrayList<>();
     SearchOverTimeReponse searchOverTimeReponse = new SearchOverTimeReponse();
 
-    public searchReponsesJPanel(SearchOverTimeReponse searchOverTimeReponse , List<SearchRegionReponse> searchRegionReponses, List<SearchRelatedReponse> searchRelatedReponses) {
+    public searchReponsesJPanel(SearchOverTimeReponse searchOverTimeReponse, List<SearchRegionReponse> searchRegionReponses, List<SearchRelatedReponse> searchRelatedReponses) {
         initComponents();
         this.searchRegionReponses = searchRegionReponses;
         this.searchRelatedReponses = searchRelatedReponses;
@@ -175,7 +175,7 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
             regionModel.addRow(row);
         }
     }
-    
+
     private void showGraph() {
         List<String> keySearchs = new ArrayList<>();
         for (int i = 0; i < searchRelatedReponses.size(); i++) {
@@ -183,7 +183,7 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         }
         graphJPanel.removeAll();
         graphJPanel.setLayout(new BorderLayout());
-        graphJPanel.add(new lineGraph(keySearchs,searchOverTimeReponse));
+        graphJPanel.add(new lineGraph(keySearchs, searchOverTimeReponse));
         graphJPanel.validate();
         graphJPanel.repaint();
     }

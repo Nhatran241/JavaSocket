@@ -29,8 +29,8 @@ public class searchJPanel extends javax.swing.JPanel {
     String[] dateStrings = {"The past 12 months", "Hours passed", "Last 4 hours", "Last day", "Last 7 days", "30 days", "90 days", "The past 5 years"};
 
     public searchJPanel() {
-
         initComponents();
+        
         txSearch2.setEditable(false);
         txSearch3.setEditable(false);
         txSearch4.setEditable(false);
@@ -44,20 +44,21 @@ public class searchJPanel extends javax.swing.JPanel {
                     @Override
                     public void onGetCategorySuccess(List<Category> categorys) {
                         showcbCatetegoryData(categorys);
+                        myClient.getGeo(new Interfaces.IGetGeoListener() {
+                            @Override
+                            public void onGetGeoSuccess(List<Geo> geo) {
+                                showcbGeoData(geo);
+                                
+                            }
+
+                            @Override
+                            public void onGetGeoFailed() {
+                            }
+                        });
                     }
 
                     @Override
                     public void onGetCategoryFailed() {
-                    }
-                });
-                myClient.getGeo(new Interfaces.IGetGeoListener() {
-                    @Override
-                    public void onGetGeoSuccess(List<Geo> geo) {
-                        showcbGeoData(geo);
-                    }
-
-                    @Override
-                    public void onGetGeoFailed() {
                     }
                 });
             }
@@ -85,7 +86,6 @@ public class searchJPanel extends javax.swing.JPanel {
             }
         });
         showcbDateData();
-
     }
 
     @SuppressWarnings("unchecked")
@@ -188,6 +188,11 @@ public class searchJPanel extends javax.swing.JPanel {
         btnSearch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSearchMouseClicked(evt);
+            }
+        });
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
             }
         });
 
@@ -320,6 +325,10 @@ public class searchJPanel extends javax.swing.JPanel {
             txSearch5.setEditable(false);
         }
     }//GEN-LAST:event_txSearch5KeyPressed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        BtnSearch();
+    }//GEN-LAST:event_btnSearchActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -513,7 +522,7 @@ public class searchJPanel extends javax.swing.JPanel {
                                                 break;
                                             }
                                         }
-                                        
+
                                         if (flag) {
                                             JScrollPane jScrollPane = new JScrollPane(new searchReponsesJPanel(searchOverTimeReponse, searchRegionReponses, searchRelatedReponses), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                                             searchReponseJPanel.removeAll();

@@ -30,6 +30,7 @@ public class searchOneKeyJPanel extends javax.swing.JPanel {
         showData();
         showGraph();
         showRelatedTopic();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -119,6 +120,11 @@ public class searchOneKeyJPanel extends javax.swing.JPanel {
         tbRelated.setRowSelectionAllowed(false);
         tbRelated.setShowHorizontalLines(false);
         tbRelated.setShowVerticalLines(false);
+        tbRelated.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbRelatedMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tbRelated);
         if (tbRelated.getColumnModel().getColumnCount() > 0) {
             tbRelated.getColumnModel().getColumn(1).setMinWidth(80);
@@ -231,8 +237,20 @@ public class searchOneKeyJPanel extends javax.swing.JPanel {
         searchJPanel.txSearch4.setText("");
         searchJPanel.txSearch2.setText("");
         searchJPanel.txSearch5.setText("");
-//        searchJPanel.BtnSearch();
+        searchJPanel.btnSearch.doClick();
     }//GEN-LAST:event_tbRelatedTopicMouseClicked
+
+    private void tbRelatedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbRelatedMouseClicked
+        int row = tbRelatedTopic.rowAtPoint(evt.getPoint());
+        int col = tbRelatedTopic.columnAtPoint(evt.getPoint());
+        String key = tbRelatedTopic.getValueAt(row, col).toString();
+        searchJPanel.txSearch1.setText(key);
+        searchJPanel.txSearch3.setText("");
+        searchJPanel.txSearch4.setText("");
+        searchJPanel.txSearch2.setText("");
+        searchJPanel.txSearch5.setText("");
+        searchJPanel.btnSearch.doClick();
+    }//GEN-LAST:event_tbRelatedMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
