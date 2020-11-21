@@ -56,8 +56,8 @@ public class RelatedTopicJPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(titleJLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(descriptionJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(descriptionJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(imgJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
@@ -65,11 +65,11 @@ public class RelatedTopicJPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -90,15 +90,15 @@ public class RelatedTopicJPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void showData() {
-        try {
-            URL url = new URL(relatedTopicReponse.getImage());
-            Image image = ImageIO.read(url);
-            imgJLabel.setIcon(new ImageIcon(image));
-        } catch (MalformedURLException ex) {
-            System.out.println(ex);
-        } catch (IOException ex) {
-            System.out.println(ex);
-        }
+//        try {
+//            URL url = new URL(relatedTopicReponse.getImage());
+//            Image image = ImageIO.read(url);
+//            imgJLabel.setIcon(new ImageIcon(image));
+//        } catch (MalformedURLException ex) {
+//            System.out.println(ex);
+//        } catch (IOException ex) {
+//            System.out.println(ex);
+//        }
         
         titleJLabel.setText(relatedTopicReponse.getTitle());
         descriptionJLabel.setText(relatedTopicReponse.getDescription());
