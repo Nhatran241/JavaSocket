@@ -210,6 +210,9 @@
               <Color blue="f7" green="f7" red="f7" type="rgb"/>
             </Property>
           </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
+          </AccessibilityProperties>
 
           <Layout>
             <DimensionLayout dim="0">
