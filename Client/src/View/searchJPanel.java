@@ -20,6 +20,9 @@ import javalibrary.model.request.SearchOvertimeRequest;
 import javalibrary.model.request.SearchRegionRequest;
 import javalibrary.model.request.SearchRelatedQueryRequest;
 import javalibrary.model.request.SearchRelatedTopicRequest;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
@@ -27,10 +30,11 @@ public class searchJPanel extends javax.swing.JPanel {
 
     MyClient myClient = MyClient.getInstance();
     String[] dateStrings = {"The past 12 months", "Hours passed", "Last 4 hours", "Last day", "Last 7 days", "30 days", "90 days", "The past 5 years"};
+    JLabel label;
 
     public searchJPanel() {
         initComponents();
-        
+        initLoadingPanel();
         txSearch2.setEditable(false);
         txSearch3.setEditable(false);
         txSearch4.setEditable(false);
@@ -43,12 +47,13 @@ public class searchJPanel extends javax.swing.JPanel {
                 myClient.getCategory(new Interfaces.IGetCategoryListener() {
                     @Override
                     public void onGetCategorySuccess(List<Category> categorys) {
+                        closeLoadingImage();
                         showcbCatetegoryData(categorys);
                         myClient.getGeo(new Interfaces.IGetGeoListener() {
                             @Override
                             public void onGetGeoSuccess(List<Geo> geo) {
                                 showcbGeoData(geo);
-                                
+
                             }
 
                             @Override
@@ -59,6 +64,7 @@ public class searchJPanel extends javax.swing.JPanel {
 
                     @Override
                     public void onGetCategoryFailed() {
+                    closeLoadingImage();
                     }
                 });
             }
@@ -86,6 +92,25 @@ public class searchJPanel extends javax.swing.JPanel {
             }
         });
         showcbDateData();
+    }
+
+    public void showLoadingImage() {
+        searchReponseJPanel.removeAll();
+        searchReponseJPanel.repaint();
+        searchReponseJPanel.add(label, BorderLayout.CENTER);
+
+    }
+
+    public void closeLoadingImage() {
+        searchReponseJPanel.remove(label);
+    }
+
+    private void initLoadingPanel() {
+        Icon loadingImage = new ImageIcon(this.getClass().getResource("../image/goodLoading.gif"));
+        
+        label = new JLabel(loadingImage);
+        label.setSize(200, 200);
+        label.setLocation(600, 200);
     }
 
     @SuppressWarnings("unchecked")
@@ -254,6 +279,8 @@ public class searchJPanel extends javax.swing.JPanel {
                         .addContainerGap())))
         );
 
+        searchReponseJPanel.getAccessibleContext().setAccessibleDescription("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -327,6 +354,7 @@ public class searchJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txSearch5KeyPressed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        showLoadingImage();
         BtnSearch();
     }//GEN-LAST:event_btnSearchActionPerformed
 
@@ -368,6 +396,7 @@ public class searchJPanel extends javax.swing.JPanel {
     }
 
     public void BtnSearch() {
+
         String txsearch1 = this.txSearch1.getText();
         String txsearch2 = this.txSearch2.getText();
         String txsearch3 = this.txSearch3.getText();
@@ -450,6 +479,7 @@ public class searchJPanel extends javax.swing.JPanel {
                 myClient.getSearchRegion(searchRegionRequest, new Interfaces.IGetSearchRegionListener() {
                     @Override
                     public void OnGetSearchRegionSuccess(List<SearchRegionReponse> searchRegionReponses) {
+//                        closeLoadingImage();
                         myClient.getSearchRelated(searchRelatedQueryRequest, new Interfaces.ISearchRelatedListener() {
                             @Override
                             public void OnGetSearchRelatedSuccess(List<SearchRelatedReponse> searchRelatedReponses) {
