@@ -14,6 +14,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonSyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javalibrary.SocketTransceiver;
 import javalibrary.model.Category;
 import javalibrary.model.Geo;
@@ -322,49 +324,29 @@ public class MyClient {
         return searchRelatedTopicReponses;
     }
 
-    public ListRelatedTopicReponse SetRelatedTopic(String inputString) {
+    public List<RelatedTopicReponse> SetRelatedTopic(String inputString) {
         List<RelatedTopicReponse> relatedTopicReponses = new ArrayList<>();
         inputString = inputString.replace(RelatedTopicRequest.class.getSimpleName(), "");
-        String headData = "{\"data\":";
-        StringBuilder sb = new StringBuilder(headData);
-        sb.append(inputString);
-        sb.append("}");
-
-        JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = new JSONObject();
-        JSONArray jsonArrayTopic;
+        JSONParser jSONParser = new JSONParser();
+        
         try {
-            jsonObject = (JSONObject) jsonParser.parse(sb.toString());
-            jsonArrayTopic = (JSONArray) jsonObject.get("data");
-
-            for (int i = 1; i < jsonArrayTopic.size(); i++) {
-                String title = "", url = "", image = "", description = "";
-                JSONObject jsonObjectItem = (JSONObject) jsonArrayTopic.get(i);
-                if (jsonObjectItem.get("og:title") != null) {
-                    title = jsonObjectItem.get("og:title").toString();
+            JSONArray jSONArray = (JSONArray) jSONParser.parse(inputString);
+            for(int i=0; i<jSONArray.size();i++){
+                JSONObject jSONObject = (JSONObject) jSONArray.get(i);
+                if(jSONObject.get("og:title")!=null&&jSONObject.get("og:url")!=null){
+                    RelatedTopicReponse relatedTopicReponse = new RelatedTopicReponse();
+                    relatedTopicReponse.setTitle(jSONObject.get("og:title").toString());
+                    relatedTopicReponse.setUrl(jSONObject.get("og:url").toString());
+                    relatedTopicReponse.setDescription(jSONObject.get("og:description")!=null?jSONObject.get("og:description").toString():"");
+                    relatedTopicReponse.setImage(jSONObject.get(":og:image")!=null?jSONObject.get(":og:image").toString():"");
+                    relatedTopicReponses.add(relatedTopicReponse);
                 }
-
-                if (jsonObjectItem.get("og:description") != null) {
-                    description = jsonObjectItem.get("og:description").toString();
-                }
-
-                if (jsonObjectItem.get("og:url") != null) {
-                    url = jsonObjectItem.get("og:url").toString();
-                }
-
-                if (jsonObjectItem.get("og:image") != null) {
-                    image = jsonObjectItem.get("og:image").toString();
-                }
-
-                RelatedTopicReponse relatedTopicReponseItem = new RelatedTopicReponse(image, title, url, description);
-                relatedTopicReponses.add(relatedTopicReponseItem);
             }
-
-        } catch (ParseException e) {
-            System.out.println(e);
+        } catch (ParseException ex) {
+            Logger.getLogger(MyClient.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        return (new ListRelatedTopicReponse(relatedTopicReponses, keySearchs.get(0)));
+        
+        return relatedTopicReponses;
     }
 
     public SearchOverTimeReponse setSearchOvertime(String inputString) {

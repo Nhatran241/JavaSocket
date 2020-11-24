@@ -10,8 +10,9 @@ import Services.MyClient;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
-import javalibrary.model.reponse.SearchOverTimeReponse;
-import javalibrary.model.request.SearchOvertimeRequest;
+import javalibrary.model.reponse.ListRelatedTopicReponse;
+import javalibrary.model.reponse.RelatedTopicReponse;
+import javalibrary.model.request.RelatedTopicRequest;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -20,33 +21,29 @@ import javax.swing.JLabel;
  *
  * @author trann
  */
-public class SearchOverTimePanel extends javax.swing.JPanel {
+public class RelatedTopicPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form SearchOverTimePanel
      */
     JLabel loading;
-    public SearchOverTimePanel() {
+    public RelatedTopicPanel() {
         initComponents();
         initUI();
     }
-    public void loadData(SearchOvertimeRequest searchOvertimeRequest){
+    public void loadData(RelatedTopicRequest relatedTopicRequest){
         showLoading();
-        MyClient.getInstance().getSearchOvertime(searchOvertimeRequest, new Interfaces.ISearchOvertimeListener() {
+        MyClient.getInstance().getRelatedTopic(relatedTopicRequest,new Interfaces.IRelatedTopicListener() {
             @Override
-            public void OnGetSearchOvertimeSuccess(SearchOverTimeReponse searchOverTimeReponse) {
-                initData(searchOvertimeRequest,searchOverTimeReponse);
-                dismisLoading();
-
-
-            }
+            public void OnGetRelatedTopicSuccess(List<RelatedTopicReponse> listRelatedTopicReponse) {
+                initData(listRelatedTopicReponse);
+                dismisLoading(); }
 
             @Override
-            public void OnGetSearchOvertimeFailed() {
-                dismisLoading();
+            public void OnGetRelatedTopicFailed() {
+            dismisLoading();
                 showTryAgain();
-                
-            }
+          }
         });
     }
 
@@ -59,69 +56,51 @@ public class SearchOverTimePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        graphPanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
 
         setBackground(new java.awt.Color(153, 255, 51));
 
-        graphPanel.setBackground(new java.awt.Color(153, 0, 153));
-        graphPanel.setPreferredSize(new java.awt.Dimension(1000, 500));
-
-        javax.swing.GroupLayout graphPanelLayout = new javax.swing.GroupLayout(graphPanel);
-        graphPanel.setLayout(graphPanelLayout);
-        graphPanelLayout.setHorizontalGroup(
-            graphPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        graphPanelLayout.setVerticalGroup(
-            graphPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
-        );
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(1000, 500));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1020, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(graphPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 522, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(graphPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel graphPanel;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
-    private void initData(SearchOvertimeRequest searchOvertimeRequest,SearchOverTimeReponse searchOverTimeReponse) {
-        graphPanel.removeAll();
-        graphPanel.setLayout(new BorderLayout());
-        graphPanel.add(new lineGraph(searchOvertimeRequest.getSearchQuery(), searchOverTimeReponse));
-        graphPanel.validate();
-        graphPanel.repaint();
+    private void initData(List<RelatedTopicReponse> list) {
+        for(int i =0 ;i<list.size();i++){
+            add(new TopicItemView(list.get(i)));
+        }
+        invalidate();
 
   }
 
     private void showLoading() {
-        
-         graphPanel.setVisible(false);
+        jScrollPane1.setVisible(false);
          loading.setVisible(true);
          invalidate();
     }
      
     private void dismisLoading(){
-         graphPanel.setVisible(true);
+        jScrollPane1.setVisible(true);
          loading.setVisible(false);
          invalidate();
     

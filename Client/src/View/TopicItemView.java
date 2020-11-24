@@ -9,11 +9,11 @@ import javalibrary.model.reponse.RelatedTopicReponse;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-public class RelatedTopicJPanel extends javax.swing.JPanel {
+public class TopicItemView extends javax.swing.JPanel {
 
     RelatedTopicReponse relatedTopicReponse = new RelatedTopicReponse();
 
-    public RelatedTopicJPanel(RelatedTopicReponse relatedTopicReponse) {
+    public TopicItemView(RelatedTopicReponse relatedTopicReponse) {
         initComponents();
         this.relatedTopicReponse = relatedTopicReponse;
         showData();

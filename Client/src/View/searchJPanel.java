@@ -444,6 +444,8 @@ public class searchJPanel extends javax.swing.JPanel {
         searchRelatedQueryRequest.setCategory(new Category(cbcategoty));
         searchRelatedTopicRequest.setCategory(new Category(cbcategoty));
         searchOvertimeRequest.setCategory(new Category(cbcategoty));
+        
+        
 
         if (!cbgeo.equalsIgnoreCase("AA")) {
             searchRegionRequest.setGeo(new Geo(cbgeo));
@@ -586,6 +588,10 @@ public class searchJPanel extends javax.swing.JPanel {
                 **/
                //one key
                 seacOneKeyJPanel.RequestSearchOvertime(searchOvertimeRequest);
+                
+                relatedTopicRequest.setRelatedTopicQuery(searchOvertimeRequest.getSearchQuery().get(0));
+                relatedTopicRequest.setPageNumber(1);
+                seacOneKeyJPanel.RequestRelatedTopic(relatedTopicRequest);
             }else {
                // multikey 
                

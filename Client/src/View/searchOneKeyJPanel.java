@@ -10,6 +10,7 @@ import javalibrary.model.reponse.SearchOverTimeReponse;
 import javalibrary.model.reponse.SearchRegionReponse;
 import javalibrary.model.reponse.SearchRelatedReponse;
 import javalibrary.model.reponse.SearchRelatedTopicReponse;
+import javalibrary.model.request.RelatedTopicRequest;
 import javax.swing.table.DefaultTableModel;
 import javalibrary.model.request.SearchOvertimeRequest;
 
@@ -25,6 +26,7 @@ public class searchOneKeyJPanel extends javax.swing.JPanel {
      * Defind Panel
      */
     SearchOverTimePanel searchOverTimePanel = new SearchOverTimePanel();
+    RelatedTopicPanel relatedTopicPanel = new RelatedTopicPanel();
 
     public searchOneKeyJPanel(ListRelatedTopicReponse listRelatedTopicReponse, SearchOverTimeReponse searchOverTimeReponse, List<SearchRegionReponse> searchRegionReponses, List<SearchRelatedReponse> searchRelatedReponses, List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
         initComponents();
@@ -54,7 +56,7 @@ public class searchOneKeyJPanel extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         tbRegion = new javax.swing.JTable();
         containerSearchOverTimePanel = new javax.swing.JPanel();
-        relatedTopicPanel = new javax.swing.JPanel();
+        containerTopicPanel = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(247, 247, 247));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -193,14 +195,14 @@ public class searchOneKeyJPanel extends javax.swing.JPanel {
             .addGap(0, 453, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout relatedTopicPanelLayout = new javax.swing.GroupLayout(relatedTopicPanel);
-        relatedTopicPanel.setLayout(relatedTopicPanelLayout);
-        relatedTopicPanelLayout.setHorizontalGroup(
-            relatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout containerTopicPanelLayout = new javax.swing.GroupLayout(containerTopicPanel);
+        containerTopicPanel.setLayout(containerTopicPanelLayout);
+        containerTopicPanelLayout.setHorizontalGroup(
+            containerTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        relatedTopicPanelLayout.setVerticalGroup(
-            relatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        containerTopicPanelLayout.setVerticalGroup(
+            containerTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 409, Short.MAX_VALUE)
         );
 
@@ -211,7 +213,7 @@ public class searchOneKeyJPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(relatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(containerTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(containerSearchOverTimePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
@@ -233,7 +235,7 @@ public class searchOneKeyJPanel extends javax.swing.JPanel {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(40, 40, 40)
-                .addComponent(relatedTopicPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(containerTopicPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -265,10 +267,10 @@ public class searchOneKeyJPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel containerSearchOverTimePanel;
+    private javax.swing.JPanel containerTopicPanel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JPanel relatedTopicPanel;
     private javax.swing.JTable tbRegion;
     private javax.swing.JTable tbRelated;
     private javax.swing.JTable tbRelatedTopic;
@@ -301,19 +303,34 @@ public class searchOneKeyJPanel extends javax.swing.JPanel {
     }
 
     private void showRelatedTopic() {
-        relatedTopicPanel.removeAll();
-        relatedTopicPanel.setLayout(new BorderLayout());
-        relatedTopicPanel.add(new listRelatedTopicJPanel(listRelatedTopicReponse.getRelatedTopicReponses(), listRelatedTopicReponse.getColumn()));
-        relatedTopicPanel.validate();
-        relatedTopicPanel.repaint();
+        containerTopicPanel.removeAll();
+        containerTopicPanel.setLayout(new BorderLayout());
+        containerTopicPanel.add(new listRelatedTopicJPanel(listRelatedTopicReponse.getRelatedTopicReponses(), listRelatedTopicReponse.getColumn()));
+        containerTopicPanel.validate();
+        containerTopicPanel.repaint();
     }
 
     public void RequestSearchOvertime(SearchOvertimeRequest searchOvertimeRequest){
         searchOverTimePanel.loadData(searchOvertimeRequest);
     }
+    
+    public void RequestRelatedTopic(RelatedTopicRequest relatedTopicRequest){
+        relatedTopicPanel.loadData(relatedTopicRequest);
+    }
+    
      private void initContainer() {
+         /**
+          * Search Overtime 
+          */
         containerSearchOverTimePanel.setLayout(new BorderLayout());
         containerSearchOverTimePanel.add(searchOverTimePanel);
         containerSearchOverTimePanel.invalidate();
+        /**
+         * Related Topic
+         */
+        containerTopicPanel.setLayout(new BorderLayout());
+        containerTopicPanel.add(relatedTopicPanel);
+        containerTopicPanel.invalidate();
+        
     }
 }
