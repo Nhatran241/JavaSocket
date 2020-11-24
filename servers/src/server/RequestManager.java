@@ -168,8 +168,8 @@ public class RequestManager {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             //Format response
-            String prettyResponse = filterRelatedTopicResult(response.body());
-            requestListener.onResponse(prettyResponse);
+//            String prettyResponse = filterRelatedTopicResult(response.body());
+            requestListener.onResponse(response.body());
 
         } catch (InterruptedException interruptedException) {
             requestListener.onResponse(String.valueOf(BaseResponse.interruptedException));

@@ -65,7 +65,7 @@ public class lineGraph extends JFXPanel {
         if (keyseachs.size() >= 2) {
             for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
-                DateFormat simple = new SimpleDateFormat("dd MM yyyy");
+                DateFormat simple = new SimpleDateFormat("dd-MM-yyyy");
                 String result = simple.format(new Date(index));
                 int data = searchOverTimeReponse.getOverTimeReponses().get(1).getNumber().get(j);
                 data2.setName(keyseachs.get(1));
@@ -75,7 +75,7 @@ public class lineGraph extends JFXPanel {
         if (keyseachs.size() >= 3) {
             for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
-                DateFormat simple = new SimpleDateFormat("dd MM yyyy");
+                DateFormat simple = new SimpleDateFormat("dd-MM-yyyy");
                 String result = simple.format(new Date(index));
                 int data = searchOverTimeReponse.getOverTimeReponses().get(2).getNumber().get(j);
                 data3.setName(keyseachs.get(2));
@@ -85,7 +85,7 @@ public class lineGraph extends JFXPanel {
         if (keyseachs.size() >= 4) {
             for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
-                DateFormat simple = new SimpleDateFormat("dd MM yyyy");
+                DateFormat simple = new SimpleDateFormat("dd-MM-yyyy");
                 String result = simple.format(new Date(index));
                 int data = searchOverTimeReponse.getOverTimeReponses().get(3).getNumber().get(j);
                 data4.setName(keyseachs.get(3));
@@ -95,7 +95,7 @@ public class lineGraph extends JFXPanel {
         if (keyseachs.size() >= 5) {
             for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
-                DateFormat simple = new SimpleDateFormat("dd MM yyyy");
+                DateFormat simple = new SimpleDateFormat("dd-MM-yyyy");
                 String result = simple.format(new Date(index));
                 int data = searchOverTimeReponse.getOverTimeReponses().get(4).getNumber().get(j);
                 data5.setName(keyseachs.get(4));
