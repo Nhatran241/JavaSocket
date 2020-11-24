@@ -155,6 +155,7 @@ public class MyClient {
     }
 
     public void getSearchOvertime(SearchOvertimeRequest searchOvertimeRequest, ISearchOvertimeListener i) {
+        System.out.print("asdasda"+searchOvertimeRequest.getFromDate());
         this.iSearchOvertimeListener = i;
         myClientTranceiver.sendWithEncrypt(searchOvertimeRequest);
     }

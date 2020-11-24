@@ -28,7 +28,7 @@
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="relatedTopicPanel" max="32767" attributes="0"/>
-                  <Component id="graphPanel" alignment="0" max="32767" attributes="0"/>
+                  <Component id="containerSearchOverTimePanel" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jScrollPane3" pref="404" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
@@ -45,7 +45,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-              <Component id="graphPanel" min="-2" max="-2" attributes="0"/>
+              <Component id="containerSearchOverTimePanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jScrollPane3" alignment="1" min="-2" pref="341" max="-2" attributes="0"/>
@@ -221,7 +221,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="graphPanel">
+    <Container class="javax.swing.JPanel" name="containerSearchOverTimePanel">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="f7" green="f7" red="f7" type="rgb"/>

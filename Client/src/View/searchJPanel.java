@@ -31,9 +31,15 @@ public class searchJPanel extends javax.swing.JPanel {
     MyClient myClient = MyClient.getInstance();
     String[] dateStrings = {"The past 12 months", "Hours passed", "Last 4 hours", "Last day", "Last 7 days", "30 days", "90 days", "The past 5 years"};
     JLabel label;
-
+    
+    /**
+     * Defind container
+     */
+    searchOneKeyJPanel seacOneKeyJPanel = new searchOneKeyJPanel();
+    
     public searchJPanel() {
         initComponents();
+        initContainer();
         initLoadingPanel();
         txSearch2.setEditable(false);
         txSearch3.setEditable(false);
@@ -43,11 +49,10 @@ public class searchJPanel extends javax.swing.JPanel {
         myClient.connect(new Interfaces.IConnectListener() {
             @Override
             public void onConnectSuccess() {
-
                 myClient.getCategory(new Interfaces.IGetCategoryListener() {
                     @Override
                     public void onGetCategorySuccess(List<Category> categorys) {
-                        closeLoadingImage();
+                        //closeLoadingImage();
                         showcbCatetegoryData(categorys);
                         myClient.getGeo(new Interfaces.IGetGeoListener() {
                             @Override
@@ -107,7 +112,6 @@ public class searchJPanel extends javax.swing.JPanel {
 
     private void initLoadingPanel() {
         Icon loadingImage = new ImageIcon(this.getClass().getResource("../image/goodLoading.gif"));
-        
         label = new JLabel(loadingImage);
         label.setSize(200, 200);
         label.setLocation(600, 200);
@@ -354,7 +358,6 @@ public class searchJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txSearch5KeyPressed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        showLoadingImage();
         BtnSearch();
     }//GEN-LAST:event_btnSearchActionPerformed
 
@@ -452,34 +455,36 @@ public class searchJPanel extends javax.swing.JPanel {
         Calendar c = Calendar.getInstance();
         Date dt = new Date();
         c.setTime(dt);
-        if (cbdate.equalsIgnoreCase("The past 12 months")) {
+        if (cbdate.contains("The past 12 months")) {
             c.add(Calendar.YEAR, -1);
-        } else if (cbdate.equalsIgnoreCase("Hours passed")) {
+        } else if (cbdate.contains("Hours passed")) {
             c.add(Calendar.HOUR, -1);
-        } else if (cbdate.equalsIgnoreCase("Last 4 hours")) {
+        } else if (cbdate.contains("Last 4 hours")) {
             c.add(Calendar.HOUR, -4);
-        } else if (cbdate.equalsIgnoreCase("Last day")) {
+        } else if (cbdate.contains("Last day")) {
             c.add(Calendar.HOUR, -24);
-        } else if (cbdate.equalsIgnoreCase("Last 7 days")) {
+        } else if (cbdate.contains("Last 7 days")) {
             c.add(Calendar.DATE, -7);
-        } else if (cbdate.equalsIgnoreCase("30 days")) {
+        } else if (cbdate.contains("30 days")) {
             c.add(Calendar.DATE, -30);
-        } else if (cbdate.equalsIgnoreCase("90 days")) {
+        } else if (cbdate.contains("90 days")) {
             c.add(Calendar.DATE, -90);
-        } else if (cbdate.equalsIgnoreCase("The past 5 years")) {
+        } else if (cbdate.contains("The past 5 years")) {
             c.add(Calendar.YEAR, -5);
         }
+        
         searchRegionRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
         searchRelatedQueryRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
         searchRelatedTopicRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
         searchOvertimeRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
 
+        
         if (!txsearch1.isEmpty()) {
             if (txsearch2.isEmpty() && txsearch3.isEmpty() && txsearch4.isEmpty() && txsearch5.isEmpty()) {
+               /**
                 myClient.getSearchRegion(searchRegionRequest, new Interfaces.IGetSearchRegionListener() {
                     @Override
                     public void OnGetSearchRegionSuccess(List<SearchRegionReponse> searchRegionReponses) {
-//                        closeLoadingImage();
                         myClient.getSearchRelated(searchRelatedQueryRequest, new Interfaces.ISearchRelatedListener() {
                             @Override
                             public void OnGetSearchRelatedSuccess(List<SearchRelatedReponse> searchRelatedReponses) {
@@ -494,12 +499,8 @@ public class searchJPanel extends javax.swing.JPanel {
                                                     @Override
                                                     public void OnGetRelatedTopicSuccess(ListRelatedTopicReponse listRelatedTopicReponse) {
                                                         if (!searchRelatedReponses.isEmpty() && !searchRelatedTopicReponses.isEmpty()) {
-                                                            JScrollPane jScrollPane = new JScrollPane(new searchOneKeyJPanel(listRelatedTopicReponse, searchOverTimeReponse, searchRegionReponses, searchRelatedReponses, searchRelatedTopicReponses), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-                                                            searchReponseJPanel.removeAll();
-                                                            searchReponseJPanel.setLayout(new BorderLayout());
-                                                            searchReponseJPanel.add(jScrollPane);
-                                                            searchReponseJPanel.validate();
-                                                            searchReponseJPanel.repaint();
+                                                            //seacOneKeyJPanel =new searchOneKeyJPanel(listRelatedTopicReponse, searchOverTimeReponse, searchRegionReponses, searchRelatedReponses, searchRelatedTopicReponses);
+                                                           
                                                         } else {
                                                             JOptionPane.showMessageDialog(jPanel1, "Search results are empty");
                                                         }
@@ -534,6 +535,7 @@ public class searchJPanel extends javax.swing.JPanel {
                     public void OnGetSearchRegionFailed() {
                     }
                 });
+               
             } else {
                 myClient.getSearchRegion(searchRegionRequest, new Interfaces.IGetSearchRegionListener() {
                     @Override
@@ -581,9 +583,33 @@ public class searchJPanel extends javax.swing.JPanel {
                     public void OnGetSearchRegionFailed() {
                     }
                 });
+                **/
+               //one key
+                seacOneKeyJPanel.RequestSearchOvertime(searchOvertimeRequest);
+            }else {
+               // multikey 
+               
+            
             }
         } else {
             JOptionPane.showMessageDialog(jPanel1, "You have not entered keywords");
         }
+        
+        /**
+         * Ràng buộc dữ liệu
+         */
+        
     }
+
+    private void initContainer() {
+        
+         JScrollPane jScrollPane = new JScrollPane(seacOneKeyJPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+         searchReponseJPanel.removeAll();
+         searchReponseJPanel.setLayout(new BorderLayout());
+         searchReponseJPanel.add(jScrollPane);
+         searchReponseJPanel.validate();
+         searchReponseJPanel.repaint();
+      }
+
+   
 }
