@@ -14,12 +14,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonSyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javalibrary.SocketTransceiver;
 import javalibrary.model.Category;
 import javalibrary.model.Geo;
-import javalibrary.model.reponse.ListRelatedTopicReponse;
 import javalibrary.model.reponse.OverTimeReponse;
 import javalibrary.model.reponse.RegionReponse;
 import javalibrary.model.reponse.RelatedReponse;
@@ -78,7 +75,6 @@ public class MyClient {
             @Override
             public void onReceive(SocketTransceiver transceiver, String message) {
 //                System.out.println("message: " + message);
-
                 if (!message.isEmpty()) {
                     if (message.contains(GeoRequestCountry.class.getSimpleName())) {
                         SetGeo(message);
@@ -143,7 +139,6 @@ public class MyClient {
     }
 
     public void getSearchOvertime(SearchOvertimeRequest searchOvertimeRequest, ISearchOvertimeListener i) {
-        System.out.print("asdasda" + searchOvertimeRequest.getFromDate());
         this.iSearchOvertimeListener = i;
         myClientTranceiver.sendWithEncrypt(searchOvertimeRequest);
     }
@@ -228,8 +223,10 @@ public class MyClient {
             }
         } catch (ParseException ex) {
             System.out.println(ex);
+        } finally {
+            iGetSearchRegionListener.OnGetSearchRegionSuccess(searchRegionReponses);
         }
-        iGetSearchRegionListener.OnGetSearchRegionSuccess(searchRegionReponses);
+        
     }
 
     public void SetSearchRelated(String inputString) {
@@ -315,8 +312,10 @@ public class MyClient {
             }
         } catch (ParseException ex) {
             System.out.println(ex);
+        } finally {
+            iSearchRelatedTopicListener.OnGetSearchRelatedTopicSuccess(searchRelatedTopicReponses);
         }
-        iSearchRelatedTopicListener.OnGetSearchRelatedTopicSuccess(searchRelatedTopicReponses);
+        
     }
 
     public void SetRelatedTopic(String inputString) {
@@ -377,8 +376,8 @@ public class MyClient {
             }
         } catch (ParseException ex) {
             System.out.println(ex);
+        } finally {
+            iSearchOvertimeListener.OnGetSearchOvertimeSuccess(searchOverTimeReponse);
         }
-        iSearchOvertimeListener.OnGetSearchOvertimeSuccess(searchOverTimeReponse);
     }
-
 }

@@ -79,8 +79,6 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
             .addGap(0, 404, Short.MAX_VALUE)
         );
 
-        containerSearchRelatedTopicPanel.setBackground(new java.awt.Color(255, 255, 255));
-
         javax.swing.GroupLayout containerSearchRelatedTopicPanelLayout = new javax.swing.GroupLayout(containerSearchRelatedTopicPanel);
         containerSearchRelatedTopicPanel.setLayout(containerSearchRelatedTopicPanelLayout);
         containerSearchRelatedTopicPanelLayout.setHorizontalGroup(
@@ -219,6 +217,5 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         containerSearchRelatedJPanel.setLayout(new BorderLayout());
         containerSearchRelatedJPanel.add(searchRelatedPanel);
         containerSearchRelatedJPanel.invalidate();
-
     }
 }
