@@ -73,7 +73,7 @@ public class listRelatedTopicJPanel extends javax.swing.JPanel {
         jpanel.setLayout(new GridLayout(size, 1));
         for (int i = 0; i < size; i++) {
             if (!relatedTopicReponses.get(i).getTitle().isEmpty() && !relatedTopicReponses.get(i).getUrl().isEmpty()) {
-                jpanel.add(new RelatedTopicJPanel(relatedTopicReponses.get(i)));
+                jpanel.add(new TopicItemView(relatedTopicReponses.get(i)));
             }
         }
         reladtedTopicJPanel.removeAll();

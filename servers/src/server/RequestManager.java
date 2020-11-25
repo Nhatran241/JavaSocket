@@ -167,8 +167,6 @@ public class RequestManager {
                 .build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            //Format response
-//            String prettyResponse = filterRelatedTopicResult(response.body());
             requestListener.onResponse(response.body());
 
         } catch (InterruptedException interruptedException) {
@@ -179,54 +177,6 @@ public class RequestManager {
 
     }
     public int getStartPage(int pageNumber) { return (pageNumber*10)+1; }
-    private String filterRelatedTopicResult(String data) {
-        //Response Json Array Metatags
-        JSONArray resJaMetatags = new JSONArray();
-        //Parse data to JsonPaser
-        Object obj = null;
-        try {
-            obj = new JSONParser().parse(data);
-        } catch (ParseException e) {
-            System.out.println("Data null");
-        }
-
-        // typecasting obj to JSONObject
-        JSONObject jo = (JSONObject) obj;
-        JSONObject jo1 = null;
-        // getting items
-        JSONArray jaItems = (JSONArray) jo.get("items");
-        // iterating items
-        Iterator itrItems = jaItems.iterator();
-        Iterator<Map.Entry> itrItemsDetail;
-
-        //Duyet element of items
-        while (itrItems.hasNext()) {
-            itrItemsDetail = ((Map) itrItems.next()).entrySet().iterator();
-            //Duyet element item detail in items
-            while (itrItemsDetail.hasNext()) {
-                Map.Entry pair = itrItemsDetail.next();
-                if (!pair.getKey().equals("pagemap")) {
-                    continue;
-                }
-                Map pageMap = (Map) pair.getValue();
-                Iterator<Map.Entry> itrPageMap = pageMap.entrySet().iterator();
-                //Duyet element of pagemap
-                while (itrPageMap.hasNext()) {
-                    Map.Entry pairPageMap = itrPageMap.next();
-                    if (pairPageMap.getKey().equals("metatags")) {
-                        //Get metatags
-                        JSONArray jaMetatags = (JSONArray) pairPageMap.getValue();
-                        Map metatags = (Map) jaMetatags.get(0);
-                        Iterator<Map.Entry> itrMetatags = metatags.entrySet().iterator();
-
-                        resJaMetatags.add(metatags);
-
-                    }
-                }
-            }
-        }
-        return resJaMetatags.toJSONString();
-    }
 
     public interface RequestListener {
         void onResponse(String response);

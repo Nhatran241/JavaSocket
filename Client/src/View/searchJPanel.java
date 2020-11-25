@@ -3,7 +3,6 @@ package View;
 import Services.Interfaces.Interfaces;
 import Services.MyClient;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -74,12 +73,11 @@ public class searchJPanel extends javax.swing.JPanel {
             public void onDisconnect() {
                 JOptionPane.showMessageDialog(jPanel1, "Disconnect to server, try to reconnect");
                 showLoading();
-                Boolean flag = false;
+                Boolean flag1 = false;
                 do {
                     myClient.connect(new Interfaces.IConnectListener() {
                         @Override
                         public void onConnectSuccess() {
-                            flag = true;
                             dismisLoading();
                         }
 
@@ -91,7 +89,7 @@ public class searchJPanel extends javax.swing.JPanel {
                         public void onDisconnect() {
                         }
                     });
-                } while (flag);
+                } while (flag1);
             }
         });
         showcbDateData();
@@ -424,6 +422,8 @@ public class searchJPanel extends javax.swing.JPanel {
         searchRelatedQueryRequest.setCategory(new Category(cbcategoty));
         searchRelatedTopicRequest.setCategory(new Category(cbcategoty));
         searchOvertimeRequest.setCategory(new Category(cbcategoty));
+        
+        
 
         if (!cbgeo.equalsIgnoreCase("AA")) {
             searchRegionRequest.setGeo(new Geo(cbgeo));
@@ -474,6 +474,7 @@ public class searchJPanel extends javax.swing.JPanel {
                 searchReponseJPanel.add(jScrollPane);
                 searchReponseJPanel.validate();
                 searchReponseJPanel.repaint();
+                
             }
         } else {
             JOptionPane.showMessageDialog(jPanel1, "You have not entered keywords");

@@ -58,7 +58,7 @@ public class Interfaces {
     
     public interface IRelatedTopicListener {
         
-        void OnGetRelatedTopicSuccess(ListRelatedTopicReponse listRelatedTopicReponse);
+        void OnGetRelatedTopicSuccess(List<RelatedTopicReponse> listRelatedTopicReponse);
         
         void OnGetRelatedTopicFailed();
     }
