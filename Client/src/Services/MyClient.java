@@ -338,7 +338,7 @@ public class MyClient {
                     relatedTopicReponse.setTitle(jSONObject.get("og:title").toString());
                     relatedTopicReponse.setUrl(jSONObject.get("og:url").toString());
                     relatedTopicReponse.setDescription(jSONObject.get("og:description")!=null?jSONObject.get("og:description").toString():"");
-                    relatedTopicReponse.setImage(jSONObject.get(":og:image")!=null?jSONObject.get(":og:image").toString():"");
+                    relatedTopicReponse.setImage(jSONObject.get("og:image")!=null?jSONObject.get("og:image").toString():"");
                     relatedTopicReponses.add(relatedTopicReponse);
                 }
             }

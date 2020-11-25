@@ -4,7 +4,11 @@ import java.awt.Desktop;
 import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javalibrary.model.reponse.RelatedTopicReponse;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -27,6 +31,12 @@ public class TopicItemView extends javax.swing.JPanel {
         titleJLabel = new javax.swing.JLabel();
         descriptionJLabel = new javax.swing.JLabel();
         imgJLabel = new javax.swing.JLabel();
+
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
 
         titleJLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         titleJLabel.setText("jLabel1");
@@ -81,6 +91,18 @@ public class TopicItemView extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_titleJLabelMouseClicked
 
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+        try {
+            // TODO add your handling code here:
+            URI oURL = new URI ( relatedTopicReponse.getUrl() );
+            java.awt.Desktop.getDesktop().browse(oURL);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(TopicItemView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(TopicItemView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jPanel1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel descriptionJLabel;
@@ -102,5 +124,33 @@ public class TopicItemView extends javax.swing.JPanel {
         
         titleJLabel.setText(relatedTopicReponse.getTitle());
         descriptionJLabel.setText(relatedTopicReponse.getDescription());
+//        System.out.println("////////////"+relatedTopicReponse.getImage());
+//        try {
+//            URL url = new URL(unescapeJava(relatedTopicReponse.getImage()));
+//            Image image = ImageIO.read(url);
+//            imgJLabel.setIcon(new ImageIcon(image));
+//        } catch (Exception e) {
+//            System.err.println(""+e+unescapeJava(relatedTopicReponse.getImage()));
+//        }
+//       
     }
+    public static String unescapeJava(String escaped) {
+    if(escaped.indexOf("\\u")==-1)
+        return escaped;
+
+    String processed="";
+
+    int position=escaped.indexOf("\\u");
+    while(position!=-1) {
+        if(position!=0)
+            processed+=escaped.substring(0,position);
+        String token=escaped.substring(position+2,position+6);
+        escaped=escaped.substring(position+6);
+        processed+=(char)Integer.parseInt(token,16);
+        position=escaped.indexOf("\\u");
+    }
+    processed+=escaped;
+
+    return processed;
+}
 }

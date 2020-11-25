@@ -26,7 +26,7 @@ public class searchOneKeyJPanel extends javax.swing.JPanel {
      * Defind Panel
      */
     SearchOverTimePanel searchOverTimePanel = new SearchOverTimePanel();
-    RelatedTopicPanel relatedTopicPanel = new RelatedTopicPanel();
+    TopicPanel topicPanel = new TopicPanel();
 
     public searchOneKeyJPanel(ListRelatedTopicReponse listRelatedTopicReponse, SearchOverTimeReponse searchOverTimeReponse, List<SearchRegionReponse> searchRegionReponses, List<SearchRelatedReponse> searchRelatedReponses, List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
         initComponents();
@@ -315,7 +315,7 @@ public class searchOneKeyJPanel extends javax.swing.JPanel {
     }
     
     public void RequestRelatedTopic(RelatedTopicRequest relatedTopicRequest){
-        relatedTopicPanel.loadData(relatedTopicRequest);
+        topicPanel.loadData(relatedTopicRequest);
     }
     
      private void initContainer() {
@@ -329,7 +329,7 @@ public class searchOneKeyJPanel extends javax.swing.JPanel {
          * Related Topic
          */
         containerTopicPanel.setLayout(new BorderLayout());
-        containerTopicPanel.add(relatedTopicPanel);
+        containerTopicPanel.add(topicPanel);
         containerTopicPanel.invalidate();
         
     }
