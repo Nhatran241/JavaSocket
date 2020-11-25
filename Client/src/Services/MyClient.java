@@ -14,12 +14,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonSyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javalibrary.SocketTransceiver;
 import javalibrary.model.Category;
 import javalibrary.model.Geo;
-import javalibrary.model.reponse.ListRelatedTopicReponse;
 import javalibrary.model.reponse.OverTimeReponse;
 import javalibrary.model.reponse.RegionReponse;
 import javalibrary.model.reponse.RelatedReponse;
@@ -66,7 +63,6 @@ public class MyClient {
         TcpClient tcpClient = new TcpClient() {
             @Override
             public void onConnect(SocketTransceiver tra) {
-                System.out.println("Connect success");
                 myClientTranceiver = tra;
                 iConnectListener.onConnectSuccess();
             }
@@ -78,36 +74,22 @@ public class MyClient {
 
             @Override
             public void onReceive(SocketTransceiver transceiver, String message) {
-                System.out.println("message: " + message);
-
+//                System.out.println("message: " + message);
                 if (!message.isEmpty()) {
                     if (message.contains(GeoRequestCountry.class.getSimpleName())) {
-
-                        iGetGeoListener.onGetGeoSuccess(SetGeo(message));
+                        SetGeo(message);
                     } else if (message.contains(CategoriesRequest.class.getSimpleName())) {
-                        message = message.replace(CategoriesRequest.class.getSimpleName(), "");
-                        try {
-                            JsonObject jsonObject = new JsonParser().parse(message).getAsJsonObject();
-                            String jsonArray = jsonObject.get("children").toString();
-                            iGetCategoryListener.onGetCategorySuccess(SetCategoryrecursive(jsonArray));
-                        } catch (JsonSyntaxException e) {
-                            System.out.println(e);
-                        }
+                        setCategory(message);
                     } else if (message.contains(SearchRegionRequest.class.getSimpleName())) {
-
-                        iGetSearchRegionListener.OnGetSearchRegionSuccess(SetSearchRegion(message));
+                        SetSearchRegion(message);
                     } else if (message.contains(SearchRelatedQueryRequest.class.getSimpleName())) {
-
-                        iSearchRelatedListener.OnGetSearchRelatedSuccess(SetSearchRelated(message));
+                        SetSearchRelated(message);
                     } else if (message.contains(SearchRelatedTopicRequest.class.getSimpleName())) {
-
-                        iSearchRelatedTopicListener.OnGetSearchRelatedTopicSuccess(SetSearchRelatedTopic(message));
+                        SetSearchRelatedTopic(message);
                     } else if (message.contains(RelatedTopicRequest.class.getSimpleName())) {
-
-                        iRelatedTopicListener.OnGetRelatedTopicSuccess(SetRelatedTopic(message));
+                        SetRelatedTopic(message);
                     } else if (message.contains(SearchOvertimeRequest.class.getSimpleName())) {
-
-                        iSearchOvertimeListener.OnGetSearchOvertimeSuccess(setSearchOvertime(message));
+                        setSearchOvertime(message);
                     }
                 }
             }
@@ -157,12 +139,11 @@ public class MyClient {
     }
 
     public void getSearchOvertime(SearchOvertimeRequest searchOvertimeRequest, ISearchOvertimeListener i) {
-        System.out.print("asdasda"+searchOvertimeRequest.getFromDate());
         this.iSearchOvertimeListener = i;
         myClientTranceiver.sendWithEncrypt(searchOvertimeRequest);
     }
 
-    public List<Geo> SetGeo(String inputString) {
+    public void SetGeo(String inputString) {
         inputString = inputString.replace(GeoRequestCountry.class.getSimpleName(), "");
         List<Geo> geos = new ArrayList<>();
         geos.add(new Geo("All over the world", "AA"));
@@ -176,11 +157,21 @@ public class MyClient {
             name = name.replace("\"", "");
             geos.add(new Geo(name, id));
         }
-
-        return geos;
+        iGetGeoListener.onGetGeoSuccess(geos);
     }
 
-    public List<Category> SetCategoryrecursive(String inputString) {
+    public void setCategory(String inpuString) {
+        inpuString = inpuString.replace(CategoriesRequest.class.getSimpleName(), "");
+        try {
+            JsonObject jsonObject = new JsonParser().parse(inpuString).getAsJsonObject();
+            String jsonArray = jsonObject.get("children").toString();
+            iGetCategoryListener.onGetCategorySuccess(Categoryrecursive(jsonArray));
+        } catch (JsonSyntaxException e) {
+            System.out.println(e);
+        }
+    }
+
+    public List<Category> Categoryrecursive(String inputString) {
         List<Category> categorys = new ArrayList<>();
         categorys.add(new Category("All catagories", "0"));
         JsonArray jsonArray = new JsonParser().parse(inputString).getAsJsonArray();
@@ -194,7 +185,7 @@ public class MyClient {
 
             if (jsonArray.get(i).getAsJsonObject().get("children") != null) {
                 String children = jsonArray.get(i).getAsJsonObject().get("children").toString();
-                categorys.add(new Category(name, id, SetCategoryrecursive(children)));
+                categorys.add(new Category(name, id, Categoryrecursive(children)));
             } else {
                 Category category = new Category(name, id);
                 categorys.add(category);
@@ -203,7 +194,7 @@ public class MyClient {
         return categorys;
     }
 
-    public List<SearchRegionReponse> SetSearchRegion(String inputString) {
+    public void SetSearchRegion(String inputString) {
         inputString = inputString.replace(SearchRegionRequest.class.getSimpleName(), "");
 
         List<SearchRegionReponse> searchRegionReponses = new ArrayList<>();
@@ -232,11 +223,13 @@ public class MyClient {
             }
         } catch (ParseException ex) {
             System.out.println(ex);
+        } finally {
+            iGetSearchRegionListener.OnGetSearchRegionSuccess(searchRegionReponses);
         }
-        return searchRegionReponses;
+        
     }
 
-    public List<SearchRelatedReponse> SetSearchRelated(String inputString) {
+    public void SetSearchRelated(String inputString) {
         List<SearchRelatedReponse> searchRelatedReponses = new ArrayList<>();
         inputString = inputString.replace(SearchRelatedQueryRequest.class.getSimpleName(), "");
 
@@ -247,7 +240,7 @@ public class MyClient {
                 JSONObject jSONObject = (JSONObject) jSONParser.parse(inputString);
                 jSONObject = (JSONObject) jSONObject.get(keySearchs.get(i));
                 JSONObject jSONrising = (JSONObject) jSONObject.get("rising");
-                
+
                 try {
                     JSONArray jSONArray = (JSONArray) jSONrising.get("data");
                     for (int j = 0; j < jSONArray.size(); j++) {
@@ -279,10 +272,10 @@ public class MyClient {
             }
             searchRelatedReponses.add(new SearchRelatedReponse(keySearchs.get(i), relatedReponses));
         }
-        return searchRelatedReponses;
+        iSearchRelatedListener.OnGetSearchRelatedSuccess(searchRelatedReponses);
     }
 
-    public List<SearchRelatedTopicReponse> SetSearchRelatedTopic(String inputString) {
+    public void SetSearchRelatedTopic(String inputString) {
         List<SearchRelatedTopicReponse> searchRelatedTopicReponses = new ArrayList<>();
         inputString = inputString.replace(SearchRelatedTopicRequest.class.getSimpleName(), "");
 
@@ -319,36 +312,38 @@ public class MyClient {
             }
         } catch (ParseException ex) {
             System.out.println(ex);
+        } finally {
+            iSearchRelatedTopicListener.OnGetSearchRelatedTopicSuccess(searchRelatedTopicReponses);
         }
-
-        return searchRelatedTopicReponses;
+        
     }
 
-    public List<RelatedTopicReponse> SetRelatedTopic(String inputString) {
+    public void SetRelatedTopic(String inputString) {
+
         List<RelatedTopicReponse> relatedTopicReponses = new ArrayList<>();
         inputString = inputString.replace(RelatedTopicRequest.class.getSimpleName(), "");
         JSONParser jSONParser = new JSONParser();
-        
+
         try {
             JSONArray jSONArray = (JSONArray) jSONParser.parse(inputString);
-            for(int i=0; i<jSONArray.size();i++){
+            for (int i = 0; i < jSONArray.size(); i++) {
                 JSONObject jSONObject = (JSONObject) jSONArray.get(i);
-                if(jSONObject.get("og:title")!=null&&jSONObject.get("og:url")!=null){
+                if (jSONObject.get("og:title") != null && jSONObject.get("og:url") != null) {
                     RelatedTopicReponse relatedTopicReponse = new RelatedTopicReponse();
                     relatedTopicReponse.setTitle(jSONObject.get("og:title").toString());
                     relatedTopicReponse.setUrl(jSONObject.get("og:url").toString());
-                    relatedTopicReponse.setDescription(jSONObject.get("og:description")!=null?jSONObject.get("og:description").toString():"");
-                    relatedTopicReponse.setImage(jSONObject.get("og:image")!=null?jSONObject.get("og:image").toString():"");
+                    relatedTopicReponse.setDescription(jSONObject.get("og:description") != null ? jSONObject.get("og:description").toString() : "");
+                    relatedTopicReponse.setImage(jSONObject.get("og:image") != null ? jSONObject.get("og:image").toString() : "");
                     relatedTopicReponses.add(relatedTopicReponse);
                 }
             }
         } catch (ParseException ex) {
-        }finally{
-        return relatedTopicReponses;
+        } finally {
+            iRelatedTopicListener.OnGetRelatedTopicSuccess(relatedTopicReponses);
         }
     }
 
-    public SearchOverTimeReponse setSearchOvertime(String inputString) {
+    public void setSearchOvertime(String inputString) {
         inputString = inputString.replace(SearchOvertimeRequest.class.getSimpleName(), "");
         SearchOverTimeReponse searchOverTimeReponse = new SearchOverTimeReponse();
         List<Long> item = new ArrayList<>();
@@ -381,8 +376,8 @@ public class MyClient {
             }
         } catch (ParseException ex) {
             System.out.println(ex);
+        } finally {
+            iSearchOvertimeListener.OnGetSearchOvertimeSuccess(searchOverTimeReponse);
         }
-        return searchOverTimeReponse;
     }
-
 }

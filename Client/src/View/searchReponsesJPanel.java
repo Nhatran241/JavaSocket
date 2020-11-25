@@ -1,28 +1,45 @@
 package View;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.util.ArrayList;
+import java.awt.Dimension;
 import java.util.List;
-import javalibrary.model.reponse.SearchOverTimeReponse;
-import javalibrary.model.reponse.SearchRegionReponse;
-import javalibrary.model.reponse.SearchRelatedReponse;
-import javax.swing.table.DefaultTableModel;
+import javalibrary.model.request.RelatedTopicRequest;
+import javalibrary.model.request.SearchOvertimeRequest;
+import javalibrary.model.request.SearchRegionRequest;
+import javalibrary.model.request.SearchRelatedQueryRequest;
+import javalibrary.model.request.SearchRelatedTopicRequest;
 
 public class searchReponsesJPanel extends javax.swing.JPanel {
 
-    List<SearchRegionReponse> searchRegionReponses = new ArrayList<>();
-    List<SearchRelatedReponse> searchRelatedReponses = new ArrayList<>();
-    SearchOverTimeReponse searchOverTimeReponse = new SearchOverTimeReponse();
+    SearchOvertimeRequest searchOvertimeRequest = new SearchOvertimeRequest();
+    SearchRegionRequest searchRegionRequest = new SearchRegionRequest();
+    SearchRelatedQueryRequest searchRelatedQueryRequest = new SearchRelatedQueryRequest();
+    SearchRelatedTopicRequest searchRelatedTopicRequest = new SearchRelatedTopicRequest();
+    RelatedTopicRequest relatedTopicRequest = new RelatedTopicRequest();
 
-    public searchReponsesJPanel(SearchOverTimeReponse searchOverTimeReponse, List<SearchRegionReponse> searchRegionReponses, List<SearchRelatedReponse> searchRelatedReponses) {
+    SearchOverTimePanel searchOverTimePanel = new SearchOverTimePanel();
+    SearchRelatedPanel searchRelatedPanel = new SearchRelatedPanel();
+    SearchRelatedTopicPanel searchRelatedTopicPanel = new SearchRelatedTopicPanel();
+    SearchRegionPanel searchRegionPanel = new SearchRegionPanel();
+
+    public searchReponsesJPanel(SearchOvertimeRequest searchOvertimeRequest, SearchRegionRequest searchRegionRequest, SearchRelatedQueryRequest searchRelatedQueryRequest, SearchRelatedTopicRequest searchRelatedTopicRequest, RelatedTopicRequest relatedTopicRequest) {
+        this.searchOvertimeRequest = searchOvertimeRequest;
+        this.searchRegionRequest = searchRegionRequest;
+        this.searchRelatedQueryRequest = searchRelatedQueryRequest;
+        this.searchRelatedTopicRequest = searchRelatedTopicRequest;
         initComponents();
-        this.searchRegionReponses = searchRegionReponses;
-        this.searchRelatedReponses = searchRelatedReponses;
-        this.searchOverTimeReponse = searchOverTimeReponse;
-        showSearchRelated();
-        showSearchRegion();
-        showGraph();
+        initContainer1();
+        initData1();
+    }
+
+    public searchReponsesJPanel(SearchOvertimeRequest searchOvertimeRequest, SearchRegionRequest searchRegionRequest, SearchRelatedQueryRequest searchRelatedQueryRequest, List<RelatedTopicRequest> relatedTopicRequests) {
+        System.out.println("searchRelatedQueryRequest: " + searchRelatedQueryRequest);
+        this.searchOvertimeRequest = searchOvertimeRequest;
+        this.searchRegionRequest = searchRegionRequest;
+        this.searchRelatedQueryRequest = searchRelatedQueryRequest;
+        initComponents();
+        initContainer2();
+        initData2();
     }
 
     @SuppressWarnings("unchecked")
@@ -30,72 +47,110 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbRegion = new javax.swing.JTable();
-        graphJPanel = new javax.swing.JPanel();
-        searchRelatedJPanel = new javax.swing.JPanel();
+        containerSearchOverTimePanel = new javax.swing.JPanel();
+        containerSearchRelatedJPanel = new javax.swing.JPanel();
+        containerSearchRelatedTopicPanel = new javax.swing.JPanel();
+        containerRelatedTopicPanel = new javax.swing.JPanel();
+        containerSearchRegionPanel = new javax.swing.JPanel();
 
-        jPanel2.setBackground(new java.awt.Color(247, 247, 247));
+        containerSearchOverTimePanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        tbRegion.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane1.setViewportView(tbRegion);
-
-        graphJPanel.setBackground(new java.awt.Color(247, 247, 247));
-
-        javax.swing.GroupLayout graphJPanelLayout = new javax.swing.GroupLayout(graphJPanel);
-        graphJPanel.setLayout(graphJPanelLayout);
-        graphJPanelLayout.setHorizontalGroup(
-            graphJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout containerSearchOverTimePanelLayout = new javax.swing.GroupLayout(containerSearchOverTimePanel);
+        containerSearchOverTimePanel.setLayout(containerSearchOverTimePanelLayout);
+        containerSearchOverTimePanelLayout.setHorizontalGroup(
+            containerSearchOverTimePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        graphJPanelLayout.setVerticalGroup(
-            graphJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        containerSearchOverTimePanelLayout.setVerticalGroup(
+            containerSearchOverTimePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 452, Short.MAX_VALUE)
         );
 
-        searchRelatedJPanel.setBackground(new java.awt.Color(247, 247, 247));
+        containerSearchRelatedJPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout searchRelatedJPanelLayout = new javax.swing.GroupLayout(searchRelatedJPanel);
-        searchRelatedJPanel.setLayout(searchRelatedJPanelLayout);
-        searchRelatedJPanelLayout.setHorizontalGroup(
-            searchRelatedJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout containerSearchRelatedJPanelLayout = new javax.swing.GroupLayout(containerSearchRelatedJPanel);
+        containerSearchRelatedJPanel.setLayout(containerSearchRelatedJPanelLayout);
+        containerSearchRelatedJPanelLayout.setHorizontalGroup(
+            containerSearchRelatedJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1236, Short.MAX_VALUE)
+        );
+        containerSearchRelatedJPanelLayout.setVerticalGroup(
+            containerSearchRelatedJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 404, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout containerSearchRelatedTopicPanelLayout = new javax.swing.GroupLayout(containerSearchRelatedTopicPanel);
+        containerSearchRelatedTopicPanel.setLayout(containerSearchRelatedTopicPanelLayout);
+        containerSearchRelatedTopicPanelLayout.setHorizontalGroup(
+            containerSearchRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        searchRelatedJPanelLayout.setVerticalGroup(
-            searchRelatedJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 399, Short.MAX_VALUE)
+        containerSearchRelatedTopicPanelLayout.setVerticalGroup(
+            containerSearchRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        containerRelatedTopicPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout containerRelatedTopicPanelLayout = new javax.swing.GroupLayout(containerRelatedTopicPanel);
+        containerRelatedTopicPanel.setLayout(containerRelatedTopicPanelLayout);
+        containerRelatedTopicPanelLayout.setHorizontalGroup(
+            containerRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        containerRelatedTopicPanelLayout.setVerticalGroup(
+            containerRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 403, Short.MAX_VALUE)
+        );
+
+        containerSearchRegionPanel.setBackground(new java.awt.Color(255, 255, 255));
+        containerSearchRegionPanel.setPreferredSize(new java.awt.Dimension(786, 396));
+
+        javax.swing.GroupLayout containerSearchRegionPanelLayout = new javax.swing.GroupLayout(containerSearchRegionPanel);
+        containerSearchRegionPanel.setLayout(containerSearchRegionPanelLayout);
+        containerSearchRegionPanelLayout.setHorizontalGroup(
+            containerSearchRegionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 780, Short.MAX_VALUE)
+        );
+        containerSearchRegionPanelLayout.setVerticalGroup(
+            containerSearchRegionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 380, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(searchRelatedJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1236, Short.MAX_VALUE)
-                    .addComponent(graphJPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(containerRelatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(containerSearchRelatedJPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(containerSearchOverTimePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(containerSearchRegionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 780, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(containerSearchRelatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(30, 30, 30))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(graphJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(containerSearchOverTimePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(containerSearchRegionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(containerSearchRelatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addComponent(containerSearchRelatedJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(40, 40, 40)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(searchRelatedJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(30, 30, 30))
+                .addComponent(containerRelatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(43, 43, 43))
         );
+
+        containerSearchRelatedJPanel.setMinimumSize(new Dimension(1236, 397));
+        containerRelatedTopicPanel.setMinimumSize(new Dimension(1236, 397));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -111,80 +166,56 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel graphJPanel;
+    private javax.swing.JPanel containerRelatedTopicPanel;
+    private javax.swing.JPanel containerSearchOverTimePanel;
+    private javax.swing.JPanel containerSearchRegionPanel;
+    private javax.swing.JPanel containerSearchRelatedJPanel;
+    private javax.swing.JPanel containerSearchRelatedTopicPanel;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel searchRelatedJPanel;
-    private javax.swing.JTable tbRegion;
     // End of variables declaration//GEN-END:variables
 
-    private void showSearchRelated() {
-        searchRelatedJPanel.removeAll();
-        int column = 1;
-        if (searchRelatedReponses.size() >= 3) {
-            column = 2;
-        }
-        if (searchRelatedReponses.size() == 5) {
-            column = 3;
-        }
-        searchRelatedJPanel.setLayout(new GridLayout(column, 2));
-        for (int i = 0; i < searchRelatedReponses.size(); i++) {
-            searchRelatedJPanel.add(new tbSearchRelatedJPanel(searchRelatedReponses.get(i)));
-        }
-        searchRelatedJPanel.validate();
-        searchRelatedJPanel.repaint();
+    public void initData1() {
+        searchOverTimePanel.loadData(searchOvertimeRequest);
+        searchRegionPanel.loadData(searchRegionRequest);
+        searchRelatedPanel.loadData(searchRelatedQueryRequest);
+        searchRelatedTopicPanel.loadData(searchRelatedTopicRequest);
     }
 
-    private void showSearchRegion() {
-        DefaultTableModel regionModel = (DefaultTableModel) tbRegion.getModel();
-        regionModel.addColumn("Region");
-        for (int i = 0; i < searchRegionReponses.size(); i++) {
-            regionModel.addColumn(searchRegionReponses.get(i).getColumn());
-        }
-        Object[] row = new Object[6];
+    private void initContainer1() {
+        containerSearchOverTimePanel.setLayout(new BorderLayout());
+        containerSearchOverTimePanel.add(searchOverTimePanel);
+        containerSearchOverTimePanel.invalidate();
 
-        for (int i = 0; i < searchRegionReponses.get(0).getRegionReponses().size(); i++) {
-            row[0] = searchRegionReponses.get(0).getRegionReponses().get(i).getName();
-            row[1] = searchRegionReponses.get(0).getRegionReponses().get(i).getTotal();
-            for (int j = 0; j < searchRegionReponses.get(1).getRegionReponses().size(); j++) {
-                if (searchRegionReponses.get(0).getRegionReponses().get(i).getName().equalsIgnoreCase(searchRegionReponses.get(1).getRegionReponses().get(j).getName())) {
-                    row[2] = searchRegionReponses.get(1).getRegionReponses().get(j).getTotal();
-                }
-            }
-            if (searchRegionReponses.size() >= 3) {
-                for (int j = 0; j < searchRegionReponses.get(2).getRegionReponses().size(); j++) {
-                    if (searchRegionReponses.get(0).getRegionReponses().get(i).getName().equalsIgnoreCase(searchRegionReponses.get(2).getRegionReponses().get(j).getName())) {
-                        row[3] = searchRegionReponses.get(2).getRegionReponses().get(j).getTotal();
-                    }
-                }
-            }
-            if (searchRegionReponses.size() >= 4) {
-                for (int j = 0; j < searchRegionReponses.get(3).getRegionReponses().size(); j++) {
-                    if (searchRegionReponses.get(0).getRegionReponses().get(i).getName().equalsIgnoreCase(searchRegionReponses.get(3).getRegionReponses().get(j).getName())) {
-                        row[4] = searchRegionReponses.get(3).getRegionReponses().get(j).getTotal();
-                    }
-                }
-            }
-            if (searchRegionReponses.size() >= 5) {
-                for (int j = 0; j < searchRegionReponses.get(4).getRegionReponses().size(); j++) {
-                    if (searchRegionReponses.get(0).getRegionReponses().get(i).getName().equalsIgnoreCase(searchRegionReponses.get(4).getRegionReponses().get(j).getName())) {
-                        row[5] = searchRegionReponses.get(4).getRegionReponses().get(j).getTotal();
-                    }
-                }
-            }
-            regionModel.addRow(row);
-        }
+        containerSearchRegionPanel.setLayout(new BorderLayout());
+        containerSearchRegionPanel.add(searchRegionPanel);
+        containerSearchRegionPanel.invalidate();
+
+        containerSearchRelatedJPanel.setLayout(new BorderLayout());
+        containerSearchRelatedJPanel.add(searchRelatedPanel);
+        containerSearchRelatedJPanel.invalidate();
+
+        containerSearchRelatedTopicPanel.setLayout(new BorderLayout());
+        containerSearchRelatedTopicPanel.add(searchRelatedTopicPanel);
+        containerSearchRelatedTopicPanel.invalidate();
     }
 
-    private void showGraph() {
-        List<String> keySearchs = new ArrayList<>();
-        for (int i = 0; i < searchRelatedReponses.size(); i++) {
-            keySearchs.add(searchRelatedReponses.get(i).getColunm());
-        }
-        graphJPanel.removeAll();
-        graphJPanel.setLayout(new BorderLayout());
-        graphJPanel.add(new lineGraph(keySearchs, searchOverTimeReponse));
-        graphJPanel.validate();
-        graphJPanel.repaint();
+    public void initData2() {
+        searchOverTimePanel.loadData(searchOvertimeRequest);
+        searchRegionPanel.loadData(searchRegionRequest);
+        searchRelatedPanel.loadData(searchRelatedQueryRequest);
+    }
+
+    private void initContainer2() {
+        containerSearchOverTimePanel.setLayout(new BorderLayout());
+        containerSearchOverTimePanel.add(searchOverTimePanel);
+        containerSearchOverTimePanel.invalidate();
+
+        containerSearchRegionPanel.setLayout(new BorderLayout());
+        containerSearchRegionPanel.add(searchRegionPanel);
+        containerSearchRegionPanel.invalidate();
+
+        containerSearchRelatedJPanel.setLayout(new BorderLayout());
+        containerSearchRelatedJPanel.add(searchRelatedPanel);
+        containerSearchRelatedJPanel.invalidate();
     }
 }
