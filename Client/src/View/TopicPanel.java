@@ -8,6 +8,8 @@ package View;
 import Services.Interfaces.Interfaces;
 import Services.MyClient;
 import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -142,11 +144,19 @@ public class TopicPanel extends javax.swing.JPanel {
                 btn_next.invalidate();
                 btn_previous.invalidate();
         scrollPane.removeAll();
-        JPanel listTopic = new JPanel(new GridLayout(list.size(),0));
-        for(int i =0;i<list.size();i++){
-            listTopic.add(new TopicItemView(list.get(i)),new GridLayout(i+1,0));
+        if(list.size() > 0){
+            JPanel listTopic = new JPanel(new GridLayout(list.size(),0));
+            for(int i =0;i<list.size();i++){
+                listTopic.add(new TopicItemView(list.get(i)),new GridLayout(i+1,0));
+            }
+            scrollPane.add(listTopic);
+        }else {
+            JPanel listTopic = new JPanel(new GridBagLayout());
+            JLabel jLabel =new JLabel("No result or Api Limit");
+            jLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+            listTopic.add(jLabel);
+            scrollPane.add(listTopic);
         }
-        scrollPane.add(listTopic);
 
   }
 
@@ -157,7 +167,6 @@ public class TopicPanel extends javax.swing.JPanel {
         MyClient.getInstance().getRelatedTopic(relatedTopicRequest,new Interfaces.IRelatedTopicListener() {
             @Override
             public void OnGetRelatedTopicSuccess(List<RelatedTopicReponse> listRelatedTopicReponse) {
-              
                 initData(listRelatedTopicReponse);
                 dismisLoading();
             }

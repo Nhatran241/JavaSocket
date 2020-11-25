@@ -343,10 +343,9 @@ public class MyClient {
                 }
             }
         } catch (ParseException ex) {
-            Logger.getLogger(MyClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }finally{
         return relatedTopicReponses;
+        }
     }
 
     public SearchOverTimeReponse setSearchOvertime(String inputString) {
