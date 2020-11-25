@@ -3,6 +3,7 @@ package View;
 import Services.Interfaces.Interfaces;
 import Services.MyClient;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,11 +11,6 @@ import java.util.Date;
 import java.util.List;
 import javalibrary.model.Category;
 import javalibrary.model.Geo;
-import javalibrary.model.reponse.ListRelatedTopicReponse;
-import javalibrary.model.reponse.SearchOverTimeReponse;
-import javalibrary.model.reponse.SearchRegionReponse;
-import javalibrary.model.reponse.SearchRelatedReponse;
-import javalibrary.model.reponse.SearchRelatedTopicReponse;
 import javalibrary.model.request.RelatedTopicRequest;
 import javalibrary.model.request.SearchOvertimeRequest;
 import javalibrary.model.request.SearchRegionRequest;
@@ -29,18 +25,13 @@ import javax.swing.JScrollPane;
 public class searchJPanel extends javax.swing.JPanel {
 
     MyClient myClient = MyClient.getInstance();
-    String[] dateStrings = {"The past 12 months", "Hours passed", "Last 4 hours", "Last day", "Last 7 days", "30 days", "90 days", "The past 5 years"};
-    JLabel label;
-    
-    /**
-     * Defind container
-     */
-    searchOneKeyJPanel seacOneKeyJPanel = new searchOneKeyJPanel();
-    
+    String[] dateStrings = {"The past 12 months", "Hours passed", "Last 4 hours", "Last day", "Last 7 days", "30 days", "90 days", "The past 5 years", "Custom time"};
+    JLabel loading;
+
     public searchJPanel() {
         initComponents();
-        initContainer();
-        initLoadingPanel();
+        initUI();
+        showLoading();
         txSearch2.setEditable(false);
         txSearch3.setEditable(false);
         txSearch4.setEditable(false);
@@ -52,24 +43,25 @@ public class searchJPanel extends javax.swing.JPanel {
                 myClient.getCategory(new Interfaces.IGetCategoryListener() {
                     @Override
                     public void onGetCategorySuccess(List<Category> categorys) {
-                        //closeLoadingImage();
+
                         showcbCatetegoryData(categorys);
                         myClient.getGeo(new Interfaces.IGetGeoListener() {
                             @Override
                             public void onGetGeoSuccess(List<Geo> geo) {
                                 showcbGeoData(geo);
-
+                                dismisLoading();
                             }
 
                             @Override
                             public void onGetGeoFailed() {
+                                dismisLoading();
                             }
                         });
                     }
 
                     @Override
                     public void onGetCategoryFailed() {
-                    closeLoadingImage();
+                        dismisLoading();
                     }
                 });
             }
@@ -81,40 +73,28 @@ public class searchJPanel extends javax.swing.JPanel {
             @Override
             public void onDisconnect() {
                 JOptionPane.showMessageDialog(jPanel1, "Disconnect to server, try to reconnect");
-                myClient.connect(new Interfaces.IConnectListener() {
-                    @Override
-                    public void onConnectSuccess() {
-                    }
+                showLoading();
+                Boolean flag = false;
+                do {
+                    myClient.connect(new Interfaces.IConnectListener() {
+                        @Override
+                        public void onConnectSuccess() {
+                            flag = true;
+                            dismisLoading();
+                        }
 
-                    @Override
-                    public void onConnectFailed() {
-                    }
+                        @Override
+                        public void onConnectFailed() {
+                        }
 
-                    @Override
-                    public void onDisconnect() {
-                    }
-                });
+                        @Override
+                        public void onDisconnect() {
+                        }
+                    });
+                } while (flag);
             }
         });
         showcbDateData();
-    }
-
-    public void showLoadingImage() {
-        searchReponseJPanel.removeAll();
-        searchReponseJPanel.repaint();
-        searchReponseJPanel.add(label, BorderLayout.CENTER);
-
-    }
-
-    public void closeLoadingImage() {
-        searchReponseJPanel.remove(label);
-    }
-
-    private void initLoadingPanel() {
-        Icon loadingImage = new ImageIcon(this.getClass().getResource("../image/goodLoading.gif"));
-        label = new JLabel(loadingImage);
-        label.setSize(200, 200);
-        label.setLocation(600, 200);
     }
 
     @SuppressWarnings("unchecked")
@@ -157,6 +137,11 @@ public class searchJPanel extends javax.swing.JPanel {
                 txSearch2ActionPerformed(evt);
             }
         });
+        txSearch2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txSearch2KeyPressed(evt);
+            }
+        });
 
         txSearch3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txSearch3.addActionListener(new java.awt.event.ActionListener() {
@@ -186,11 +171,6 @@ public class searchJPanel extends javax.swing.JPanel {
         txSearch5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txSearch5ActionPerformed(evt);
-            }
-        });
-        txSearch5.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txSearch5KeyPressed(evt);
             }
         });
 
@@ -331,35 +311,35 @@ public class searchJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txSearch1KeyPressed
 
     private void txSearch3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txSearch3KeyPressed
-        if (!txSearch2.getText().isEmpty()) {
-            txSearch3.setEditable(true);
-        } else {
-            txSearch3.setText("");
-            txSearch3.setEditable(false);
-        }
-    }//GEN-LAST:event_txSearch3KeyPressed
-
-    private void txSearch4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txSearch4KeyPressed
         if (!txSearch3.getText().isEmpty()) {
             txSearch4.setEditable(true);
         } else {
             txSearch4.setText("");
             txSearch4.setEditable(false);
         }
-    }//GEN-LAST:event_txSearch4KeyPressed
+    }//GEN-LAST:event_txSearch3KeyPressed
 
-    private void txSearch5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txSearch5KeyPressed
+    private void txSearch4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txSearch4KeyPressed
         if (!txSearch4.getText().isEmpty()) {
             txSearch5.setEditable(true);
         } else {
             txSearch5.setText("");
             txSearch5.setEditable(false);
         }
-    }//GEN-LAST:event_txSearch5KeyPressed
+    }//GEN-LAST:event_txSearch4KeyPressed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         BtnSearch();
     }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void txSearch2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txSearch2KeyPressed
+        if (!txSearch2.getText().isEmpty()) {
+            txSearch3.setEditable(true);
+        } else {
+            txSearch3.setText("");
+            txSearch3.setEditable(false);
+        }
+    }//GEN-LAST:event_txSearch2KeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -472,144 +452,64 @@ public class searchJPanel extends javax.swing.JPanel {
         } else if (cbdate.contains("The past 5 years")) {
             c.add(Calendar.YEAR, -5);
         }
-        
+
         searchRegionRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
         searchRelatedQueryRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
         searchRelatedTopicRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
         searchOvertimeRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
 
-        
         if (!txsearch1.isEmpty()) {
             if (txsearch2.isEmpty() && txsearch3.isEmpty() && txsearch4.isEmpty() && txsearch5.isEmpty()) {
-               /**
-                myClient.getSearchRegion(searchRegionRequest, new Interfaces.IGetSearchRegionListener() {
-                    @Override
-                    public void OnGetSearchRegionSuccess(List<SearchRegionReponse> searchRegionReponses) {
-                        myClient.getSearchRelated(searchRelatedQueryRequest, new Interfaces.ISearchRelatedListener() {
-                            @Override
-                            public void OnGetSearchRelatedSuccess(List<SearchRelatedReponse> searchRelatedReponses) {
-                                myClient.getSearchRelatedTopic(searchRelatedTopicRequest, new Interfaces.ISearchRelatedTopicListener() {
-                                    @Override
-                                    public void OnGetSearchRelatedTopicSuccess(List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
-                                        myClient.getSearchOvertime(searchOvertimeRequest, new Interfaces.ISearchOvertimeListener() {
-                                            @Override
-                                            public void OnGetSearchOvertimeSuccess(SearchOverTimeReponse searchOverTimeReponse) {
-                                                relatedTopicRequest.setRelatedTopicQuery(txsearch1);
-                                                myClient.getRelatedTopic(relatedTopicRequest, new Interfaces.IRelatedTopicListener() {
-                                                    @Override
-                                                    public void OnGetRelatedTopicSuccess(ListRelatedTopicReponse listRelatedTopicReponse) {
-                                                        if (!searchRelatedReponses.isEmpty() && !searchRelatedTopicReponses.isEmpty()) {
-                                                            //seacOneKeyJPanel =new searchOneKeyJPanel(listRelatedTopicReponse, searchOverTimeReponse, searchRegionReponses, searchRelatedReponses, searchRelatedTopicReponses);
-                                                           
-                                                        } else {
-                                                            JOptionPane.showMessageDialog(jPanel1, "Search results are empty");
-                                                        }
-
-                                                    }
-
-                                                    @Override
-                                                    public void OnGetRelatedTopicFailed() {
-                                                    }
-                                                });
-                                            }
-
-                                            @Override
-                                            public void OnGetSearchOvertimeFailed() {
-                                            }
-                                        });
-                                    }
-
-                                    @Override
-                                    public void OnGetSearchRelatedTopicFailed() {
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void OnGetSearchRelatedFailed() {
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void OnGetSearchRegionFailed() {
-                    }
-                });
-               
+                JScrollPane jScrollPane = new JScrollPane(new searchReponsesJPanel(searchOvertimeRequest, searchRegionRequest, searchRelatedQueryRequest, searchRelatedTopicRequest, relatedTopicRequest), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                searchReponseJPanel.removeAll();
+                searchReponseJPanel.setLayout(new BorderLayout());
+                searchReponseJPanel.add(jScrollPane);
+                searchReponseJPanel.validate();
+                searchReponseJPanel.repaint();
             } else {
-                myClient.getSearchRegion(searchRegionRequest, new Interfaces.IGetSearchRegionListener() {
-                    @Override
-                    public void OnGetSearchRegionSuccess(List<SearchRegionReponse> searchRegionReponses) {
-                        myClient.getSearchRelated(searchRelatedQueryRequest, new Interfaces.ISearchRelatedListener() {
-                            @Override
-                            public void OnGetSearchRelatedSuccess(List<SearchRelatedReponse> searchRelatedReponses) {
-                                myClient.getSearchOvertime(searchOvertimeRequest, new Interfaces.ISearchOvertimeListener() {
-                                    @Override
-                                    public void OnGetSearchOvertimeSuccess(SearchOverTimeReponse searchOverTimeReponse) {
-                                        Boolean flag = false;
-                                        for (int i = 0; i < searchRelatedReponses.size(); i++) {
-                                            SearchRelatedReponse searchRelatedReponse = searchRelatedReponses.get(i);
-                                            if (!searchRelatedReponse.getRelatedReponses().isEmpty()) {
-                                                flag = true;
-                                                break;
-                                            }
-                                        }
-
-                                        if (flag) {
-                                            JScrollPane jScrollPane = new JScrollPane(new searchReponsesJPanel(searchOverTimeReponse, searchRegionReponses, searchRelatedReponses), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-                                            searchReponseJPanel.removeAll();
-                                            searchReponseJPanel.setLayout(new BorderLayout());
-                                            searchReponseJPanel.add(jScrollPane);
-                                            searchReponseJPanel.validate();
-                                            searchReponseJPanel.repaint();
-                                        } else {
-                                            JOptionPane.showMessageDialog(jPanel1, "Search results are empty");
-                                        }
-                                    }
-
-                                    @Override
-                                    public void OnGetSearchOvertimeFailed() {
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void OnGetSearchRelatedFailed() {
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void OnGetSearchRegionFailed() {
-                    }
-                });
-                **/
-               //one key
-                seacOneKeyJPanel.RequestSearchOvertime(searchOvertimeRequest);
-            }else {
-               // multikey 
-               
-            
+                List<RelatedTopicRequest> relatedTopicRequests = new ArrayList<>();
+                JScrollPane jScrollPane = new JScrollPane(new searchReponsesJPanel(searchOvertimeRequest, searchRegionRequest, searchRelatedQueryRequest, relatedTopicRequests), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                searchReponseJPanel.removeAll();
+                searchReponseJPanel.setLayout(new BorderLayout());
+                searchReponseJPanel.add(jScrollPane);
+                searchReponseJPanel.validate();
+                searchReponseJPanel.repaint();
             }
         } else {
             JOptionPane.showMessageDialog(jPanel1, "You have not entered keywords");
         }
-        
-        /**
-         * Ràng buộc dữ liệu
-         */
-        
+
     }
 
-    private void initContainer() {
-        
-         JScrollPane jScrollPane = new JScrollPane(seacOneKeyJPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-         searchReponseJPanel.removeAll();
-         searchReponseJPanel.setLayout(new BorderLayout());
-         searchReponseJPanel.add(jScrollPane);
-         searchReponseJPanel.validate();
-         searchReponseJPanel.repaint();
-      }
+    private void showLoading() {
 
-   
+        jPanel1.setVisible(false);
+        loading.setVisible(true);
+        invalidate();
+    }
+
+    private void dismisLoading() {
+        jPanel1.setVisible(true);
+        loading.setVisible(false);
+        invalidate();
+
+    }
+
+    private void showTryAgain() {
+
+    }
+
+    private void onTryAgainClick() {
+
+    }
+
+    private void initUI() {
+        Icon loadingImage = new ImageIcon(this.getClass().getResource("../image/goodLoading.gif"));
+        loading = new JLabel(loadingImage);
+        loading.setVisible(false);
+        loading.setSize(200, 200);
+        loading.setLocation(600, 400);
+        add(loading, BorderLayout.CENTER);
+    }
+
 }

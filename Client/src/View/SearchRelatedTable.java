@@ -4,11 +4,11 @@ import javalibrary.model.reponse.RelatedReponse;
 import javalibrary.model.reponse.SearchRelatedReponse;
 import javax.swing.table.DefaultTableModel;
 
-public class tbSearchRelatedJPanel extends javax.swing.JPanel {
+public class SearchRelatedTable extends javax.swing.JPanel {
 
     SearchRelatedReponse searchRelatedReponse;
 
-    public tbSearchRelatedJPanel(SearchRelatedReponse searchRelatedReponse) {
+    public SearchRelatedTable(SearchRelatedReponse searchRelatedReponse) {
         initComponents();
         this.searchRelatedReponse = searchRelatedReponse;
         showdata();

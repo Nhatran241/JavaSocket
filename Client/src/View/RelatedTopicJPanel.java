@@ -1,13 +1,8 @@
 package View;
 
 import java.awt.Desktop;
-import java.awt.Image;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import javalibrary.model.reponse.RelatedTopicReponse;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 public class RelatedTopicJPanel extends javax.swing.JPanel {
 

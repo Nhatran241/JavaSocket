@@ -14,12 +14,12 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javalibrary.model.reponse.SearchOverTimeReponse;
 
-public class lineGraph extends JFXPanel {
+public class SearchOverTimeGraph extends JFXPanel {
 
     SearchOverTimeReponse searchOverTimeReponse;
     List<String> keyseachs;
 
-    public lineGraph(List<String> keysearchs, SearchOverTimeReponse searchOverTimeReponse) {
+    public SearchOverTimeGraph(List<String> keysearchs, SearchOverTimeReponse searchOverTimeReponse) {
         super();
         this.searchOverTimeReponse = searchOverTimeReponse;
         this.keyseachs = keysearchs;
@@ -42,7 +42,7 @@ public class lineGraph extends JFXPanel {
 
         LineChart<String, Number> lineChart = new LineChart<>(xAxis, yAxis);
         lineChart.setMinWidth(1350);
-        lineChart.setMinHeight(450);
+        lineChart.setMinHeight(500);
         XYChart.Series<String, Number> data1 = new XYChart.Series<>();
         XYChart.Series<String, Number> data2 = new XYChart.Series<>();
         XYChart.Series<String, Number> data3 = new XYChart.Series<>();
