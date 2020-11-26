@@ -44,6 +44,7 @@ public class TopicPanel extends javax.swing.JPanel {
         btn_previous = new javax.swing.JButton();
         btn_next = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1236, 524));
 
         btn_previous.setText("previous page");

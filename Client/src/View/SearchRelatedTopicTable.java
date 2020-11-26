@@ -20,6 +20,8 @@ public class SearchRelatedTopicTable extends javax.swing.JPanel {
         relatedTopicTable = new javax.swing.JTable();
         nameJLabel = new javax.swing.JLabel();
 
+        searchRelatedTopicPanel.setBackground(new java.awt.Color(255, 255, 255));
+
         relatedTopicTable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         relatedTopicTable.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         relatedTopicTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -71,18 +73,23 @@ public class SearchRelatedTopicTable extends javax.swing.JPanel {
         searchRelatedTopicPanelLayout.setHorizontalGroup(
             searchRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(searchRelatedTopicPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(nameJLabel)
-                .addContainerGap(449, Short.MAX_VALUE))
-            .addComponent(jScrollPane2)
+                .addGroup(searchRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(searchRelatedTopicPanelLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(searchRelatedTopicPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(nameJLabel)))
+                .addGap(15, 15, 15))
         );
         searchRelatedTopicPanelLayout.setVerticalGroup(
             searchRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchRelatedTopicPanelLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addContainerGap()
                 .addComponent(nameJLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
