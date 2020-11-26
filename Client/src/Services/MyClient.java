@@ -1,5 +1,6 @@
 package Services;
 
+import Services.Interfaces.Interfaces;
 import Services.Interfaces.Interfaces.IConnectListener;
 import Services.Interfaces.Interfaces.IGetCategoryListener;
 import Services.Interfaces.Interfaces.IGetGeoListener;
@@ -34,6 +35,7 @@ import javalibrary.model.request.SearchOvertimeRequest;
 import javalibrary.model.request.SearchRegionRequest;
 import javalibrary.model.request.SearchRelatedQueryRequest;
 import javalibrary.model.request.SearchRelatedTopicRequest;
+import javalibrary.model.request.SuggestionsKeywordRequest;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -49,6 +51,7 @@ public class MyClient {
     private ISearchRelatedTopicListener iSearchRelatedTopicListener;
     private IRelatedTopicListener iRelatedTopicListener;
     private ISearchOvertimeListener iSearchOvertimeListener;
+    private Interfaces.ISuggestionKeywordListener iSuggestionKeywordListener;
 
     List<String> keySearchs = new ArrayList<>();
 
@@ -92,6 +95,8 @@ public class MyClient {
                         SetRelatedTopic(message);
                     } else if (message.contains(SearchOvertimeRequest.class.getSimpleName())) {
                         setSearchOvertime(message);
+                    } else if (message.contains(SuggestionsKeywordRequest.class.getSimpleName())){
+                        setSuggestionKeyword(message);
                     }
                 }
             }
@@ -143,6 +148,11 @@ public class MyClient {
     public void getSearchOvertime(SearchOvertimeRequest searchOvertimeRequest, ISearchOvertimeListener i) {
         this.iSearchOvertimeListener = i;
         myClientTranceiver.sendWithEncrypt(searchOvertimeRequest);
+    }
+    
+    public void getSuggestionKeyword(SuggestionsKeywordRequest suggestionsKeywordRequest,Interfaces.ISuggestionKeywordListener i){
+        this.iSuggestionKeywordListener = i;
+        myClientTranceiver.sendWithEncrypt(suggestionsKeywordRequest);
     }
 
     public void SetGeo(String inputString) {
@@ -243,7 +253,6 @@ public class MyClient {
                 JSONObject jSONObjectKey = (JSONObject) jSONObject.get(keySearchs.get(i).trim());
                 JSONObject raising = (JSONObject) jSONObjectKey.get("rising");
                 JSONObject top = (JSONObject) jSONObjectKey.get("top");
-                
                 
                 JSONArray raisingData = (JSONArray) raising.get("data");
                 JSONArray topData = (JSONArray) top.get("data");
@@ -369,5 +378,10 @@ public class MyClient {
         } finally {
             iSearchOvertimeListener.OnGetSearchOvertimeSuccess(searchOverTimeReponse);
         }
+    }
+    
+    
+    public void setSuggestionKeyword(String inputString){
+        System.out.println(""+inputString);
     }
 }
