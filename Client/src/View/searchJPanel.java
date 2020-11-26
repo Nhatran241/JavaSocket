@@ -461,42 +461,60 @@ public class searchJPanel extends javax.swing.JPanel {
         searchRelatedQueryRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
         searchRelatedTopicRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
         searchOvertimeRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
-        
         if (cbdate.contains("Hours passed")) {
             searchRegionRequest.setFromDate("now1h");
             searchRelatedQueryRequest.setFromDate("now1h");
             searchRelatedTopicRequest.setFromDate("now1h");
             searchOvertimeRequest.setFromDate("now1h");
+            searchRegionRequest.setToDate("");
+            searchRelatedQueryRequest.setToDate("");
+            searchRelatedTopicRequest.setToDate("");
+            searchOvertimeRequest.setToDate("");
         } else if (cbdate.contains("Last 4 hours")) {
-            
             searchRegionRequest.setFromDate("now4h");
             searchRelatedQueryRequest.setFromDate("now4h");
             searchRelatedTopicRequest.setFromDate("now4h");
             searchOvertimeRequest.setFromDate("now4h");
+            searchRegionRequest.setToDate("");
+            searchRelatedQueryRequest.setToDate("");
+            searchRelatedTopicRequest.setToDate("");
+            searchOvertimeRequest.setToDate("");
         } else if (cbdate.contains("Last day")) {
-            
             searchRegionRequest.setFromDate("now1d");
             searchRelatedQueryRequest.setFromDate("now1d");
             searchRelatedTopicRequest.setFromDate("now1d");
             searchOvertimeRequest.setFromDate("now1d");
+            searchRegionRequest.setToDate("");
+            searchRelatedQueryRequest.setToDate("");
+            searchRelatedTopicRequest.setToDate("");
+            searchOvertimeRequest.setToDate("");
         } else if (cbdate.contains("Last 7 days")) {
-            
             searchRegionRequest.setFromDate("now7d");
             searchRelatedQueryRequest.setFromDate("now7d");
             searchRelatedTopicRequest.setFromDate("now7d");
             searchOvertimeRequest.setFromDate("now7d");
+            searchRegionRequest.setToDate("");
+            searchRelatedQueryRequest.setToDate("");
+            searchRelatedTopicRequest.setToDate("");
+            searchOvertimeRequest.setToDate("");
         } else if (cbdate.contains("30 days")) {
-            
             searchRegionRequest.setFromDate("now1m");
             searchRelatedQueryRequest.setFromDate("now1m");
             searchRelatedTopicRequest.setFromDate("now1m");
             searchOvertimeRequest.setFromDate("now1m");
+            searchRegionRequest.setToDate("");
+            searchRelatedQueryRequest.setToDate("");
+            searchRelatedTopicRequest.setToDate("");
+            searchOvertimeRequest.setToDate("");
         } else if (cbdate.contains("90 days")) {
-            
             searchRegionRequest.setFromDate("now3m");
             searchRelatedQueryRequest.setFromDate("now3m");
             searchRelatedTopicRequest.setFromDate("now3m");
             searchOvertimeRequest.setFromDate("now3m");
+            searchRegionRequest.setToDate("");
+            searchRelatedQueryRequest.setToDate("");
+            searchRelatedTopicRequest.setToDate("");
+            searchOvertimeRequest.setToDate("");
         } 
 //        
 //        Calendar c2 = Calendar.getInstance();

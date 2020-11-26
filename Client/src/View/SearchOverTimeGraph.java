@@ -22,7 +22,6 @@ public class SearchOverTimeGraph extends JFXPanel {
     public SearchOverTimeGraph(List<String> keysearchs, SearchOverTimeReponse searchOverTimeReponse) {
         super();
         this.searchOverTimeReponse = searchOverTimeReponse;
-        
         this.keyseachs = keysearchs;
         Platform.setImplicitExit(false);
         Platform.runLater(new Runnable() {
@@ -49,8 +48,9 @@ public class SearchOverTimeGraph extends JFXPanel {
         XYChart.Series<String, Number> data3 = new XYChart.Series<>();
         XYChart.Series<String, Number> data4 = new XYChart.Series<>();
         XYChart.Series<String, Number> data5 = new XYChart.Series<>();
+        int start = searchOverTimeReponse.getIndex().size() - 47;
         if (keyseachs.size() >= 1) {
-            for (int j = 0; j < searchOverTimeReponse.getIndex().size(); j++) {
+            for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
                 DateFormat simple = new SimpleDateFormat("dd-MM-yyyy");
                 String result = simple.format(new Date(index));
@@ -60,7 +60,7 @@ public class SearchOverTimeGraph extends JFXPanel {
             }
         }
         if (keyseachs.size() >= 2) {
-            for (int j = 0; j < searchOverTimeReponse.getIndex().size(); j++) {
+            for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
                 DateFormat simple = new SimpleDateFormat("dd-MM-yyyy");
                 String result = simple.format(new Date(index));
@@ -70,7 +70,7 @@ public class SearchOverTimeGraph extends JFXPanel {
             }
         }
         if (keyseachs.size() >= 3) {
-            for (int j = 0; j < searchOverTimeReponse.getIndex().size(); j++) {
+            for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
                 DateFormat simple = new SimpleDateFormat("dd-MM-yyyy");
                 String result = simple.format(new Date(index));
@@ -80,7 +80,7 @@ public class SearchOverTimeGraph extends JFXPanel {
             }
         }
         if (keyseachs.size() >= 4) {
-            for (int j = 0; j < searchOverTimeReponse.getIndex().size(); j++) {
+            for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
                 DateFormat simple = new SimpleDateFormat("dd-MM-yyyy");
                 String result = simple.format(new Date(index));
@@ -90,7 +90,7 @@ public class SearchOverTimeGraph extends JFXPanel {
             }
         }
         if (keyseachs.size() >= 5) {
-            for (int j = 0; j < searchOverTimeReponse.getIndex().size(); j++) {
+            for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
                 DateFormat simple = new SimpleDateFormat("dd-MM-yyyy");
                 String result = simple.format(new Date(index));
