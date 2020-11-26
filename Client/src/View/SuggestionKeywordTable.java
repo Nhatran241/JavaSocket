@@ -1,17 +1,18 @@
 package View;
 
-import javalibrary.model.reponse.RelatedReponse;
-import javalibrary.model.reponse.SearchRelatedReponse;
+import javalibrary.model.reponse.SuggesstionKeywordResponse;
+import javalibrary.model.reponse.SuggesstionResponse;
 import javax.swing.table.DefaultTableModel;
 
 public class SuggestionKeywordTable extends javax.swing.JPanel {
 
-    SearchRelatedReponse searchRelatedReponse;
-     DefaultTableModel relatedModel;
+    SuggesstionKeywordResponse suggesstionKeywordResponse;
+    DefaultTableModel relatedModel;
 
-    public SuggestionKeywordTable(SearchRelatedReponse searchRelatedReponse) {
+    public SuggestionKeywordTable(SuggesstionKeywordResponse suggesstionKeywordResponse) {
         initComponents();
-        this.searchRelatedReponse = searchRelatedReponse;
+        this.suggesstionKeywordResponse = suggesstionKeywordResponse;
+        relatedModel = (DefaultTableModel) tbRelated.getModel();
         showdata();
     }
 
@@ -26,7 +27,7 @@ public class SuggestionKeywordTable extends javax.swing.JPanel {
         setBackground(new java.awt.Color(247, 247, 247));
 
         nameJLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        nameJLabel.setText("jLabel1");
+        nameJLabel.setText("Suggestions Keyword");
 
         tbRelated.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tbRelated.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
@@ -35,14 +36,14 @@ public class SuggestionKeywordTable extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Keyword"
+                "Keyword", "Type"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class
+                java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false
+                false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -105,30 +106,16 @@ public class SuggestionKeywordTable extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void showdata() {
-        nameJLabel.setText(searchRelatedReponse.getColunm());
-        relatedModel = (DefaultTableModel) tbRelated.getModel();
-        showTopData();
+        removeAllRow();
+        Object[] row = new Object[2];
+        for (SuggesstionResponse suggesstionResponse : suggesstionKeywordResponse.getResponse()) {
+            row[0] = suggesstionResponse.getTitle();
+            row[1] = suggesstionResponse.getType();
+            relatedModel.addRow(row);
+        }
        
     }
-    private void showTopData(){
-        removeAllRow();
-        Object[] row = new Object[2];
-        for (RelatedReponse relatedReponse : searchRelatedReponse.getRelatedReponses()) {
-            row[0] = relatedReponse.getName();
-            row[1] = relatedReponse.getTop();
-            System.out.println(""+relatedReponse.getTop() +" / "+relatedReponse.getRising());
-            relatedModel.addRow(row);
-        }
-    }
-    private void showRaisingData(){
-        removeAllRow();
-        Object[] row = new Object[2];
-        for (RelatedReponse relatedReponse : searchRelatedReponse.getRelatedReponses()) {
-            row[0] = relatedReponse.getName();
-            row[1] = relatedReponse.getRising();
-            relatedModel.addRow(row);
-        }
-    }
+   
 
     private void removeAllRow() {
        for (int i = relatedModel.getRowCount() - 1; i >= 0; i--) {

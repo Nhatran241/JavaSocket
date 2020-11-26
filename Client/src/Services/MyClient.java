@@ -28,6 +28,8 @@ import javalibrary.model.reponse.SearchOverTimeReponse;
 import javalibrary.model.reponse.SearchRegionReponse;
 import javalibrary.model.reponse.SearchRelatedReponse;
 import javalibrary.model.reponse.SearchRelatedTopicReponse;
+import javalibrary.model.reponse.SuggesstionKeywordResponse;
+import javalibrary.model.reponse.SuggesstionResponse;
 import javalibrary.model.request.CategoriesRequest;
 import javalibrary.model.request.GeoRequestCountry;
 import javalibrary.model.request.RelatedTopicRequest;
@@ -266,8 +268,8 @@ public class MyClient {
                 }
                 searchRelatedReponses.add(new SearchRelatedReponse(keySearchs.get(i), listItem));
             }
-        } catch (ParseException ex) {
-            Logger.getLogger(MyClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            iSearchRelatedListener.OnGetSearchRelatedFailed();
         } finally {
             iSearchRelatedListener.OnGetSearchRelatedSuccess(searchRelatedReponses);
         }
@@ -321,21 +323,22 @@ public class MyClient {
         List<RelatedTopicReponse> relatedTopicReponses = new ArrayList<>();
         inputString = inputString.replace(RelatedTopicRequest.class.getSimpleName(), "");
         JSONParser jSONParser = new JSONParser();
-        System.out.println("inputString: " + inputString);
         try {
-            JSONArray jSONArray = (JSONArray) jSONParser.parse(inputString);
+            JSONObject items = (JSONObject) jSONParser.parse(inputString);
+            JSONArray jSONArray = (JSONArray) items.get("items");
             for (int i = 0; i < jSONArray.size(); i++) {
                 JSONObject jSONObject = (JSONObject) jSONArray.get(i);
-                if (jSONObject.get("og:title") != null && jSONObject.get("og:url") != null) {
+                if (jSONObject.get("title") != null && jSONObject.get("link") != null) {
                     RelatedTopicReponse relatedTopicReponse = new RelatedTopicReponse();
-                    relatedTopicReponse.setTitle(jSONObject.get("og:title").toString());
-                    relatedTopicReponse.setUrl(jSONObject.get("og:url").toString());
-                    relatedTopicReponse.setDescription(jSONObject.get("og:description") != null ? jSONObject.get("og:description").toString() : "");
-                    relatedTopicReponse.setImage(jSONObject.get("og:image") != null ? jSONObject.get("og:image").toString() : "");
+                    relatedTopicReponse.setTitle(jSONObject.get("title").toString());
+                    relatedTopicReponse.setUrl(jSONObject.get("link").toString());
+                    relatedTopicReponse.setDescription(jSONObject.get("snippet") != null ? jSONObject.get("snippet").toString() : "");
+                    relatedTopicReponse.setImage("");
                     relatedTopicReponses.add(relatedTopicReponse);
                 }
             }
-        } catch (ParseException ex) {
+        } catch (Exception ex) {
+            iRelatedTopicListener.OnGetRelatedTopicFailed();
         } finally {
             iRelatedTopicListener.OnGetRelatedTopicSuccess(relatedTopicReponses);
         }
@@ -381,6 +384,23 @@ public class MyClient {
     
     
     public void setSuggestionKeyword(String inputString){
-        System.out.println(""+inputString);
+        inputString = inputString.replace(SuggestionsKeywordRequest.class.getSimpleName(), "");
+        SuggesstionKeywordResponse suggesstionKeywordResponse = new SuggesstionKeywordResponse();
+        List<SuggesstionResponse> keyword = new ArrayList<>();
+        
+        JSONParser jSONParser = new JSONParser();
+            try {
+                JSONArray jsonData = (JSONArray)jSONParser.parse(inputString);
+                for (int i = 0; i < jsonData.size(); i++) {
+                    JSONObject data = (JSONObject) jsonData.get(i);
+                    keyword.add(new SuggesstionResponse(data.get("title").toString(), data.get("type").toString()));
+                }
+                suggesstionKeywordResponse.setResponse(keyword);
+            } catch (Exception e) {
+                System.out.println(e);
+                iSuggestionKeywordListener.OnGetSuggestionKeywordFailed();
+            } finally {
+            iSuggestionKeywordListener.OnGetSuggestionKeywordSuccess(suggesstionKeywordResponse);
+        }
     }
 }

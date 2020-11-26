@@ -398,6 +398,7 @@ public class searchJPanel extends javax.swing.JPanel {
         SearchRelatedTopicRequest searchRelatedTopicRequest = new SearchRelatedTopicRequest();
         SearchOvertimeRequest searchOvertimeRequest = new SearchOvertimeRequest();
         RelatedTopicRequest relatedTopicRequest = new RelatedTopicRequest();
+        SuggestionsKeywordRequest suggestionsKeywordRequest = new SuggestionsKeywordRequest();
 
         List<String> listSearchs = new ArrayList<>();
         if (!txsearch1.isEmpty()) {
@@ -460,10 +461,59 @@ public class searchJPanel extends javax.swing.JPanel {
         searchRelatedQueryRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
         searchRelatedTopicRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
         searchOvertimeRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
-
+        
+        if (cbdate.contains("Hours passed")) {
+            searchRegionRequest.setFromDate("now1h");
+            searchRelatedQueryRequest.setFromDate("now1h");
+            searchRelatedTopicRequest.setFromDate("now1h");
+            searchOvertimeRequest.setFromDate("now1h");
+        } else if (cbdate.contains("Last 4 hours")) {
+            
+            searchRegionRequest.setFromDate("now4h");
+            searchRelatedQueryRequest.setFromDate("now4h");
+            searchRelatedTopicRequest.setFromDate("now4h");
+            searchOvertimeRequest.setFromDate("now4h");
+        } else if (cbdate.contains("Last day")) {
+            
+            searchRegionRequest.setFromDate("now1d");
+            searchRelatedQueryRequest.setFromDate("now1d");
+            searchRelatedTopicRequest.setFromDate("now1d");
+            searchOvertimeRequest.setFromDate("now1d");
+        } else if (cbdate.contains("Last 7 days")) {
+            
+            searchRegionRequest.setFromDate("now7d");
+            searchRelatedQueryRequest.setFromDate("now7d");
+            searchRelatedTopicRequest.setFromDate("now7d");
+            searchOvertimeRequest.setFromDate("now7d");
+        } else if (cbdate.contains("30 days")) {
+            
+            searchRegionRequest.setFromDate("now1m");
+            searchRelatedQueryRequest.setFromDate("now1m");
+            searchRelatedTopicRequest.setFromDate("now1m");
+            searchOvertimeRequest.setFromDate("now1m");
+        } else if (cbdate.contains("90 days")) {
+            
+            searchRegionRequest.setFromDate("now3m");
+            searchRelatedQueryRequest.setFromDate("now3m");
+            searchRelatedTopicRequest.setFromDate("now3m");
+            searchOvertimeRequest.setFromDate("now3m");
+        } 
+//        
+//        Calendar c2 = Calendar.getInstance();
+//        Date dt2 = new Date();
+//        c2.setTime(dt2);
+//        
+//        searchRegionRequest.setToDate(new SimpleDateFormat("yyyy-MM-dd").format(c2.getTime()));
+//        searchRelatedQueryRequest.setToDate(new SimpleDateFormat("yyyy-MM-dd").format(c2.getTime()));
+//        searchRelatedTopicRequest.setToDate(new SimpleDateFormat("yyyy-MM-dd").format(c2.getTime()));
+//        searchOvertimeRequest.setToDate(new SimpleDateFormat("yyyy-MM-dd").format(c2.getTime()));
+        
+        
+        
         if (!txsearch1.isEmpty()) {
             if (txsearch2.isEmpty() && txsearch3.isEmpty() && txsearch4.isEmpty() && txsearch5.isEmpty()) {
-                JScrollPane jScrollPane = new JScrollPane(new searchReponsesJPanel(searchOvertimeRequest, searchRegionRequest, searchRelatedQueryRequest, searchRelatedTopicRequest, relatedTopicRequest , su), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                suggestionsKeywordRequest.setKeyword(txsearch1.toString());
+                JScrollPane jScrollPane = new JScrollPane(new searchReponsesJPanel(searchOvertimeRequest, searchRegionRequest, searchRelatedQueryRequest, searchRelatedTopicRequest, relatedTopicRequest , suggestionsKeywordRequest), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                 searchReponseJPanel.removeAll();
                 searchReponseJPanel.setLayout(new BorderLayout());
                 searchReponseJPanel.add(jScrollPane);

@@ -21,12 +21,11 @@ public class SuggestionKeywordPanel extends javax.swing.JPanel {
     }
 
     public void loadData(SuggestionsKeywordRequest suggestionsKeywordRequest) {
-        
         showLoading();
         MyClient.getInstance().getSuggestionKeyword(suggestionsKeywordRequest, new Interfaces.ISuggestionKeywordListener() {
             @Override
             public void OnGetSuggestionKeywordSuccess(SuggesstionKeywordResponse suggesstionKeywordResponse) {
-//                initData(suggesstionKeywordResponse);
+                initData(suggesstionKeywordResponse);
                 dismisLoading();
             }
 
@@ -43,16 +42,16 @@ public class SuggestionKeywordPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        searchRelatedTopicPanel = new javax.swing.JPanel();
+        suggestionKeywordPanel = new javax.swing.JPanel();
 
-        javax.swing.GroupLayout searchRelatedTopicPanelLayout = new javax.swing.GroupLayout(searchRelatedTopicPanel);
-        searchRelatedTopicPanel.setLayout(searchRelatedTopicPanelLayout);
-        searchRelatedTopicPanelLayout.setHorizontalGroup(
-            searchRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout suggestionKeywordPanelLayout = new javax.swing.GroupLayout(suggestionKeywordPanel);
+        suggestionKeywordPanel.setLayout(suggestionKeywordPanelLayout);
+        suggestionKeywordPanelLayout.setHorizontalGroup(
+            suggestionKeywordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 791, Short.MAX_VALUE)
         );
-        searchRelatedTopicPanelLayout.setVerticalGroup(
-            searchRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        suggestionKeywordPanelLayout.setVerticalGroup(
+            suggestionKeywordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 446, Short.MAX_VALUE)
         );
 
@@ -60,50 +59,35 @@ public class SuggestionKeywordPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(searchRelatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(suggestionKeywordPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(searchRelatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(suggestionKeywordPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel searchRelatedTopicPanel;
+    private javax.swing.JPanel suggestionKeywordPanel;
     // End of variables declaration//GEN-END:variables
-  /**
-    private void initData(List<SearchRelatedReponse> searchRelatedReponses) {
-        searchRelatedTopicPanel.removeAll();
-        int column = 1;
-        int row = 1;
-        if (searchRelatedReponses.size() >= 3) {
-            column = 2;
-        }
-        if (searchRelatedReponses.size() == 5) {
-            column = 3;
-        }
-        if (searchRelatedReponses.size() >= 2) {
-            row = 2;
-        }
-        searchRelatedTopicPanel.setLayout(new GridLayout(column, row));
-        for (int i = 0; i < searchRelatedReponses.size(); i++) {
-            searchRelatedTopicPanel.add(new SearchRelatedTable(searchRelatedReponses.get(i)));
-        }
-        searchRelatedTopicPanel.validate();
-        searchRelatedTopicPanel.repaint();
+    private void initData(SuggesstionKeywordResponse suggesstionKeywordResponse) {
+        suggestionKeywordPanel.removeAll();
+        suggestionKeywordPanel.setLayout(new BorderLayout());
+        suggestionKeywordPanel.add(new SuggestionKeywordTable(suggesstionKeywordResponse));
+        suggestionKeywordPanel.validate();
+        suggestionKeywordPanel.repaint();
     }
 
-* **/
     private void showLoading() {
 
-        searchRelatedTopicPanel.setVisible(false);
+        suggestionKeywordPanel.setVisible(false);
         loading.setVisible(true);
         invalidate();
     }
 
     private void dismisLoading() {
-        searchRelatedTopicPanel.setVisible(true);
+        suggestionKeywordPanel.setVisible(true);
         loading.setVisible(false);
         invalidate();
 

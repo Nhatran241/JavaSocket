@@ -5,18 +5,22 @@
  */
 package javalibrary.model.reponse;
 
+import java.util.List;
+
 /**
  *
  * @author trann
  */
 public class SuggesstionKeywordResponse {
-    String keyword;
+    List<SuggesstionResponse> response;
 
-    public SuggesstionKeywordResponse(String keyword) {
-        this.keyword = keyword;
+    public SuggesstionKeywordResponse() {
     }
-    public String getKeyword(){
-        return keyword;
+    public List<SuggesstionResponse> getResponse(){
+        return response;
+    }
+    public void setResponse(List<SuggesstionResponse> response){
+        this.response = response;
     }
     
     

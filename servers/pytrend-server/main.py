@@ -12,23 +12,42 @@ def searchi():
   rcat = request.args.get('cat', default = "", type = str)
   rgeo = request.args.get('geo', default = "", type = str)
   rdatefrom = request.args.get('from', type = str).replace("'", "")
+  if rdatefrom == 'now3m': rdatefrom = 'today 3-m'
+  if rdatefrom == 'now2m': rdatefrom = 'today 2-m'
+  if rdatefrom == 'now1m': rdatefrom = 'today 1-m'
+  if rdatefrom == 'now7d': rdatefrom = 'now 7-d'
+  if rdatefrom == 'now1d': rdatefrom = 'now 1-d'
+  if rdatefrom == 'now4h': rdatefrom = 'now 4-H'
+  if rdatefrom == 'now1h': rdatefrom = 'now 1-H'
   rdateto = request.args.get('to', type = str).replace("'", "")
   pytrend = TrendReq(hl='en-US', tz=360)
-  if rdatefrom != "" and rdateto != "" :
+  if rdatefrom != "" or rdateto != "" :
       if rgeo !="" and rcat != "" :
         print("full")
-        pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom+" "+rdateto)
+        if rdateto != "" :
+          pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom+" "+rdateto)
+        else :
+          pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom)
       else :
         if rgeo != "" :
           print("no cat")
-          pytrend.build_payload(kw_list=rkeyword,geo=rgeo,timeframe=rdatefrom+' '+rdateto)
+          if rdateto != "" :
+            pytrend.build_payload(kw_list=rkeyword,geo=rgeo,timeframe=rdatefrom+' '+rdateto)
+          else :
+            pytrend.build_payload(kw_list=rkeyword,geo=rgeo,timeframe=rdatefrom)
         else :
           if rcat != "" :
             print("no geo")
-            pytrend.build_payload(kw_list=rkeyword,cat=rcat,timeframe=rdatefrom+' '+rdateto)
+            if rdateto != "" :
+              pytrend.build_payload(kw_list=rkeyword,cat=rcat,timeframe=rdatefrom+' '+rdateto)
+            else :
+              pytrend.build_payload(kw_list=rkeyword,cat=rcat,timeframe=rdatefrom)
           else :
             print("no geo no cat")
-            pytrend.build_payload(kw_list=rkeyword,timeframe=rdatefrom+' '+rdateto) 
+            if rdateto != "" :
+              pytrend.build_payload(kw_list=rkeyword,timeframe=rdatefrom+' '+rdateto)
+            else :
+              pytrend.build_payload(kw_list=rkeyword,timeframe=rdatefrom)
   else :
         if rgeo !="" and rcat != "" :
           print("full no date")
@@ -54,23 +73,42 @@ def searcho():
   rcat = request.args.get('cat', default = "", type = str)
   rgeo = request.args.get('geo', default = "", type = str)
   rdatefrom = request.args.get('from', type = str).replace("'", "")
+  if rdatefrom == 'now3m': rdatefrom = 'today 3-m'
+  if rdatefrom == 'now2m': rdatefrom = 'today 2-m'
+  if rdatefrom == 'now1m': rdatefrom = 'today 1-m'
+  if rdatefrom == 'now7d': rdatefrom = 'now 7-d'
+  if rdatefrom == 'now1d': rdatefrom = 'now 1-d'
+  if rdatefrom == 'now4h': rdatefrom = 'now 4-H'
+  if rdatefrom == 'now1h': rdatefrom = 'now 1-H'
   rdateto = request.args.get('to', type = str).replace("'", "")
   pytrend = TrendReq(hl='en-US', tz=360)
-  if rdatefrom != "" and rdateto != "" :
+  if rdatefrom != "" or rdateto != "" :
       if rgeo !="" and rcat != "" :
         print("full")
-        pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom+" "+rdateto)
+        if rdateto != "" :
+          pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom+" "+rdateto)
+        else :
+          pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom)
       else :
         if rgeo != "" :
           print("no cat")
-          pytrend.build_payload(kw_list=rkeyword,geo=rgeo,timeframe=rdatefrom+' '+rdateto)
+          if rdateto != "" :
+            pytrend.build_payload(kw_list=rkeyword,geo=rgeo,timeframe=rdatefrom+' '+rdateto)
+          else :
+            pytrend.build_payload(kw_list=rkeyword,geo=rgeo,timeframe=rdatefrom)
         else :
           if rcat != "" :
             print("no geo")
-            pytrend.build_payload(kw_list=rkeyword,cat=rcat,timeframe=rdatefrom+' '+rdateto)
+            if rdateto != "" :
+              pytrend.build_payload(kw_list=rkeyword,cat=rcat,timeframe=rdatefrom+' '+rdateto)
+            else :
+              pytrend.build_payload(kw_list=rkeyword,cat=rcat,timeframe=rdatefrom)
           else :
             print("no geo no cat")
-            pytrend.build_payload(kw_list=rkeyword,timeframe=rdatefrom+' '+rdateto) 
+            if rdateto != "" :
+              pytrend.build_payload(kw_list=rkeyword,timeframe=rdatefrom+' '+rdateto)
+            else :
+              pytrend.build_payload(kw_list=rkeyword,timeframe=rdatefrom) 
   else :
         if rgeo !="" and rcat != "" :
           print("full no date")
@@ -96,23 +134,42 @@ def searcht():
   rcat = request.args.get('cat', default = "", type = str)
   rgeo = request.args.get('geo', default = "", type = str)
   rdatefrom = request.args.get('from', type = str).replace("'", "")
+  if rdatefrom == 'now3m': rdatefrom = 'today 3-m'
+  if rdatefrom == 'now2m': rdatefrom = 'today 2-m'
+  if rdatefrom == 'now1m': rdatefrom = 'today 1-m'
+  if rdatefrom == 'now7d': rdatefrom = 'now 7-d'
+  if rdatefrom == 'now1d': rdatefrom = 'now 1-d'
+  if rdatefrom == 'now4h': rdatefrom = 'now 4-H'
+  if rdatefrom == 'now1h': rdatefrom = 'now 1-H'
   rdateto = request.args.get('to', type = str).replace("'", "")
   pytrend = TrendReq(hl='en-US', tz=360)
-  if rdatefrom != "" and rdateto != "" :
+  if rdatefrom != "" or rdateto != "" :
       if rgeo !="" and rcat != "" :
         print("full")
-        pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom+" "+rdateto)
+        if rdateto != "" :
+          pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom+" "+rdateto)
+        else :
+          pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom)
       else :
         if rgeo != "" :
           print("no cat")
-          pytrend.build_payload(kw_list=rkeyword,geo=rgeo,timeframe=rdatefrom+' '+rdateto)
+          if rdateto != "" :
+            pytrend.build_payload(kw_list=rkeyword,geo=rgeo,timeframe=rdatefrom+' '+rdateto)
+          else :
+            pytrend.build_payload(kw_list=rkeyword,geo=rgeo,timeframe=rdatefrom)
         else :
           if rcat != "" :
             print("no geo")
-            pytrend.build_payload(kw_list=rkeyword,cat=rcat,timeframe=rdatefrom+' '+rdateto)
+            if rdateto != "" :
+              pytrend.build_payload(kw_list=rkeyword,cat=rcat,timeframe=rdatefrom+' '+rdateto)
+            else :
+              pytrend.build_payload(kw_list=rkeyword,cat=rcat,timeframe=rdatefrom)
           else :
             print("no geo no cat")
-            pytrend.build_payload(kw_list=rkeyword,timeframe=rdatefrom+' '+rdateto) 
+            if rdateto != "" :
+              pytrend.build_payload(kw_list=rkeyword,timeframe=rdatefrom+' '+rdateto)
+            else :
+              pytrend.build_payload(kw_list=rkeyword,timeframe=rdatefrom) 
   else :
         if rgeo !="" and rcat != "" :
           print("full no date")
@@ -141,23 +198,42 @@ def searchr():
   rcat = request.args.get('cat', default = "", type = str)
   rgeo = request.args.get('geo', default = "", type = str)
   rdatefrom = request.args.get('from', type = str).replace("'", "")
+  if rdatefrom == 'now3m': rdatefrom = 'today 3-m'
+  if rdatefrom == 'now2m': rdatefrom = 'today 2-m'
+  if rdatefrom == 'now1m': rdatefrom = 'today 1-m'
+  if rdatefrom == 'now7d': rdatefrom = 'now 7-d'
+  if rdatefrom == 'now1d': rdatefrom = 'now 1-d'
+  if rdatefrom == 'now4h': rdatefrom = 'now 4-H'
+  if rdatefrom == 'now1h': rdatefrom = 'now 1-H'
   rdateto = request.args.get('to', type = str).replace("'", "")
   pytrend = TrendReq(hl='en-US', tz=360)
-  if rdatefrom != "" and rdateto != "" :
+  if rdatefrom != "" or rdateto != "" :
     if rgeo !="" and rcat != "" :
       print("full")
-      pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom+" "+rdateto)
+      if rdateto != "" :
+        pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom+" "+rdateto)
+      else :
+        pytrend.build_payload(kw_list=rkeyword,geo=rgeo,cat=rcat,timeframe=rdatefrom)
     else :
       if rgeo != "" :
         print("no cat")
-        pytrend.build_payload(kw_list=rkeyword,geo=rgeo,timeframe=rdatefrom+' '+rdateto)
+        if rdateto != "" :
+          pytrend.build_payload(kw_list=rkeyword,geo=rgeo,timeframe=rdatefrom+' '+rdateto)
+        else :
+          pytrend.build_payload(kw_list=rkeyword,geo=rgeo,timeframe=rdatefrom)
       else :
         if rcat != "" :
           print("no geo")
-          pytrend.build_payload(kw_list=rkeyword,cat=rcat,timeframe=rdatefrom+' '+rdateto)
+          if rdateto != "" :
+            pytrend.build_payload(kw_list=rkeyword,cat=rcat,timeframe=rdatefrom+' '+rdateto)
+          else :
+            pytrend.build_payload(kw_list=rkeyword,cat=rcat,timeframe=rdatefrom)
         else :
           print("no geo no cat")
-          pytrend.build_payload(kw_list=rkeyword,timeframe=rdatefrom+' '+rdateto) 
+          if rdateto != "" :
+            pytrend.build_payload(kw_list=rkeyword,timeframe=rdatefrom+' '+rdateto)
+          else :
+            pytrend.build_payload(kw_list=rkeyword,timeframe=rdatefrom) 
   else :
       if rgeo !="" and rcat != "" :
         print("full no date")

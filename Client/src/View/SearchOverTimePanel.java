@@ -3,6 +3,7 @@ package View;
 import Services.Interfaces.Interfaces;
 import Services.MyClient;
 import java.awt.BorderLayout;
+import java.awt.Font;
 import javalibrary.model.reponse.SearchOverTimeReponse;
 import javalibrary.model.request.SearchOvertimeRequest;
 import javax.swing.Icon;
@@ -11,7 +12,7 @@ import javax.swing.JLabel;
 
 public class SearchOverTimePanel extends javax.swing.JPanel {
 
-    JLabel loading;
+    JLabel loading,error;
     public SearchOverTimePanel() {
         initComponents();
         initUI();
@@ -75,11 +76,16 @@ public class SearchOverTimePanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void initData(SearchOvertimeRequest searchOvertimeRequest, SearchOverTimeReponse searchOverTimeReponse) {
+        if(searchOverTimeReponse.getOverTimeReponses()==null || searchOverTimeReponse.getOverTimeReponses().size() == 0){
+            error.setVisible(true);
+        }else{
+             error.setVisible(false);
         graphPanel.removeAll();
         graphPanel.setLayout(new BorderLayout());
         graphPanel.add(new SearchOverTimeGraph(searchOvertimeRequest.getSearchQuery(), searchOverTimeReponse));
         graphPanel.validate();
         graphPanel.repaint();
+        }
 
   }
 
@@ -87,13 +93,11 @@ public class SearchOverTimePanel extends javax.swing.JPanel {
         
          graphPanel.setVisible(false);
          loading.setVisible(true);
-         invalidate();
     }
      
     private void dismisLoading(){
          graphPanel.setVisible(true);
          loading.setVisible(false);
-         invalidate();
     
     }
     private void showTryAgain(){
@@ -110,5 +114,11 @@ public class SearchOverTimePanel extends javax.swing.JPanel {
         loading.setSize(200, 200);
         loading.setLocation(600, 150);
         add(loading,BorderLayout.CENTER);
+        
+        error = new JLabel("No data");
+        error.setVisible(false);
+        error.setFont(new Font("Serif", Font.PLAIN, 20));
+        error.setLocation(600, 150);
+        add(error,BorderLayout.CENTER);
     }
 }
