@@ -21,12 +21,14 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
     SearchRelatedPanel searchRelatedPanel = new SearchRelatedPanel();
     SearchRelatedTopicPanel searchRelatedTopicPanel = new SearchRelatedTopicPanel();
     SearchRegionPanel searchRegionPanel = new SearchRegionPanel();
+    TopicPanel topicPanel = new TopicPanel();
 
     public searchReponsesJPanel(SearchOvertimeRequest searchOvertimeRequest, SearchRegionRequest searchRegionRequest, SearchRelatedQueryRequest searchRelatedQueryRequest, SearchRelatedTopicRequest searchRelatedTopicRequest, RelatedTopicRequest relatedTopicRequest) {
         this.searchOvertimeRequest = searchOvertimeRequest;
         this.searchRegionRequest = searchRegionRequest;
         this.searchRelatedQueryRequest = searchRelatedQueryRequest;
         this.searchRelatedTopicRequest = searchRelatedTopicRequest;
+        this.relatedTopicRequest = relatedTopicRequest;
         initComponents();
         initContainer1();
         initData1();
@@ -179,6 +181,7 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         searchRegionPanel.loadData(searchRegionRequest);
         searchRelatedPanel.loadData(searchRelatedQueryRequest);
         searchRelatedTopicPanel.loadData(searchRelatedTopicRequest);
+        topicPanel.loadData(relatedTopicRequest);
     }
 
     private void initContainer1() {
@@ -197,6 +200,10 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         containerSearchRelatedTopicPanel.setLayout(new BorderLayout());
         containerSearchRelatedTopicPanel.add(searchRelatedTopicPanel);
         containerSearchRelatedTopicPanel.invalidate();
+        
+        containerRelatedTopicPanel.setLayout(new BorderLayout());
+        containerRelatedTopicPanel.add(topicPanel);
+        containerRelatedTopicPanel.invalidate();
     }
 
     public void initData2() {

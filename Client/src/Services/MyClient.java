@@ -14,6 +14,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonSyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javalibrary.SocketTransceiver;
 import javalibrary.model.Category;
 import javalibrary.model.Geo;
@@ -232,47 +234,35 @@ public class MyClient {
     public void SetSearchRelated(String inputString) {
         List<SearchRelatedReponse> searchRelatedReponses = new ArrayList<>();
         inputString = inputString.replace(SearchRelatedQueryRequest.class.getSimpleName(), "");
-
-        for (int i = 0; i < keySearchs.size(); i++) {
-            List<RelatedReponse> relatedReponses = new ArrayList<>();
-            JSONParser jSONParser = new JSONParser();
-            try {
-                JSONObject jSONObject = (JSONObject) jSONParser.parse(inputString);
-                jSONObject = (JSONObject) jSONObject.get(keySearchs.get(i));
-                JSONObject jSONrising = (JSONObject) jSONObject.get("rising");
-
-                try {
-                    JSONArray jSONArray = (JSONArray) jSONrising.get("data");
-                    for (int j = 0; j < jSONArray.size(); j++) {
-                        JSONArray item = (JSONArray) jSONArray.get(j);
-                        String name = item.get(0).toString();
-                        name = name.replace("\"", "");
-                        String rising = item.get(1).toString();
-                        relatedReponses.add(new RelatedReponse(name, rising));
-                    }
-                    JSONObject jSONtop = (JSONObject) jSONObject.get("top");
-                    jSONArray = (JSONArray) jSONtop.get("data");
-                    for (int j = 0; j < jSONArray.size(); j++) {
-                        JSONArray item = (JSONArray) jSONArray.get(j);
-                        String name = item.get(0).toString();
-                        name = name.replace("\"", "");
-                        String top = item.get(1).toString();
-                        for (RelatedReponse relatedReponse : relatedReponses) {
-                            if (relatedReponse.getName().equalsIgnoreCase(name)) {
-                                relatedReponse.setTop(top);
-                            }
-                        }
-                    }
-                } catch (Exception e) {
-                    System.out.println(e);
+        JSONParser jSONParser = new JSONParser();
+        JSONObject jSONObject;
+        try {
+            jSONObject = (JSONObject) jSONParser.parse(inputString);
+            for (int i = 0; i < keySearchs.size(); i++) {
+                List<RelatedReponse> listItem = new ArrayList<>();
+                JSONObject jSONObjectKey = (JSONObject) jSONObject.get(keySearchs.get(i).trim());
+                JSONObject raising = (JSONObject) jSONObjectKey.get("rising");
+                JSONObject top = (JSONObject) jSONObjectKey.get("top");
+                
+                
+                JSONArray raisingData = (JSONArray) raising.get("data");
+                JSONArray topData = (JSONArray) top.get("data");
+                
+                for (int j = 0; j < raisingData.size(); j++) {
+                    JSONArray itemDataRaising = (JSONArray) raisingData.get(j);
+                    JSONArray itemDataTop = (JSONArray) topData.get(j);
+                    String name = (String) itemDataRaising.get(0);
+                    String raisingdata = itemDataRaising.get(1).toString();
+                    String topdata =itemDataTop.get(1).toString();
+                    listItem.add(new RelatedReponse(name, raisingdata,topdata));
                 }
-
-            } catch (ParseException ex) {
-                System.out.println(ex);
+                searchRelatedReponses.add(new SearchRelatedReponse(keySearchs.get(i), listItem));
             }
-            searchRelatedReponses.add(new SearchRelatedReponse(keySearchs.get(i), relatedReponses));
-        }
+        } catch (ParseException ex) {
+            Logger.getLogger(MyClient.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
         iSearchRelatedListener.OnGetSearchRelatedSuccess(searchRelatedReponses);
+        }
     }
 
     public void SetSearchRelatedTopic(String inputString) {
