@@ -21,6 +21,7 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
     SearchRelatedPanel searchRelatedPanel = new SearchRelatedPanel();
     SearchRelatedTopicPanel searchRelatedTopicPanel = new SearchRelatedTopicPanel();
     SearchRegionPanel searchRegionPanel = new SearchRegionPanel();
+    TopicPanel topicPanel = new TopicPanel();
 
     public searchReponsesJPanel(SearchOvertimeRequest searchOvertimeRequest, SearchRegionRequest searchRegionRequest, SearchRelatedQueryRequest searchRelatedQueryRequest, SearchRelatedTopicRequest searchRelatedTopicRequest, RelatedTopicRequest relatedTopicRequest) {
         this.searchOvertimeRequest = searchOvertimeRequest;
@@ -83,7 +84,7 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         containerSearchRelatedTopicPanel.setLayout(containerSearchRelatedTopicPanelLayout);
         containerSearchRelatedTopicPanelLayout.setHorizontalGroup(
             containerSearchRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 420, Short.MAX_VALUE)
         );
         containerSearchRelatedTopicPanelLayout.setVerticalGroup(
             containerSearchRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,6 +180,8 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         searchRegionPanel.loadData(searchRegionRequest);
         searchRelatedPanel.loadData(searchRelatedQueryRequest);
         searchRelatedTopicPanel.loadData(searchRelatedTopicRequest);
+        System.out.println("relatedTopicRequest: " + relatedTopicRequest);
+        topicPanel.loadData(relatedTopicRequest);
     }
 
     private void initContainer1() {
@@ -197,6 +200,10 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         containerSearchRelatedTopicPanel.setLayout(new BorderLayout());
         containerSearchRelatedTopicPanel.add(searchRelatedTopicPanel);
         containerSearchRelatedTopicPanel.invalidate();
+        
+        containerRelatedTopicPanel.setLayout(new BorderLayout());
+        containerRelatedTopicPanel.add(topicPanel);
+        containerRelatedTopicPanel.invalidate();
     }
 
     public void initData2() {

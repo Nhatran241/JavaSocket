@@ -323,7 +323,7 @@ public class MyClient {
         List<RelatedTopicReponse> relatedTopicReponses = new ArrayList<>();
         inputString = inputString.replace(RelatedTopicRequest.class.getSimpleName(), "");
         JSONParser jSONParser = new JSONParser();
-
+        System.out.println("inputString: " + inputString);
         try {
             JSONArray jSONArray = (JSONArray) jSONParser.parse(inputString);
             for (int i = 0; i < jSONArray.size(); i++) {
