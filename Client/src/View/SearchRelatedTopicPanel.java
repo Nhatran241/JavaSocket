@@ -106,7 +106,7 @@ public class SearchRelatedTopicPanel extends javax.swing.JPanel {
         loading = new JLabel(loadingImage);
         loading.setVisible(false);
         loading.setSize(200, 200);
-        loading.setLocation(200, 80);
+        loading.setLocation(250, 150);
         add(loading, BorderLayout.CENTER);
     }
 }

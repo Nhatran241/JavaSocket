@@ -76,6 +76,7 @@ public class MyClient {
 
             @Override
             public void onReceive(SocketTransceiver transceiver, String message) {
+                System.out.println(message);
                 if (!message.isEmpty()) {
                     if (message.contains(GeoRequestCountry.class.getSimpleName())) {
                         SetGeo(message);
