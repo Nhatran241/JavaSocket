@@ -417,13 +417,13 @@ public class searchJPanel extends javax.swing.JPanel {
         searchRelatedQueryRequest.setSearchQuery(listSearchs);
         searchRelatedTopicRequest.setSearchQuery(listSearchs);
         searchOvertimeRequest.setSearchQuery(listSearchs);
+        relatedTopicRequest.setRelatedTopicQuery(listSearchs.get(0));
+        relatedTopicRequest.setPageNumber(0);
 
         searchRegionRequest.setCategory(new Category(cbcategoty));
         searchRelatedQueryRequest.setCategory(new Category(cbcategoty));
         searchRelatedTopicRequest.setCategory(new Category(cbcategoty));
         searchOvertimeRequest.setCategory(new Category(cbcategoty));
-        
-        
 
         if (!cbgeo.equalsIgnoreCase("AA")) {
             searchRegionRequest.setGeo(new Geo(cbgeo));

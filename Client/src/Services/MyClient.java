@@ -79,7 +79,6 @@ public class MyClient {
 
             @Override
             public void onReceive(SocketTransceiver transceiver, String message) {
-//                System.out.println("message: " + message);
                 if (!message.isEmpty()) {
                     if (message.contains(GeoRequestCountry.class.getSimpleName())) {
                         SetGeo(message);
@@ -238,7 +237,7 @@ public class MyClient {
         } finally {
             iGetSearchRegionListener.OnGetSearchRegionSuccess(searchRegionReponses);
         }
-        
+
     }
 
     public void SetSearchRelated(String inputString) {
@@ -253,24 +252,28 @@ public class MyClient {
                 JSONObject jSONObjectKey = (JSONObject) jSONObject.get(keySearchs.get(i).trim());
                 JSONObject raising = (JSONObject) jSONObjectKey.get("rising");
                 JSONObject top = (JSONObject) jSONObjectKey.get("top");
+<<<<<<< HEAD
                 
+=======
+
+>>>>>>> 45e0d23638c8d897b23c28e0d4094e518c744d67
                 JSONArray raisingData = (JSONArray) raising.get("data");
                 JSONArray topData = (JSONArray) top.get("data");
-                
+
                 for (int j = 0; j < raisingData.size(); j++) {
                     JSONArray itemDataRaising = (JSONArray) raisingData.get(j);
                     JSONArray itemDataTop = (JSONArray) topData.get(j);
                     String name = (String) itemDataRaising.get(0);
                     String raisingdata = itemDataRaising.get(1).toString();
-                    String topdata =itemDataTop.get(1).toString();
-                    listItem.add(new RelatedReponse(name, raisingdata,topdata));
+                    String topdata = itemDataTop.get(1).toString();
+                    listItem.add(new RelatedReponse(name, raisingdata, topdata));
                 }
                 searchRelatedReponses.add(new SearchRelatedReponse(keySearchs.get(i), listItem));
             }
         } catch (ParseException ex) {
             Logger.getLogger(MyClient.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-        iSearchRelatedListener.OnGetSearchRelatedSuccess(searchRelatedReponses);
+        } finally {
+            iSearchRelatedListener.OnGetSearchRelatedSuccess(searchRelatedReponses);
         }
     }
 
@@ -314,7 +317,7 @@ public class MyClient {
         } finally {
             iSearchRelatedTopicListener.OnGetSearchRelatedTopicSuccess(searchRelatedTopicReponses);
         }
-        
+
     }
 
     public void SetRelatedTopic(String inputString) {
@@ -322,7 +325,7 @@ public class MyClient {
         List<RelatedTopicReponse> relatedTopicReponses = new ArrayList<>();
         inputString = inputString.replace(RelatedTopicRequest.class.getSimpleName(), "");
         JSONParser jSONParser = new JSONParser();
-
+        System.out.println("inputString: " + inputString);
         try {
             JSONArray jSONArray = (JSONArray) jSONParser.parse(inputString);
             for (int i = 0; i < jSONArray.size(); i++) {

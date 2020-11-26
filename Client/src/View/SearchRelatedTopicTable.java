@@ -71,12 +71,10 @@ public class SearchRelatedTopicTable extends javax.swing.JPanel {
         searchRelatedTopicPanelLayout.setHorizontalGroup(
             searchRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(searchRelatedTopicPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
-            .addGroup(searchRelatedTopicPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(nameJLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(449, Short.MAX_VALUE))
+            .addComponent(jScrollPane2)
         );
         searchRelatedTopicPanelLayout.setVerticalGroup(
             searchRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
