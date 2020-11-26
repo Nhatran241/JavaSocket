@@ -252,11 +252,6 @@ public class MyClient {
                 JSONObject jSONObjectKey = (JSONObject) jSONObject.get(keySearchs.get(i).trim());
                 JSONObject raising = (JSONObject) jSONObjectKey.get("rising");
                 JSONObject top = (JSONObject) jSONObjectKey.get("top");
-<<<<<<< HEAD
-                
-=======
-
->>>>>>> 45e0d23638c8d897b23c28e0d4094e518c744d67
                 JSONArray raisingData = (JSONArray) raising.get("data");
                 JSONArray topData = (JSONArray) top.get("data");
 

@@ -22,8 +22,6 @@ public class SuggestionKeywordTable extends javax.swing.JPanel {
         nameJLabel = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbRelated = new javax.swing.JTable();
-        btn_raising = new javax.swing.JButton();
-        btn_top = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(247, 247, 247));
 
@@ -37,14 +35,14 @@ public class SuggestionKeywordTable extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Related search", "Value"
+                "Keyword"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
+                java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -65,45 +63,22 @@ public class SuggestionKeywordTable extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tbRelated);
 
-        btn_raising.setText("Raising");
-        btn_raising.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_raisingActionPerformed(evt);
-            }
-        });
-
-        btn_top.setText("Top");
-        btn_top.setPreferredSize(new java.awt.Dimension(67, 23));
-        btn_top.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_topActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(nameJLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_top, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_raising)))
+                    .addComponent(nameJLabel))
                 .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameJLabel)
-                    .addComponent(btn_raising)
-                    .addComponent(btn_top, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(nameJLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
@@ -122,20 +97,8 @@ public class SuggestionKeywordTable extends javax.swing.JPanel {
         searchJPanel.btnSearch.doClick();
     }//GEN-LAST:event_tbRelatedMouseClicked
 
-    private void btn_topActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_topActionPerformed
-        // TODO add your handling code here:
-        showTopData();
-    }//GEN-LAST:event_btn_topActionPerformed
-
-    private void btn_raisingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_raisingActionPerformed
-        // TODO add your handling code here:
-        showRaisingData();
-    }//GEN-LAST:event_btn_raisingActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_raising;
-    private javax.swing.JButton btn_top;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel nameJLabel;
     private javax.swing.JTable tbRelated;

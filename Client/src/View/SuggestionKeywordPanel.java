@@ -5,8 +5,8 @@ import Services.MyClient;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.util.List;
-import javalibrary.model.reponse.SearchRelatedReponse;
-import javalibrary.model.request.SearchRelatedQueryRequest;
+import javalibrary.model.reponse.SuggesstionKeywordResponse;
+import javalibrary.model.request.SuggestionsKeywordRequest;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -20,21 +20,22 @@ public class SuggestionKeywordPanel extends javax.swing.JPanel {
         initUI();
     }
 
-    public void loadData(SearchRelatedQueryRequest searchRelatedQueryRequest) {
+    public void loadData(SuggestionsKeywordRequest suggestionsKeywordRequest) {
         
         showLoading();
-        MyClient.getInstance().getSearchRelated(searchRelatedQueryRequest, new Interfaces.ISearchRelatedListener() {
+        MyClient.getInstance().getSuggestionKeyword(suggestionsKeywordRequest, new Interfaces.ISuggestionKeywordListener() {
+
             @Override
-            public void OnGetSearchRelatedSuccess(List<SearchRelatedReponse> searchRelatedReponses) {
-                System.out.println("asdasdasdasd: " + searchRelatedReponses);
-                initData(searchRelatedReponses);
+            public void OnGetSuggestionKeywordSuccess(SuggesstionKeywordResponse suggesstionKeywordResponse) {
+//                initData(suggesstionKeywordResponse);
                 dismisLoading();
             }
 
             @Override
-            public void OnGetSearchRelatedFailed() {
-                dismisLoading();
+            public void OnGetSuggestionKeywordFailed() {
+                    dismisLoading();
                 showTryAgain();
+          
             }
         });
     }
@@ -72,6 +73,7 @@ public class SuggestionKeywordPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel searchRelatedTopicPanel;
     // End of variables declaration//GEN-END:variables
+  /**
     private void initData(List<SearchRelatedReponse> searchRelatedReponses) {
         searchRelatedTopicPanel.removeAll();
         int column = 1;
@@ -93,6 +95,7 @@ public class SuggestionKeywordPanel extends javax.swing.JPanel {
         searchRelatedTopicPanel.repaint();
     }
 
+* **/
     private void showLoading() {
 
         searchRelatedTopicPanel.setVisible(false);
