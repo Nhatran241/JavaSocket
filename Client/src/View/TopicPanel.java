@@ -44,6 +44,8 @@ public class TopicPanel extends javax.swing.JPanel {
         btn_previous = new javax.swing.JButton();
         btn_next = new javax.swing.JButton();
 
+        setPreferredSize(new java.awt.Dimension(1236, 524));
+
         btn_previous.setText("previous page");
         btn_previous.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -71,7 +73,7 @@ public class TopicPanel extends javax.swing.JPanel {
                 .addComponent(btn_previous)
                 .addGap(18, 18, 18)
                 .addComponent(btn_next, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(767, Short.MAX_VALUE))
+                .addContainerGap(969, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -18,7 +18,7 @@ public class RelatedReponse {
     }
 
     public String getRising() {
-        return rising;
+        return rising == null || rising.length() ==0 ? "0":rising;
     }
 
     public void setRising(String rising) {
@@ -26,7 +26,7 @@ public class RelatedReponse {
     }
 
     public String getTop() {
-        return top;
+        return top == null || top.length() == 0? "0" : top;
     }
 
     public void setTop(String top) {

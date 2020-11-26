@@ -2,6 +2,7 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.List;
 import javalibrary.model.request.RelatedTopicRequest;
 import javalibrary.model.request.SearchOvertimeRequest;
@@ -16,6 +17,7 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
     SearchRelatedQueryRequest searchRelatedQueryRequest = new SearchRelatedQueryRequest();
     SearchRelatedTopicRequest searchRelatedTopicRequest = new SearchRelatedTopicRequest();
     RelatedTopicRequest relatedTopicRequest = new RelatedTopicRequest();
+    List<RelatedTopicRequest> relatedTopicRequests = new ArrayList<>();
 
     SearchOverTimePanel searchOverTimePanel = new SearchOverTimePanel();
     SearchRelatedPanel searchRelatedPanel = new SearchRelatedPanel();
@@ -28,6 +30,7 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         this.searchRegionRequest = searchRegionRequest;
         this.searchRelatedQueryRequest = searchRelatedQueryRequest;
         this.searchRelatedTopicRequest = searchRelatedTopicRequest;
+        this.relatedTopicRequest = relatedTopicRequest;
         initComponents();
         initContainer1();
         initData1();
@@ -38,6 +41,7 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         this.searchOvertimeRequest = searchOvertimeRequest;
         this.searchRegionRequest = searchRegionRequest;
         this.searchRelatedQueryRequest = searchRelatedQueryRequest;
+        this.relatedTopicRequests = relatedTopicRequests;
         initComponents();
         initContainer2();
         initData2();
@@ -53,6 +57,7 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         containerSearchRelatedTopicPanel = new javax.swing.JPanel();
         containerRelatedTopicPanel = new javax.swing.JPanel();
         containerSearchRegionPanel = new javax.swing.JPanel();
+        containerSuggestKeyPanel = new javax.swing.JPanel();
 
         containerSearchOverTimePanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -118,6 +123,19 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
             .addGap(0, 380, Short.MAX_VALUE)
         );
 
+        containerSuggestKeyPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout containerSuggestKeyPanelLayout = new javax.swing.GroupLayout(containerSuggestKeyPanel);
+        containerSuggestKeyPanel.setLayout(containerSuggestKeyPanelLayout);
+        containerSuggestKeyPanelLayout.setHorizontalGroup(
+            containerSuggestKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        containerSuggestKeyPanelLayout.setVerticalGroup(
+            containerSuggestKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 404, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -125,6 +143,7 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(containerSuggestKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(containerRelatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(containerSearchRelatedJPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(containerSearchOverTimePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -143,8 +162,10 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(containerSearchRegionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                     .addComponent(containerSearchRelatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGap(40, 40, 40)
                 .addComponent(containerSearchRelatedJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(41, 41, 41)
+                .addComponent(containerSuggestKeyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(containerRelatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(43, 43, 43))
@@ -172,6 +193,7 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
     private javax.swing.JPanel containerSearchRegionPanel;
     private javax.swing.JPanel containerSearchRelatedJPanel;
     private javax.swing.JPanel containerSearchRelatedTopicPanel;
+    private javax.swing.JPanel containerSuggestKeyPanel;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 
@@ -180,7 +202,6 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         searchRegionPanel.loadData(searchRegionRequest);
         searchRelatedPanel.loadData(searchRelatedQueryRequest);
         searchRelatedTopicPanel.loadData(searchRelatedTopicRequest);
-        System.out.println("relatedTopicRequest: " + relatedTopicRequest);
         topicPanel.loadData(relatedTopicRequest);
     }
 
@@ -224,5 +245,8 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         containerSearchRelatedJPanel.setLayout(new BorderLayout());
         containerSearchRelatedJPanel.add(searchRelatedPanel);
         containerSearchRelatedJPanel.invalidate();
+        
+        containerRelatedTopicPanel.setLayout(new BorderLayout());
+        containerRelatedTopicPanel.add(new ListTopicPanel(relatedTopicRequests));
     }
 }
