@@ -15,6 +15,7 @@ import javalibrary.model.request.SearchOvertimeRequest;
 import javalibrary.model.request.SearchRegionRequest;
 import javalibrary.model.request.SearchRelatedQueryRequest;
 import javalibrary.model.request.SearchRelatedTopicRequest;
+import javalibrary.model.request.SuggestionsKeywordRequest;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -460,7 +461,7 @@ public class searchJPanel extends javax.swing.JPanel {
 
         if (!txsearch1.isEmpty()) {
             if (txsearch2.isEmpty() && txsearch3.isEmpty() && txsearch4.isEmpty() && txsearch5.isEmpty()) {
-                JScrollPane jScrollPane = new JScrollPane(new searchReponsesJPanel(searchOvertimeRequest, searchRegionRequest, searchRelatedQueryRequest, searchRelatedTopicRequest, relatedTopicRequest), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                JScrollPane jScrollPane = new JScrollPane(new searchReponsesJPanel(searchOvertimeRequest, searchRegionRequest, searchRelatedQueryRequest, searchRelatedTopicRequest, relatedTopicRequest , su), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                 searchReponseJPanel.removeAll();
                 searchReponseJPanel.setLayout(new BorderLayout());
                 searchReponseJPanel.add(jScrollPane);

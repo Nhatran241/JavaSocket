@@ -112,8 +112,6 @@ public class SuggestionKeywordTable extends javax.swing.JPanel {
     }
     private void showTopData(){
         removeAllRow();
-        btn_top.setEnabled(false);
-        btn_raising.setEnabled(true);
         Object[] row = new Object[2];
         for (RelatedReponse relatedReponse : searchRelatedReponse.getRelatedReponses()) {
             row[0] = relatedReponse.getName();
@@ -124,8 +122,6 @@ public class SuggestionKeywordTable extends javax.swing.JPanel {
     }
     private void showRaisingData(){
         removeAllRow();
-        btn_top.setEnabled(true);
-        btn_raising.setEnabled(false);
         Object[] row = new Object[2];
         for (RelatedReponse relatedReponse : searchRelatedReponse.getRelatedReponses()) {
             row[0] = relatedReponse.getName();

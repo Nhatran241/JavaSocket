@@ -3,8 +3,7 @@ package javalibrary.model.request;
 public class SuggestionsKeywordRequest extends BaseRequest {
     private String keyword;
 
-    public SuggestionsKeywordRequest(String keyword) {
-        this.keyword = keyword;
+    public SuggestionsKeywordRequest() {
     }
 
     public String getKeyword() {

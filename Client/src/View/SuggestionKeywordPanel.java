@@ -24,7 +24,6 @@ public class SuggestionKeywordPanel extends javax.swing.JPanel {
         
         showLoading();
         MyClient.getInstance().getSuggestionKeyword(suggestionsKeywordRequest, new Interfaces.ISuggestionKeywordListener() {
-
             @Override
             public void OnGetSuggestionKeywordSuccess(SuggesstionKeywordResponse suggesstionKeywordResponse) {
 //                initData(suggesstionKeywordResponse);
