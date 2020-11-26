@@ -58,13 +58,11 @@ public class SearchRegionPanel extends javax.swing.JPanel {
         searchRegionPanel.setLayout(searchRegionPanelLayout);
         searchRegionPanelLayout.setHorizontalGroup(
             searchRegionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1236, Short.MAX_VALUE)
         );
         searchRegionPanelLayout.setVerticalGroup(
             searchRegionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(searchRegionPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -122,7 +120,7 @@ public class SearchRegionPanel extends javax.swing.JPanel {
         loading = new JLabel(loadingImage);
         loading.setVisible(false);
         loading.setSize(200, 200);
-        loading.setLocation(340, 80);
+        loading.setLocation(600, 90);
         add(loading, BorderLayout.CENTER);
     }
 

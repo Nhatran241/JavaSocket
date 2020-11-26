@@ -18,6 +18,7 @@ import javalibrary.model.request.SearchRelatedTopicRequest;
 import javalibrary.model.request.SuggestionsKeywordRequest;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -68,6 +69,7 @@ public class searchJPanel extends javax.swing.JPanel {
 
             @Override
             public void onConnectFailed() {
+                System.out.println("onConnectFailed");
             }
 
             @Override

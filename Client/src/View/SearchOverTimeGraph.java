@@ -31,7 +31,7 @@ public class SearchOverTimeGraph extends JFXPanel {
             }
         });
     }
-
+    
     private void createScene() {
         Group root = new Group();
 
@@ -48,10 +48,7 @@ public class SearchOverTimeGraph extends JFXPanel {
         XYChart.Series<String, Number> data3 = new XYChart.Series<>();
         XYChart.Series<String, Number> data4 = new XYChart.Series<>();
         XYChart.Series<String, Number> data5 = new XYChart.Series<>();
-        int start = searchOverTimeReponse.getIndex().size() - 30;
-        if (start < 0) {
-            start = 0;
-        }
+        int start = searchOverTimeReponse.getIndex().size() - 47;
         if (keyseachs.size() >= 1) {
             for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);

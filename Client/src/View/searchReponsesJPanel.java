@@ -58,10 +58,11 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         containerSearchOverTimePanel = new javax.swing.JPanel();
         containerSearchRelatedJPanel = new javax.swing.JPanel();
-        containerSearchRelatedTopicPanel = new javax.swing.JPanel();
         containerRelatedTopicPanel = new javax.swing.JPanel();
         containerSearchRegionPanel = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         containerSuggestKeyPanel = new javax.swing.JPanel();
+        containerSearchRelatedTopicPanel = new javax.swing.JPanel();
 
         containerSearchOverTimePanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -82,22 +83,11 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         containerSearchRelatedJPanel.setLayout(containerSearchRelatedJPanelLayout);
         containerSearchRelatedJPanelLayout.setHorizontalGroup(
             containerSearchRelatedJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1236, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         containerSearchRelatedJPanelLayout.setVerticalGroup(
             containerSearchRelatedJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 404, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout containerSearchRelatedTopicPanelLayout = new javax.swing.GroupLayout(containerSearchRelatedTopicPanel);
-        containerSearchRelatedTopicPanel.setLayout(containerSearchRelatedTopicPanelLayout);
-        containerSearchRelatedTopicPanelLayout.setHorizontalGroup(
-            containerSearchRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
-        );
-        containerSearchRelatedTopicPanelLayout.setVerticalGroup(
-            containerSearchRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 592, Short.MAX_VALUE)
         );
 
         containerRelatedTopicPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -110,22 +100,23 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         );
         containerRelatedTopicPanelLayout.setVerticalGroup(
             containerRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 403, Short.MAX_VALUE)
+            .addGap(0, 591, Short.MAX_VALUE)
         );
 
         containerSearchRegionPanel.setBackground(new java.awt.Color(255, 255, 255));
-        containerSearchRegionPanel.setPreferredSize(new java.awt.Dimension(786, 396));
 
         javax.swing.GroupLayout containerSearchRegionPanelLayout = new javax.swing.GroupLayout(containerSearchRegionPanel);
         containerSearchRegionPanel.setLayout(containerSearchRegionPanelLayout);
         containerSearchRegionPanelLayout.setHorizontalGroup(
             containerSearchRegionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 780, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         containerSearchRegionPanelLayout.setVerticalGroup(
             containerSearchRegionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
+            .addGap(0, 351, Short.MAX_VALUE)
         );
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         containerSuggestKeyPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -133,28 +124,54 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         containerSuggestKeyPanel.setLayout(containerSuggestKeyPanelLayout);
         containerSuggestKeyPanelLayout.setHorizontalGroup(
             containerSuggestKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 615, Short.MAX_VALUE)
         );
         containerSuggestKeyPanelLayout.setVerticalGroup(
             containerSuggestKeyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 404, Short.MAX_VALUE)
+            .addGap(0, 401, Short.MAX_VALUE)
+        );
+
+        containerSearchRelatedTopicPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout containerSearchRelatedTopicPanelLayout = new javax.swing.GroupLayout(containerSearchRelatedTopicPanel);
+        containerSearchRelatedTopicPanel.setLayout(containerSearchRelatedTopicPanelLayout);
+        containerSearchRelatedTopicPanelLayout.setHorizontalGroup(
+            containerSearchRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 609, Short.MAX_VALUE)
+        );
+        containerSearchRelatedTopicPanelLayout.setVerticalGroup(
+            containerSearchRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(containerSearchRelatedTopicPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(containerSuggestKeyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(containerSuggestKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(containerSearchRelatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(containerSuggestKeyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(containerRelatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(containerSearchRelatedJPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(containerSearchOverTimePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(containerSearchRegionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 780, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addComponent(containerSearchRelatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(containerSearchRegionPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(30, 30, 30))
         );
         jPanel2Layout.setVerticalGroup(
@@ -163,13 +180,11 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addComponent(containerSearchOverTimePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(containerSearchRegionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                    .addComponent(containerSearchRelatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(40, 40, 40)
+                .addComponent(containerSearchRegionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
                 .addComponent(containerSearchRelatedJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(41, 41, 41)
-                .addComponent(containerSuggestKeyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(containerRelatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(43, 43, 43))
@@ -198,6 +213,7 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
     private javax.swing.JPanel containerSearchRelatedJPanel;
     private javax.swing.JPanel containerSearchRelatedTopicPanel;
     private javax.swing.JPanel containerSuggestKeyPanel;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 
@@ -240,9 +256,12 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         searchOverTimePanel.loadData(searchOvertimeRequest);
         searchRegionPanel.loadData(searchRegionRequest);
         searchRelatedPanel.loadData(searchRelatedQueryRequest);
+        
     }
 
     private void initContainer2() {
+        jPanel1.setVisible(false);
+        
         containerSearchOverTimePanel.setLayout(new BorderLayout());
         containerSearchOverTimePanel.add(searchOverTimePanel);
         containerSearchOverTimePanel.invalidate();
@@ -255,7 +274,8 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         containerSearchRelatedJPanel.add(searchRelatedPanel);
         containerSearchRelatedJPanel.invalidate();
         
-        containerRelatedTopicPanel.setLayout(new BorderLayout());
-        containerRelatedTopicPanel.add(new ListTopicPanel(relatedTopicRequests));
+//        containerRelatedTopicPanel.setLayout(new BorderLayout());
+//        containerRelatedTopicPanel.add(new ListTopicPanel(relatedTopicRequests));
+//        containerRelatedTopicPanel.invalidate();
     }
 }
