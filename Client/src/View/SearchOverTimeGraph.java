@@ -18,15 +18,20 @@ public class SearchOverTimeGraph extends JFXPanel {
 
     SearchOverTimeReponse searchOverTimeReponse;
     List<String> keyseachs;
-    boolean isDayView=true;
+    boolean isdayformat=true;
+    boolean ishourformat =false;
+    boolean ishourminuteformat =false;
     DateFormat dayformat = new SimpleDateFormat("dd-MM-yyyy");
     DateFormat hourformat = new SimpleDateFormat("dd-MM-yyyy HH");
+    DateFormat hourminuteformat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
-    public SearchOverTimeGraph(List<String> keysearchs, SearchOverTimeReponse searchOverTimeReponse,boolean isDayView) {
+    public SearchOverTimeGraph(List<String> keysearchs, SearchOverTimeReponse searchOverTimeReponse,boolean isdayformat,boolean ishourformat,boolean ishourminuteformat) {
         super();
         this.searchOverTimeReponse = searchOverTimeReponse;
         this.keyseachs = keysearchs;
-        this.isDayView = isDayView;
+        this.isdayformat = isdayformat;
+        this.ishourformat = ishourformat;
+        this.ishourminuteformat = ishourminuteformat;
         Platform.setImplicitExit(false);
         Platform.runLater(new Runnable() {
             @Override
@@ -52,29 +57,33 @@ public class SearchOverTimeGraph extends JFXPanel {
         XYChart.Series<String, Number> data3 = new XYChart.Series<>();
         XYChart.Series<String, Number> data4 = new XYChart.Series<>();
         XYChart.Series<String, Number> data5 = new XYChart.Series<>();
-        int start = searchOverTimeReponse.getIndex().size() - 47;
         if (keyseachs.size() >= 1) {
-            for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
+            for (int j = 0; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
                 String result;
-                if(isDayView){
+                if(isdayformat){
                     result = dayformat.format(new Date(index));
-                }else{
+                }else if(ishourformat){
                     result = hourformat.format(new Date(index));
+                }else {
+                    result = hourminuteformat.format(new Date(index));
                 }
                 int data = searchOverTimeReponse.getOverTimeReponses().get(0).getNumber().get(j);
+                System.out.println("number"+data);
                 data1.setName(keyseachs.get(0));
                 data1.getData().add(new XYChart.Data<>(result, data));
             }
         }
         if (keyseachs.size() >= 2) {
-            for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
+            for (int j = 0; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
                  String result;
-                if(isDayView){
+                if(isdayformat){
                     result = dayformat.format(new Date(index));
-                }else{
+                }else if(ishourformat){
                     result = hourformat.format(new Date(index));
+                }else {
+                    result = hourminuteformat.format(new Date(index));
                 }
                 int data = searchOverTimeReponse.getOverTimeReponses().get(1).getNumber().get(j);
                 data2.setName(keyseachs.get(1));
@@ -82,13 +91,15 @@ public class SearchOverTimeGraph extends JFXPanel {
             }
         }
         if (keyseachs.size() >= 3) {
-            for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
+            for (int j = 0; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
                  String result;
-                if(isDayView){
+                 if(isdayformat){
                     result = dayformat.format(new Date(index));
-                }else{
+                }else if(ishourformat){
                     result = hourformat.format(new Date(index));
+                }else {
+                    result = hourminuteformat.format(new Date(index));
                 }
                 int data = searchOverTimeReponse.getOverTimeReponses().get(2).getNumber().get(j);
                 data3.setName(keyseachs.get(2));
@@ -96,13 +107,15 @@ public class SearchOverTimeGraph extends JFXPanel {
             }
         }
         if (keyseachs.size() >= 4) {
-            for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
+            for (int j = 0; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
                  String result;
-                if(isDayView){
+                if(isdayformat){
                     result = dayformat.format(new Date(index));
-                }else{
+                }else if(ishourformat){
                     result = hourformat.format(new Date(index));
+                }else {
+                    result = hourminuteformat.format(new Date(index));
                 }
                 int data = searchOverTimeReponse.getOverTimeReponses().get(3).getNumber().get(j);
                 data4.setName(keyseachs.get(3));
@@ -110,13 +123,15 @@ public class SearchOverTimeGraph extends JFXPanel {
             }
         }
         if (keyseachs.size() >= 5) {
-            for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
+            for (int j = 0; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
                  String result;
-                if(isDayView){
+                if(isdayformat){
                     result = dayformat.format(new Date(index));
-                }else{
+                }else if(ishourformat){
                     result = hourformat.format(new Date(index));
+                }else {
+                    result = hourminuteformat.format(new Date(index));
                 }
                 int data = searchOverTimeReponse.getOverTimeReponses().get(4).getNumber().get(j);
                 data5.setName(keyseachs.get(4));

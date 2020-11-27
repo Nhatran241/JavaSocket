@@ -1,5 +1,7 @@
 package javalibrary.model.request;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javalibrary.model.Category;
 import javalibrary.model.Geo;
 
@@ -9,8 +11,8 @@ public class SearchOvertimeRequest extends BaseRequest{
     private List<String> searchQuery;
     private Geo geo;
     private Category category;
-    private String fromDate = "";
-    private String toDate = "";
+    private String fromDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+    private String toDate =  new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
 
     public SearchOvertimeRequest() {
         super();

@@ -536,7 +536,6 @@ public class searchJPanel extends javax.swing.JPanel {
                 searchReponseJPanel.setLayout(new BorderLayout());
                 searchReponseJPanel.add(jScrollPane);
                 searchReponseJPanel.validate();
-                searchReponseJPanel.repaint();
             } else {
                 List<RelatedTopicRequest> relatedTopicRequests = new ArrayList<>();
                 for (int i = 0; i < listSearchs.size(); i++) {

@@ -82,11 +82,22 @@ public class SearchOverTimePanel extends javax.swing.JPanel {
              error.setVisible(false);
         graphPanel.removeAll();
         graphPanel.setLayout(new BorderLayout());
-        boolean isDayView=true;
+        boolean isdayformat=true;
+        boolean ishourformat=false;
+        boolean ishourminuteformat=false;
         if(searchOvertimeRequest.getFromDate().contains("now1h")||searchOvertimeRequest.getFromDate().contains("now4h")
-                ||searchOvertimeRequest.getFromDate().contains("now1d"))
-            isDayView = false;
-        graphPanel.add(new SearchOverTimeGraph(searchOvertimeRequest.getSearchQuery(), searchOverTimeReponse,isDayView));
+                ||searchOvertimeRequest.getFromDate().contains("now1d")){
+            ishourminuteformat=true;
+            ishourformat=false;
+            isdayformat =false;
+        }
+         if(searchOvertimeRequest.getFromDate().contains("now7d")){
+            ishourminuteformat=false;
+            ishourformat =true;
+            isdayformat =false;
+        }
+        
+        graphPanel.add(new SearchOverTimeGraph(searchOvertimeRequest.getSearchQuery(), searchOverTimeReponse,isdayformat,ishourformat,ishourminuteformat));
         graphPanel.validate();
         graphPanel.repaint();
         }
