@@ -68,7 +68,7 @@ public class SearchRelatedTopicTable extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(relatedTopicTable);
 
-        searchRelatedTopicPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 640, 330));
+        searchRelatedTopicPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 640, 340));
 
         nameJLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         nameJLabel.setText("jLabel1");
@@ -99,9 +99,7 @@ public class SearchRelatedTopicTable extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(searchRelatedTopicPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(searchRelatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
