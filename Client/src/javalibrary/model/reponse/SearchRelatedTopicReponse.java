@@ -26,21 +26,23 @@ public class SearchRelatedTopicReponse {
         this.name = name;
     }
 
-    public String getTop() {
-        return top;
-    }
 
     public void setTop(String top) {
         this.top = top;
     }
 
-    public String getRising() {
-        return rising;
+      public String getRising() {
+        return rising == null || rising.length() ==0 ? "0":rising;
     }
 
     public void setRising(String rising) {
         this.rising = rising;
     }
+
+    public String getTop() {
+        return top == null || top.length() == 0? "0" : top;
+    }
+
 
     
 }

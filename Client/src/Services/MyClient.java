@@ -376,7 +376,7 @@ public class MyClient {
                 System.out.println(e);
             }
         } catch (ParseException ex) {
-            System.out.println(ex);
+            iSearchOvertimeListener.OnGetSearchOvertimeFailed();
         } finally {
             iSearchOvertimeListener.OnGetSearchOvertimeSuccess(searchOverTimeReponse);
         }
