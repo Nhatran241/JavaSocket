@@ -15,6 +15,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonSyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javalibrary.SocketTransceiver;
 import javalibrary.model.Category;
 import javalibrary.model.Geo;
@@ -163,16 +165,20 @@ public class MyClient {
     public void SetGeo(String inputString) {
         inputString = inputString.replace(GeoRequestCountry.class.getSimpleName(), "");
         List<Geo> geos = new ArrayList<>();
-        geos.add(new Geo("All over the world", "AA"));
-
-        JsonArray jsonArray = new JsonParser().parse(inputString).getAsJsonArray();
-        for (int i = 0; i < jsonArray.size(); i++) {
+        JSONParser jsonParser = new JSONParser();
+        JsonArray jsonArray;
+        try {
+            jsonArray = (JsonArray) jsonParser.parse(inputString);
+             for (int i = 0; i < jsonArray.size(); i++) {
             String id = jsonArray.get(i).getAsJsonObject().get("id").toString();
             String name = jsonArray.get(i).getAsJsonObject().get("name").toString();
 
             id = id.replace("\"", "");
             name = name.replace("\"", "");
             geos.add(new Geo(name, id));
+        }
+        } catch (Exception ex) {
+            iGetGeoListener.onGetGeoFailed();
         }
         iGetGeoListener.onGetGeoSuccess(geos);
     }
