@@ -1,10 +1,11 @@
 package javalibrary.model.reponse;
 
 public class SearchRelatedTopicReponse {
+
     String name, top, rising;
-    
+
     public SearchRelatedTopicReponse() {
-        
+
     }
 
     public SearchRelatedTopicReponse(String name, String rising) {
@@ -26,13 +27,12 @@ public class SearchRelatedTopicReponse {
         this.name = name;
     }
 
-
     public void setTop(String top) {
         this.top = top;
     }
 
-      public String getRising() {
-        return rising == null || rising.length() ==0 ? "0":rising;
+    public String getRising() {
+        return rising == null || rising.length() == 0 ? "0" : rising;
     }
 
     public void setRising(String rising) {
@@ -40,9 +40,7 @@ public class SearchRelatedTopicReponse {
     }
 
     public String getTop() {
-        return top == null || top.length() == 0? "0" : top;
+        return top == null || top.length() == 0 ? "0" : top;
     }
 
-
-    
 }

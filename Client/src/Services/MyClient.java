@@ -303,6 +303,7 @@ public class MyClient {
 
                     for (SearchRelatedTopicReponse searchRelatedTopicReponse : searchRelatedTopicReponses) {
                         if (searchRelatedTopicReponse.getName().equalsIgnoreCase(name)) {
+                            System.out.println("true");
                             searchRelatedTopicReponse.setTop(top);
                         }
                     }

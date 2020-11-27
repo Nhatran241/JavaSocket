@@ -78,7 +78,7 @@ public class SearchRelatedTable extends javax.swing.JPanel {
             }
         });
         add(btn_raising);
-        btn_raising.setBounds(585, 13, 67, 23);
+        btn_raising.setBounds(585, 13, 75, 25);
 
         btn_top.setText("Top");
         btn_top.setPreferredSize(new java.awt.Dimension(67, 23));
