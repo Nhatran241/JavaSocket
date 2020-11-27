@@ -1,13 +1,18 @@
 package View;
 
 import java.util.List;
+import javalibrary.model.reponse.RelatedReponse;
 import javalibrary.model.reponse.SearchRelatedTopicReponse;
 import javax.swing.table.DefaultTableModel;
 
 public class SearchRelatedTopicTable extends javax.swing.JPanel {
-
+    List<SearchRelatedTopicReponse> searchRelatedTopicReponses;
+    DefaultTableModel regionTopicModel;
+    
     public SearchRelatedTopicTable(String keyString, List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
         initComponents();
+        this.searchRelatedTopicReponses = searchRelatedTopicReponses;
+        regionTopicModel = (DefaultTableModel) relatedTopicTable.getModel();
         showData(keyString, searchRelatedTopicReponses);
     }
 
@@ -19,8 +24,11 @@ public class SearchRelatedTopicTable extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         relatedTopicTable = new javax.swing.JTable();
         nameJLabel = new javax.swing.JLabel();
+        btn_top = new javax.swing.JButton();
+        btn_raising = new javax.swing.JButton();
 
         searchRelatedTopicPanel.setBackground(new java.awt.Color(255, 255, 255));
+        searchRelatedTopicPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         relatedTopicTable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         relatedTopicTable.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
@@ -29,14 +37,14 @@ public class SearchRelatedTopicTable extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Related topic", "Rising", "Top"
+                "Related topic", "Value"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -56,41 +64,29 @@ public class SearchRelatedTopicTable extends javax.swing.JPanel {
             }
         });
         jScrollPane2.setViewportView(relatedTopicTable);
-        if (relatedTopicTable.getColumnModel().getColumnCount() > 0) {
-            relatedTopicTable.getColumnModel().getColumn(1).setMinWidth(80);
-            relatedTopicTable.getColumnModel().getColumn(1).setPreferredWidth(100);
-            relatedTopicTable.getColumnModel().getColumn(1).setMaxWidth(120);
-            relatedTopicTable.getColumnModel().getColumn(2).setMinWidth(80);
-            relatedTopicTable.getColumnModel().getColumn(2).setPreferredWidth(100);
-            relatedTopicTable.getColumnModel().getColumn(2).setMaxWidth(120);
-        }
+
+        searchRelatedTopicPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 648, 342));
 
         nameJLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         nameJLabel.setText("jLabel1");
+        searchRelatedTopicPanel.add(nameJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 12, -1, -1));
 
-        javax.swing.GroupLayout searchRelatedTopicPanelLayout = new javax.swing.GroupLayout(searchRelatedTopicPanel);
-        searchRelatedTopicPanel.setLayout(searchRelatedTopicPanelLayout);
-        searchRelatedTopicPanelLayout.setHorizontalGroup(
-            searchRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(searchRelatedTopicPanelLayout.createSequentialGroup()
-                .addGroup(searchRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(searchRelatedTopicPanelLayout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(searchRelatedTopicPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(nameJLabel)))
-                .addGap(15, 15, 15))
-        );
-        searchRelatedTopicPanelLayout.setVerticalGroup(
-            searchRelatedTopicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchRelatedTopicPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(nameJLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
-        );
+        btn_top.setText("Top");
+        btn_top.setPreferredSize(new java.awt.Dimension(67, 23));
+        btn_top.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_topActionPerformed(evt);
+            }
+        });
+        searchRelatedTopicPanel.add(btn_top, new org.netbeans.lib.awtextra.AbsoluteConstraints(511, 11, -1, -1));
+
+        btn_raising.setText("Raising");
+        btn_raising.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_raisingActionPerformed(evt);
+            }
+        });
+        searchRelatedTopicPanel.add(btn_raising, new org.netbeans.lib.awtextra.AbsoluteConstraints(596, 11, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -116,8 +112,20 @@ public class SearchRelatedTopicTable extends javax.swing.JPanel {
         searchJPanel.btnSearch.doClick();
     }//GEN-LAST:event_relatedTopicTableMouseClicked
 
+    private void btn_topActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_topActionPerformed
+        // TODO add your handling code here:
+        showTopData();
+    }//GEN-LAST:event_btn_topActionPerformed
+
+    private void btn_raisingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_raisingActionPerformed
+        // TODO add your handling code here:
+        showRaisingData();
+    }//GEN-LAST:event_btn_raisingActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_raising;
+    private javax.swing.JButton btn_top;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel nameJLabel;
     private javax.swing.JTable relatedTopicTable;
@@ -127,13 +135,35 @@ public class SearchRelatedTopicTable extends javax.swing.JPanel {
     private void showData(String keyString, List<SearchRelatedTopicReponse> searchRelatedTopicReponses)
     {
         nameJLabel.setText(keyString);
-        DefaultTableModel regionTopicModel = (DefaultTableModel) relatedTopicTable.getModel();
-        Object[] row = new Object[3];
-        for (SearchRelatedTopicReponse object : searchRelatedTopicReponses) {
-            row[0] = object.getName();
-            row[1] = object.getRising();
-            row[2] = object.getTop();
+        showTopData();
+    }
+    
+     private void showTopData(){
+        removeAllRow();
+        btn_top.setEnabled(false);
+        btn_raising.setEnabled(true);
+        Object[] row = new Object[2];
+        for (SearchRelatedTopicReponse relatedReponse :searchRelatedTopicReponses) {
+            row[0] = relatedReponse.getName();
+            row[1] = relatedReponse.getTop();
             regionTopicModel.addRow(row);
+        }
+    }
+    private void showRaisingData(){
+        removeAllRow();
+        btn_top.setEnabled(true);
+        btn_raising.setEnabled(false);
+        Object[] row = new Object[2];
+        for (SearchRelatedTopicReponse relatedReponse :searchRelatedTopicReponses) {
+            row[0] = relatedReponse.getName();
+            row[1] = relatedReponse.getRising();
+            regionTopicModel.addRow(row);
+        }
+    }
+
+    private void removeAllRow() {
+       for (int i = regionTopicModel.getRowCount() - 1; i >= 0; i--) {
+            regionTopicModel.removeRow(i);
         }
     }
 }

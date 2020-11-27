@@ -9,6 +9,7 @@ import javalibrary.model.request.SearchOvertimeRequest;
 import javalibrary.model.request.SearchRegionRequest;
 import javalibrary.model.request.SearchRelatedQueryRequest;
 import javalibrary.model.request.SearchRelatedTopicRequest;
+import javalibrary.model.request.SuggestionsKeywordRequest;
 
 public class searchReponsesJPanel extends javax.swing.JPanel {
 
@@ -16,6 +17,7 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
     SearchRegionRequest searchRegionRequest = new SearchRegionRequest();
     SearchRelatedQueryRequest searchRelatedQueryRequest = new SearchRelatedQueryRequest();
     SearchRelatedTopicRequest searchRelatedTopicRequest = new SearchRelatedTopicRequest();
+    SuggestionsKeywordRequest suggestionsKeywordRequest = new SuggestionsKeywordRequest();
     RelatedTopicRequest relatedTopicRequest = new RelatedTopicRequest();
     List<RelatedTopicRequest> relatedTopicRequests = new ArrayList<>();
 
@@ -24,13 +26,15 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
     SearchRelatedTopicPanel searchRelatedTopicPanel = new SearchRelatedTopicPanel();
     SearchRegionPanel searchRegionPanel = new SearchRegionPanel();
     TopicPanel topicPanel = new TopicPanel();
+    SuggestionKeywordPanel suggestionKeywordPanel = new SuggestionKeywordPanel();
 
-    public searchReponsesJPanel(SearchOvertimeRequest searchOvertimeRequest, SearchRegionRequest searchRegionRequest, SearchRelatedQueryRequest searchRelatedQueryRequest, SearchRelatedTopicRequest searchRelatedTopicRequest, RelatedTopicRequest relatedTopicRequest) {
+    public searchReponsesJPanel(SearchOvertimeRequest searchOvertimeRequest, SearchRegionRequest searchRegionRequest, SearchRelatedQueryRequest searchRelatedQueryRequest, SearchRelatedTopicRequest searchRelatedTopicRequest, RelatedTopicRequest relatedTopicRequest , SuggestionsKeywordRequest suggestionsKeywordRequest) {
         this.searchOvertimeRequest = searchOvertimeRequest;
         this.searchRegionRequest = searchRegionRequest;
         this.searchRelatedQueryRequest = searchRelatedQueryRequest;
         this.searchRelatedTopicRequest = searchRelatedTopicRequest;
         this.relatedTopicRequest = relatedTopicRequest;
+        this.suggestionsKeywordRequest =  suggestionsKeywordRequest;
         initComponents();
         initContainer1();
         initData1();
@@ -218,7 +222,8 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         searchRegionPanel.loadData(searchRegionRequest);
         searchRelatedPanel.loadData(searchRelatedQueryRequest);
         searchRelatedTopicPanel.loadData(searchRelatedTopicRequest);
-//        topicPanel.loadData(relatedTopicRequest);
+        topicPanel.loadData(relatedTopicRequest);
+        suggestionKeywordPanel.loadData(suggestionsKeywordRequest);
     }
 
     private void initContainer1() {
@@ -241,6 +246,10 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         containerRelatedTopicPanel.setLayout(new BorderLayout());
         containerRelatedTopicPanel.add(topicPanel);
         containerRelatedTopicPanel.invalidate();
+        
+        containerSuggestKeyPanel.setLayout( new BorderLayout());
+        containerSuggestKeyPanel.add(suggestionKeywordPanel);
+        containerSuggestKeyPanel.invalidate();
     }
 
     public void initData2() {

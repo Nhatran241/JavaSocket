@@ -9,6 +9,7 @@ import javalibrary.model.reponse.SearchRelatedReponse;
 import javalibrary.model.reponse.RelatedTopicReponse;
 import javalibrary.model.reponse.SearchOverTimeReponse;
 import javalibrary.model.reponse.SearchRelatedTopicReponse;
+import javalibrary.model.reponse.SuggesstionKeywordResponse;
 
 public class Interfaces {
     
@@ -67,5 +68,10 @@ public class Interfaces {
         void OnGetSearchOvertimeSuccess(SearchOverTimeReponse searchOverTimeReponse);
         
         void OnGetSearchOvertimeFailed();
+    }
+    
+    public interface ISuggestionKeywordListener{
+        void OnGetSuggestionKeywordSuccess(SuggesstionKeywordResponse suggesstionKeywordResponse);
+        void OnGetSuggestionKeywordFailed();
     }
 }

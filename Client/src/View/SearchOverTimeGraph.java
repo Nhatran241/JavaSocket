@@ -18,11 +18,15 @@ public class SearchOverTimeGraph extends JFXPanel {
 
     SearchOverTimeReponse searchOverTimeReponse;
     List<String> keyseachs;
+    boolean isDayView=true;
+    DateFormat dayformat = new SimpleDateFormat("dd-MM-yyyy");
+    DateFormat hourformat = new SimpleDateFormat("dd-MM-yyyy HH");
 
-    public SearchOverTimeGraph(List<String> keysearchs, SearchOverTimeReponse searchOverTimeReponse) {
+    public SearchOverTimeGraph(List<String> keysearchs, SearchOverTimeReponse searchOverTimeReponse,boolean isDayView) {
         super();
         this.searchOverTimeReponse = searchOverTimeReponse;
         this.keyseachs = keysearchs;
+        this.isDayView = isDayView;
         Platform.setImplicitExit(false);
         Platform.runLater(new Runnable() {
             @Override
@@ -52,8 +56,12 @@ public class SearchOverTimeGraph extends JFXPanel {
         if (keyseachs.size() >= 1) {
             for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
-                DateFormat simple = new SimpleDateFormat("dd-MM-yyyy");
-                String result = simple.format(new Date(index));
+                String result;
+                if(isDayView){
+                    result = dayformat.format(new Date(index));
+                }else{
+                    result = hourformat.format(new Date(index));
+                }
                 int data = searchOverTimeReponse.getOverTimeReponses().get(0).getNumber().get(j);
                 data1.setName(keyseachs.get(0));
                 data1.getData().add(new XYChart.Data<>(result, data));
@@ -62,8 +70,12 @@ public class SearchOverTimeGraph extends JFXPanel {
         if (keyseachs.size() >= 2) {
             for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
-                DateFormat simple = new SimpleDateFormat("dd-MM-yyyy");
-                String result = simple.format(new Date(index));
+                 String result;
+                if(isDayView){
+                    result = dayformat.format(new Date(index));
+                }else{
+                    result = hourformat.format(new Date(index));
+                }
                 int data = searchOverTimeReponse.getOverTimeReponses().get(1).getNumber().get(j);
                 data2.setName(keyseachs.get(1));
                 data2.getData().add(new XYChart.Data<>(result, data));
@@ -72,8 +84,12 @@ public class SearchOverTimeGraph extends JFXPanel {
         if (keyseachs.size() >= 3) {
             for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
-                DateFormat simple = new SimpleDateFormat("dd-MM-yyyy");
-                String result = simple.format(new Date(index));
+                 String result;
+                if(isDayView){
+                    result = dayformat.format(new Date(index));
+                }else{
+                    result = hourformat.format(new Date(index));
+                }
                 int data = searchOverTimeReponse.getOverTimeReponses().get(2).getNumber().get(j);
                 data3.setName(keyseachs.get(2));
                 data3.getData().add(new XYChart.Data<>(result, data));
@@ -82,8 +98,12 @@ public class SearchOverTimeGraph extends JFXPanel {
         if (keyseachs.size() >= 4) {
             for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
-                DateFormat simple = new SimpleDateFormat("dd-MM-yyyy");
-                String result = simple.format(new Date(index));
+                 String result;
+                if(isDayView){
+                    result = dayformat.format(new Date(index));
+                }else{
+                    result = hourformat.format(new Date(index));
+                }
                 int data = searchOverTimeReponse.getOverTimeReponses().get(3).getNumber().get(j);
                 data4.setName(keyseachs.get(3));
                 data4.getData().add(new XYChart.Data<>(result, data));
@@ -92,8 +112,12 @@ public class SearchOverTimeGraph extends JFXPanel {
         if (keyseachs.size() >= 5) {
             for (int j = start; j < searchOverTimeReponse.getIndex().size(); j++) {
                 long index = searchOverTimeReponse.getIndex().get(j);
-                DateFormat simple = new SimpleDateFormat("dd-MM-yyyy");
-                String result = simple.format(new Date(index));
+                 String result;
+                if(isDayView){
+                    result = dayformat.format(new Date(index));
+                }else{
+                    result = hourformat.format(new Date(index));
+                }
                 int data = searchOverTimeReponse.getOverTimeReponses().get(4).getNumber().get(j);
                 data5.setName(keyseachs.get(4));
                 data5.getData().add(new XYChart.Data<>(result, data));

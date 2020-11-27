@@ -3,6 +3,7 @@ package View;
 import Services.Interfaces.Interfaces;
 import Services.MyClient;
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.List;
 import javalibrary.model.reponse.SearchRelatedReponse;
@@ -13,7 +14,7 @@ import javax.swing.JLabel;
 
 public class SearchRelatedPanel extends javax.swing.JPanel {
 
-    JLabel loading;
+    JLabel loading,error;
 
     public SearchRelatedPanel() {
         initComponents();
@@ -26,7 +27,7 @@ public class SearchRelatedPanel extends javax.swing.JPanel {
         MyClient.getInstance().getSearchRelated(searchRelatedQueryRequest, new Interfaces.ISearchRelatedListener() {
             @Override
             public void OnGetSearchRelatedSuccess(List<SearchRelatedReponse> searchRelatedReponses) {
-                System.out.println("asdasdasdasd: " + searchRelatedReponses);
+                error.setVisible(false);
                 initData(searchRelatedReponses);
                 dismisLoading();
             }
@@ -35,6 +36,8 @@ public class SearchRelatedPanel extends javax.swing.JPanel {
             public void OnGetSearchRelatedFailed() {
                 dismisLoading();
                 showTryAgain();
+                error.setVisible(true);
+                error.invalidate();
             }
         });
     }
@@ -122,5 +125,11 @@ public class SearchRelatedPanel extends javax.swing.JPanel {
         loading.setSize(200, 200);
         loading.setLocation(600, 100);
         add(loading, BorderLayout.CENTER);
+        
+        error = new JLabel("No data");
+        error.setVisible(false);
+        error.setFont(new Font("Serif", Font.PLAIN, 20));
+        error.setLocation(600, 150);
+        add(error,BorderLayout.CENTER);
     }
 }
