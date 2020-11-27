@@ -24,7 +24,7 @@ public class SuggestionKeywordTable extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tbRelated = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(247, 247, 247));
+        setBackground(new java.awt.Color(255, 255, 255));
 
         nameJLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         nameJLabel.setText("Suggestions Keyword");

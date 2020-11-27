@@ -25,13 +25,10 @@ public class SearchRelatedTable extends javax.swing.JPanel {
         btn_raising = new javax.swing.JButton();
         btn_top = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(247, 247, 247));
-        setLayout(null);
+        setBackground(new java.awt.Color(255, 255, 255));
 
         nameJLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         nameJLabel.setText("jLabel1");
-        add(nameJLabel);
-        nameJLabel.setBounds(10, 10, 66, 22);
 
         tbRelated.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tbRelated.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
@@ -68,17 +65,12 @@ public class SearchRelatedTable extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tbRelated);
 
-        add(jScrollPane2);
-        jScrollPane2.setBounds(10, 42, 648, 341);
-
         btn_raising.setText("Raising");
         btn_raising.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_raisingActionPerformed(evt);
             }
         });
-        add(btn_raising);
-        btn_raising.setBounds(585, 13, 67, 23);
 
         btn_top.setText("Top");
         btn_top.setPreferredSize(new java.awt.Dimension(67, 23));
@@ -87,8 +79,38 @@ public class SearchRelatedTable extends javax.swing.JPanel {
                 btn_topActionPerformed(evt);
             }
         });
-        add(btn_top);
-        btn_top.setBounds(500, 13, 67, 23);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(nameJLabel)
+                        .addGap(424, 424, 424)
+                        .addComponent(btn_top, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_raising))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nameJLabel)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_top, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_raising))))
+                .addGap(4, 4, 4)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbRelatedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbRelatedMouseClicked

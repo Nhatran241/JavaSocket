@@ -27,16 +27,16 @@ public class ChooseDatePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        asdasdasd = new javax.swing.JPanel();
+        chooseDatePanel = new javax.swing.JPanel();
 
-        javax.swing.GroupLayout asdasdasdLayout = new javax.swing.GroupLayout(asdasdasd);
-        asdasdasd.setLayout(asdasdasdLayout);
-        asdasdasdLayout.setHorizontalGroup(
-            asdasdasdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 921, Short.MAX_VALUE)
+        javax.swing.GroupLayout chooseDatePanelLayout = new javax.swing.GroupLayout(chooseDatePanel);
+        chooseDatePanel.setLayout(chooseDatePanelLayout);
+        chooseDatePanelLayout.setHorizontalGroup(
+            chooseDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 361, Short.MAX_VALUE)
         );
-        asdasdasdLayout.setVerticalGroup(
-            asdasdasdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        chooseDatePanelLayout.setVerticalGroup(
+            chooseDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 331, Short.MAX_VALUE)
         );
 
@@ -44,22 +44,16 @@ public class ChooseDatePanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(asdasdasd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47))
+            .addComponent(chooseDatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addComponent(asdasdasd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+            .addComponent(chooseDatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel asdasdasd;
+    private javax.swing.JPanel chooseDatePanel;
     // End of variables declaration//GEN-END:variables
 }
