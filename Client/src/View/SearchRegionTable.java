@@ -86,7 +86,7 @@ public class SearchRegionTable extends javax.swing.JPanel {
             regionModel.addColumn(searchRegionReponses.get(i).getColumn());
         }
         Object[] row = new Object[6];
-
+        
         for (int i = 0; i < searchRegionReponses.get(0).getRegionReponses().size(); i++) {
             row[0] = searchRegionReponses.get(0).getRegionReponses().get(i).getName();
             row[1] = searchRegionReponses.get(0).getRegionReponses().get(i).getTotal();

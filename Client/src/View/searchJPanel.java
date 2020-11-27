@@ -415,7 +415,7 @@ public class searchJPanel extends javax.swing.JPanel {
         searchRelatedTopicRequest.setCategory(new Category(cbcategoty));
         searchOvertimeRequest.setCategory(new Category(cbcategoty));
 
-        if (!cbgeo.equalsIgnoreCase("AA")) {
+        if (!cbgeo.equalsIgnoreCase("GLOBAL")) {
             searchRegionRequest.setGeo(new Geo(cbgeo));
             searchRelatedQueryRequest.setGeo(new Geo(cbgeo));
             searchRelatedTopicRequest.setGeo(new Geo(cbgeo));

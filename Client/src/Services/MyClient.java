@@ -166,21 +166,18 @@ public class MyClient {
         inputString = inputString.replace(GeoRequestCountry.class.getSimpleName(), "");
         List<Geo> geos = new ArrayList<>();
         JSONParser jsonParser = new JSONParser();
-        JsonArray jsonArray;
         try {
-            jsonArray = (JsonArray) jsonParser.parse(inputString);
+            JSONArray jsonArray = (JSONArray) jsonParser.parse(inputString);
              for (int i = 0; i < jsonArray.size(); i++) {
-            String id = jsonArray.get(i).getAsJsonObject().get("id").toString();
-            String name = jsonArray.get(i).getAsJsonObject().get("name").toString();
-
-            id = id.replace("\"", "");
-            name = name.replace("\"", "");
+                 JSONObject object = (JSONObject) jsonArray.get(i);
+            String id = object.get("id").toString();
+            String name = object.get("name").toString();
             geos.add(new Geo(name, id));
         }
+        iGetGeoListener.onGetGeoSuccess(geos);
         } catch (Exception ex) {
             iGetGeoListener.onGetGeoFailed();
         }
-        iGetGeoListener.onGetGeoSuccess(geos);
     }
 
     public void setCategory(String inpuString) {
@@ -190,7 +187,7 @@ public class MyClient {
             String jsonArray = jsonObject.get("children").toString();
             iGetCategoryListener.onGetCategorySuccess(Categoryrecursive(jsonArray));
         } catch (JsonSyntaxException e) {
-            System.out.println(e);
+            iGetCategoryListener.onGetCategoryFailed();
         }
     }
 
@@ -242,12 +239,11 @@ public class MyClient {
                     searchRegionReponses.add(new SearchRegionReponse(keySearchs.get(i), regionReponses));
                 }
             } catch (Exception e) {
-                System.out.println(e);
+                iGetSearchRegionListener.OnGetSearchRegionFailed();
             }
+            iGetSearchRegionListener.OnGetSearchRegionSuccess(searchRegionReponses);
         } catch (Exception ex) {
             iGetSearchRegionListener.OnGetSearchRegionFailed();
-        } finally {
-            iGetSearchRegionListener.OnGetSearchRegionSuccess(searchRegionReponses);
         }
 
     }
@@ -277,10 +273,9 @@ public class MyClient {
                 }
                 searchRelatedReponses.add(new SearchRelatedReponse(keySearchs.get(i), listItem));
             }
+            iSearchRelatedListener.OnGetSearchRelatedSuccess(searchRelatedReponses);
         } catch (Exception ex) {
             iSearchRelatedListener.OnGetSearchRelatedFailed();
-        } finally {
-            iSearchRelatedListener.OnGetSearchRelatedSuccess(searchRelatedReponses);
         }
     }
 
@@ -313,13 +308,12 @@ public class MyClient {
                     relatedTopicTops.add(new RelatedTopicTop(name, top));
                 }
             } catch (Exception e) {
-                System.out.println(e);
+                iSearchRelatedTopicListener.OnGetSearchRelatedTopicFailed();
             }
+            iSearchRelatedTopicListener.OnGetSearchRelatedTopicSuccess(new SearchRelatedTopicReponse(relatedTopicRisings, relatedTopicTops));
         } catch (Exception ex) {
             iSearchRelatedTopicListener.OnGetSearchRelatedTopicFailed();
-        } finally {
-            iSearchRelatedTopicListener.OnGetSearchRelatedTopicSuccess(new SearchRelatedTopicReponse(relatedTopicRisings, relatedTopicTops));
-        }
+        } 
 
     }
 
@@ -342,10 +336,9 @@ public class MyClient {
                     relatedTopicReponses.add(relatedTopicReponse);
                 }
             }
+            iRelatedTopicListener.OnGetRelatedTopicSuccess(relatedTopicReponses);
         } catch (Exception ex) {
             iRelatedTopicListener.OnGetRelatedTopicFailed();
-        } finally {
-            iRelatedTopicListener.OnGetRelatedTopicSuccess(relatedTopicReponses);
         }
     }
 
@@ -378,12 +371,12 @@ public class MyClient {
                 searchOverTimeReponse.setIndex(item);
                 searchOverTimeReponse.setOverTimeReponses(overTimeReponses);
             } catch (Exception e) {
-                System.out.println(e);
+            iSearchOvertimeListener.OnGetSearchOvertimeFailed();
             }
+            
+            iSearchOvertimeListener.OnGetSearchOvertimeSuccess(searchOverTimeReponse);
         } catch (Exception ex) {
             iSearchOvertimeListener.OnGetSearchOvertimeFailed();
-        } finally {
-            iSearchOvertimeListener.OnGetSearchOvertimeSuccess(searchOverTimeReponse);
         }
     }
     
@@ -401,10 +394,9 @@ public class MyClient {
                     keyword.add(new SuggesstionResponse(data.get("title").toString(), data.get("type").toString()));
                 }
                 suggesstionKeywordResponse.setResponse(keyword);
+            iSuggestionKeywordListener.OnGetSuggestionKeywordSuccess(suggesstionKeywordResponse);
             } catch (Exception e) {
                 iSuggestionKeywordListener.OnGetSuggestionKeywordFailed();
-            } finally {
-            iSuggestionKeywordListener.OnGetSuggestionKeywordSuccess(suggesstionKeywordResponse);
-        }
+            }
     }
 }
