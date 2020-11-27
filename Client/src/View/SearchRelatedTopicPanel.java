@@ -23,16 +23,16 @@ public class SearchRelatedTopicPanel extends javax.swing.JPanel {
         showLoading();
         MyClient.getInstance().getSearchRelatedTopic(searchRelatedTopicRequest, new Interfaces.ISearchRelatedTopicListener() {
             @Override
-            public void OnGetSearchRelatedTopicSuccess(List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
+            public void OnGetSearchRelatedTopicSuccess(SearchRelatedTopicReponse searchRelatedTopicReponse) {
                  new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        initData(searchRelatedTopicRequest.getSearchQuery().get(0), searchRelatedTopicReponses);
+                        initData(searchRelatedTopicRequest.getSearchQuery().get(0), searchRelatedTopicReponse);
                         dismisLoading();
                     }
                 }).start();
-                
-            }
+                }
+            
 
             @Override
             public void OnGetSearchRelatedTopicFailed() {
@@ -81,10 +81,10 @@ public class SearchRelatedTopicPanel extends javax.swing.JPanel {
     private javax.swing.JPanel searchRelatedTopicPanel;
     // End of variables declaration//GEN-END:variables
 
-    private void initData(String keyString, List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
+    private void initData(String keyString, SearchRelatedTopicReponse searchRelatedTopicReponse) {
         searchRelatedTopicPanel.removeAll();
         searchRelatedTopicPanel.setLayout(new BorderLayout());
-        searchRelatedTopicPanel.add(new SearchRelatedTopicTable(keyString, searchRelatedTopicReponses));
+        searchRelatedTopicPanel.add(new SearchRelatedTopicTable(keyString, searchRelatedTopicReponse));
         searchRelatedTopicPanel.validate();
         searchRelatedTopicPanel.repaint();
 

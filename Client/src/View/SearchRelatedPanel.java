@@ -60,6 +60,8 @@ public class SearchRelatedPanel extends javax.swing.JPanel {
 
         searchRelatedTopicPanel = new javax.swing.JPanel();
 
+        searchRelatedTopicPanel.setBackground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout searchRelatedTopicPanelLayout = new javax.swing.GroupLayout(searchRelatedTopicPanel);
         searchRelatedTopicPanel.setLayout(searchRelatedTopicPanelLayout);
         searchRelatedTopicPanelLayout.setHorizontalGroup(

@@ -56,6 +56,8 @@ public class SuggestionKeywordPanel extends javax.swing.JPanel {
 
         suggestionKeywordPanel = new javax.swing.JPanel();
 
+        suggestionKeywordPanel.setBackground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout suggestionKeywordPanelLayout = new javax.swing.GroupLayout(suggestionKeywordPanel);
         suggestionKeywordPanel.setLayout(suggestionKeywordPanelLayout);
         suggestionKeywordPanelLayout.setHorizontalGroup(

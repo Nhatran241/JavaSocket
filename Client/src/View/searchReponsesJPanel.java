@@ -222,7 +222,7 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         searchRegionPanel.loadData(searchRegionRequest);
         searchRelatedPanel.loadData(searchRelatedQueryRequest);
         searchRelatedTopicPanel.loadData(searchRelatedTopicRequest);
-        topicPanel.loadData(relatedTopicRequest);
+//        topicPanel.loadData(relatedTopicRequest);
         suggestionKeywordPanel.loadData(suggestionsKeywordRequest);
     }
 

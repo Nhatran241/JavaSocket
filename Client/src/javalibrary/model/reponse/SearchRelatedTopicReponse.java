@@ -1,48 +1,35 @@
 package javalibrary.model.reponse;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SearchRelatedTopicReponse {
-    String name, top, rising;
-    
+    List<RelatedTopicRising> relatedTopicRisings = new ArrayList<>();
+    List<RelatedTopicTop> relatedTopicTops = new ArrayList<>();
+
     public SearchRelatedTopicReponse() {
-        
-    }
-
-    public SearchRelatedTopicReponse(String name, String rising) {
-        this.name = name;
-        this.rising = rising;
-    }
-
-    public SearchRelatedTopicReponse(String name, String top, String rising) {
-        this.name = name;
-        this.top = top;
-        this.rising = rising;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
-    public void setTop(String top) {
-        this.top = top;
-    }
-
-      public String getRising() {
-        return rising == null || rising.length() ==0 ? "0":rising;
-    }
-
-    public void setRising(String rising) {
-        this.rising = rising;
-    }
-
-    public String getTop() {
-        return top == null || top.length() == 0? "0" : top;
-    }
-
-
     
+    }
+    
+    public SearchRelatedTopicReponse(List<RelatedTopicRising> relatedTopicRisings ,List<RelatedTopicTop> relatedTopicTops) {
+        this.relatedTopicRisings = relatedTopicRisings;
+        this.relatedTopicTops = relatedTopicTops;
+    }
+  
+    public List<RelatedTopicRising> getRelatedTopicRisings() {
+        return relatedTopicRisings;
+    }
+
+    public void setRelatedTopicRisings(List<RelatedTopicRising> relatedTopicRisings) {
+        this.relatedTopicRisings = relatedTopicRisings;
+    }
+
+    public List<RelatedTopicTop> getRelatedTopicTops() {
+        return relatedTopicTops;
+    }
+
+    public void setRelatedTopicTops(List<RelatedTopicTop> relatedTopicTops) {
+        this.relatedTopicTops = relatedTopicTops;
+    }
+
 }

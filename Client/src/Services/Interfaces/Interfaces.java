@@ -52,7 +52,7 @@ public class Interfaces {
     
     public interface ISearchRelatedTopicListener {
         
-        void OnGetSearchRelatedTopicSuccess(List<SearchRelatedTopicReponse> searchRelatedTopicReponses);
+        void OnGetSearchRelatedTopicSuccess(SearchRelatedTopicReponse searchRelatedTopicReponse);
         
         void OnGetSearchRelatedTopicFailed();
     }

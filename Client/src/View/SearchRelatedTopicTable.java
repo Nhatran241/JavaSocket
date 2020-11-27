@@ -2,18 +2,21 @@ package View;
 
 import java.util.List;
 import javalibrary.model.reponse.RelatedReponse;
+import javalibrary.model.reponse.RelatedTopicRising;
+import javalibrary.model.reponse.RelatedTopicTop;
 import javalibrary.model.reponse.SearchRelatedTopicReponse;
 import javax.swing.table.DefaultTableModel;
 
 public class SearchRelatedTopicTable extends javax.swing.JPanel {
-    List<SearchRelatedTopicReponse> searchRelatedTopicReponses;
+
+    SearchRelatedTopicReponse searchRelatedTopicReponse;
     DefaultTableModel regionTopicModel;
-    
-    public SearchRelatedTopicTable(String keyString, List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
+
+    public SearchRelatedTopicTable(String keyString, SearchRelatedTopicReponse searchRelatedTopicReponse) {
         initComponents();
-        this.searchRelatedTopicReponses = searchRelatedTopicReponses;
+        this.searchRelatedTopicReponse = searchRelatedTopicReponse;
         regionTopicModel = (DefaultTableModel) relatedTopicTable.getModel();
-        showData(keyString, searchRelatedTopicReponses);
+        showData(keyString, searchRelatedTopicReponse);
     }
 
     @SuppressWarnings("unchecked")
@@ -65,7 +68,7 @@ public class SearchRelatedTopicTable extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(relatedTopicTable);
 
-        searchRelatedTopicPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 648, 342));
+        searchRelatedTopicPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 640, 340));
 
         nameJLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         nameJLabel.setText("jLabel1");
@@ -78,7 +81,7 @@ public class SearchRelatedTopicTable extends javax.swing.JPanel {
                 btn_topActionPerformed(evt);
             }
         });
-        searchRelatedTopicPanel.add(btn_top, new org.netbeans.lib.awtextra.AbsoluteConstraints(511, 11, -1, -1));
+        searchRelatedTopicPanel.add(btn_top, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 10, -1, -1));
 
         btn_raising.setText("Raising");
         btn_raising.addActionListener(new java.awt.event.ActionListener() {
@@ -86,17 +89,17 @@ public class SearchRelatedTopicTable extends javax.swing.JPanel {
                 btn_raisingActionPerformed(evt);
             }
         });
-        searchRelatedTopicPanel.add(btn_raising, new org.netbeans.lib.awtextra.AbsoluteConstraints(596, 11, -1, -1));
+        searchRelatedTopicPanel.add(btn_raising, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(searchRelatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(searchRelatedTopicPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(searchRelatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(searchRelatedTopicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -132,29 +135,29 @@ public class SearchRelatedTopicTable extends javax.swing.JPanel {
     private javax.swing.JPanel searchRelatedTopicPanel;
     // End of variables declaration//GEN-END:variables
 
-    private void showData(String keyString, List<SearchRelatedTopicReponse> searchRelatedTopicReponses)
-    {
+    private void showData(String keyString, SearchRelatedTopicReponse searchRelatedTopicReponse) {
         nameJLabel.setText(keyString);
         showTopData();
     }
-    
-     private void showTopData(){
+
+    private void showTopData() {
         removeAllRow();
         btn_top.setEnabled(false);
         btn_raising.setEnabled(true);
         Object[] row = new Object[2];
-        for (SearchRelatedTopicReponse relatedReponse :searchRelatedTopicReponses) {
+        for (RelatedTopicTop relatedReponse : searchRelatedTopicReponse.getRelatedTopicTops()) {
             row[0] = relatedReponse.getName();
             row[1] = relatedReponse.getTop();
             regionTopicModel.addRow(row);
         }
     }
-    private void showRaisingData(){
+
+    private void showRaisingData() {
         removeAllRow();
         btn_top.setEnabled(true);
         btn_raising.setEnabled(false);
         Object[] row = new Object[2];
-        for (SearchRelatedTopicReponse relatedReponse :searchRelatedTopicReponses) {
+        for (RelatedTopicRising relatedReponse : searchRelatedTopicReponse.getRelatedTopicRisings()) {
             row[0] = relatedReponse.getName();
             row[1] = relatedReponse.getRising();
             regionTopicModel.addRow(row);
@@ -162,7 +165,7 @@ public class SearchRelatedTopicTable extends javax.swing.JPanel {
     }
 
     private void removeAllRow() {
-       for (int i = regionTopicModel.getRowCount() - 1; i >= 0; i--) {
+        for (int i = regionTopicModel.getRowCount() - 1; i >= 0; i--) {
             regionTopicModel.removeRow(i);
         }
     }
