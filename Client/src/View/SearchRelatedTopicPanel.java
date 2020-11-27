@@ -23,8 +23,8 @@ public class SearchRelatedTopicPanel extends javax.swing.JPanel {
         showLoading();
         MyClient.getInstance().getSearchRelatedTopic(searchRelatedTopicRequest, new Interfaces.ISearchRelatedTopicListener() {
             @Override
-            public void OnGetSearchRelatedTopicSuccess(List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
-                initData(searchRelatedTopicRequest.getSearchQuery().get(0), searchRelatedTopicReponses);
+            public void OnGetSearchRelatedTopicSuccess(SearchRelatedTopicReponse searchRelatedTopicReponse) {
+                initData(searchRelatedTopicRequest.getSearchQuery().get(0), searchRelatedTopicReponse);
                 dismisLoading();
             }
 
@@ -70,10 +70,10 @@ public class SearchRelatedTopicPanel extends javax.swing.JPanel {
     private javax.swing.JPanel searchRelatedTopicPanel;
     // End of variables declaration//GEN-END:variables
 
-    private void initData(String keyString, List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
+    private void initData(String keyString, SearchRelatedTopicReponse searchRelatedTopicReponse) {
         searchRelatedTopicPanel.removeAll();
         searchRelatedTopicPanel.setLayout(new BorderLayout());
-        searchRelatedTopicPanel.add(new SearchRelatedTopicTable(keyString, searchRelatedTopicReponses));
+        searchRelatedTopicPanel.add(new SearchRelatedTopicTable(keyString, searchRelatedTopicReponse));
         searchRelatedTopicPanel.validate();
         searchRelatedTopicPanel.repaint();
 

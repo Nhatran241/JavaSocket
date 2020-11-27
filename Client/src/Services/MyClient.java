@@ -15,8 +15,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonSyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javalibrary.SocketTransceiver;
 import javalibrary.model.Category;
 import javalibrary.model.Geo;
@@ -24,6 +22,8 @@ import javalibrary.model.reponse.OverTimeReponse;
 import javalibrary.model.reponse.RegionReponse;
 import javalibrary.model.reponse.RelatedReponse;
 import javalibrary.model.reponse.RelatedTopicReponse;
+import javalibrary.model.reponse.RelatedTopicRising;
+import javalibrary.model.reponse.RelatedTopicTop;
 import javalibrary.model.reponse.SearchOverTimeReponse;
 import javalibrary.model.reponse.SearchRegionReponse;
 import javalibrary.model.reponse.SearchRelatedReponse;
@@ -276,7 +276,8 @@ public class MyClient {
     }
 
     public void SetSearchRelatedTopic(String inputString) {
-        List<SearchRelatedTopicReponse> searchRelatedTopicReponses = new ArrayList<>();
+        List<RelatedTopicRising> relatedTopicRisings = new ArrayList<>();
+        List<RelatedTopicTop> relatedTopicTops = new ArrayList<>();
         inputString = inputString.replace(SearchRelatedTopicRequest.class.getSimpleName(), "");
 
         JSONParser jSONParser = new JSONParser();
@@ -292,7 +293,7 @@ public class MyClient {
                     String rising = item.get(0).toString();
                     String name = item.get(4).toString();
                     name = name.replace("\"", "");
-                    searchRelatedTopicReponses.add(new SearchRelatedTopicReponse(name, rising));
+                    relatedTopicRisings.add(new RelatedTopicRising(name, rising));
                 }
                 jsonArray = (JSONArray) jSONtop.get("data");
                 for (int i = 0; i < jsonArray.size(); i++) {
@@ -300,13 +301,7 @@ public class MyClient {
                     String top = item.get(0).toString();
                     String name = item.get(5).toString();
                     name = name.replace("\"", "");
-
-                    for (SearchRelatedTopicReponse searchRelatedTopicReponse : searchRelatedTopicReponses) {
-                        if (searchRelatedTopicReponse.getName().equalsIgnoreCase(name)) {
-                            System.out.println("true");
-                            searchRelatedTopicReponse.setTop(top);
-                        }
-                    }
+                    relatedTopicTops.add(new RelatedTopicTop(name, top));
                 }
             } catch (Exception e) {
                 System.out.println(e);
@@ -314,7 +309,7 @@ public class MyClient {
         } catch (ParseException ex) {
             System.out.println(ex);
         } finally {
-            iSearchRelatedTopicListener.OnGetSearchRelatedTopicSuccess(searchRelatedTopicReponses);
+            iSearchRelatedTopicListener.OnGetSearchRelatedTopicSuccess(new SearchRelatedTopicReponse(relatedTopicRisings, relatedTopicTops));
         }
 
     }
