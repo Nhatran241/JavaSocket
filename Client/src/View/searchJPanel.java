@@ -37,11 +37,10 @@ public class searchJPanel extends javax.swing.JPanel {
         txSearch3.setEditable(false);
         txSearch4.setEditable(false);
         txSearch5.setEditable(false);
-
-        myClient.connect(new Interfaces.IConnectListener() {
+        myClient.init(new Interfaces.IConnectListener() {
             @Override
             public void onConnectSuccess() {
-                myClient.getCategory(new Interfaces.IGetCategoryListener() {
+               myClient.getCategory(new Interfaces.IGetCategoryListener() {
                     @Override
                     public void onGetCategorySuccess(List<Category> categorys) {
 
@@ -69,32 +68,19 @@ public class searchJPanel extends javax.swing.JPanel {
 
             @Override
             public void onConnectFailed() {
-                System.out.println("onConnectFailed");
+                JOptionPane.showMessageDialog(jPanel1, "Failed to connect, try to reconnect");
+                showLoading();
+                myClient.connect();
             }
 
             @Override
             public void onDisconnect() {
                 JOptionPane.showMessageDialog(jPanel1, "Disconnect to server, try to reconnect");
                 showLoading();
-                Boolean flag1 = false;
-                do {
-                    myClient.connect(new Interfaces.IConnectListener() {
-                        @Override
-                        public void onConnectSuccess() {
-                            dismisLoading();
-                        }
-
-                        @Override
-                        public void onConnectFailed() {
-                        }
-
-                        @Override
-                        public void onDisconnect() {
-                        }
-                    });
-                } while (flag1);
+                myClient.connect();
             }
         });
+        myClient.connect();
         showcbDateData();
     }
 

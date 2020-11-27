@@ -5,7 +5,10 @@ import com.google.gson.Gson;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.security.KeyPair;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.crypto.SecretKey;
 import securedata.SecureDataManager;
 
@@ -61,7 +64,7 @@ public abstract class SocketTransceiver implements Runnable {
 				out.flush();
 				return true;
 			} catch (Exception e) {
-				e.printStackTrace();
+                            runFlag =false;
 			}
 		}
 		return false;
@@ -74,7 +77,7 @@ public abstract class SocketTransceiver implements Runnable {
 				out.flush();
 				return true;
 			} catch (Exception e) {
-				e.printStackTrace();
+                            runFlag =false;
 			}
 		}
 		return false;
@@ -89,7 +92,7 @@ public abstract class SocketTransceiver implements Runnable {
 				out.flush();
 				return true;
 			} catch (Exception e) {
-				e.printStackTrace();
+                            runFlag =false;
 			}
 		}
 		return false;
@@ -101,7 +104,7 @@ public abstract class SocketTransceiver implements Runnable {
 				return send(SecureDataManager.getInstance().EncrpytMessage(data,secretKey));
 			}else return false;
 		} catch (Exception e) {
-			e.printStackTrace();
+                            runFlag =false;
 		}
 		return false;
 	}
@@ -112,7 +115,7 @@ public abstract class SocketTransceiver implements Runnable {
 				return send(SecureDataManager.getInstance().EncrpytMessage(data,secretKey));
 			}else return false;
 		} catch (Exception e) {
-			e.printStackTrace();
+                            runFlag =false;
 		}
 		return false;
 	}
@@ -152,8 +155,9 @@ public abstract class SocketTransceiver implements Runnable {
 			socket = null;
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		this.onDisconnect(addr);
+		}finally{
+                    this.onDisconnect(addr);
+                }
 	}
 
 	public abstract void onReceive(InetAddress addr,byte[] data);

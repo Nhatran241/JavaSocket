@@ -24,14 +24,24 @@ public class SearchRegionPanel extends javax.swing.JPanel {
         MyClient.getInstance().getSearchRegion(searchRegionRequest, new Interfaces.IGetSearchRegionListener() {
             @Override
             public void OnGetSearchRegionSuccess(List<SearchRegionReponse> searchRegionReponses) {
-                dismisLoading();
-                initData(searchRegionReponses);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dismisLoading();
+                        initData(searchRegionReponses);
+                    }
+                }).start();
             }
 
             @Override
             public void OnGetSearchRegionFailed() {
-                dismisLoading();
-                showTryAgain();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dismisLoading();
+                        showTryAgain();
+                    }
+                }).start();
             }
         });
     }

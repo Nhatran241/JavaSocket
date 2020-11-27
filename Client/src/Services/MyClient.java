@@ -58,6 +58,7 @@ public class MyClient {
     List<String> keySearchs = new ArrayList<>();
 
     private static MyClient instance;
+    private TcpClient tcpClient;
 
     public static MyClient getInstance() {
         if (instance == null) {
@@ -65,9 +66,8 @@ public class MyClient {
         }
         return instance;
     }
-
-    public void connect(IConnectListener iConnectListener) {
-        TcpClient tcpClient = new TcpClient() {
+    public void init(IConnectListener iConnectListener){
+            tcpClient = new TcpClient() {
             @Override
             public void onConnect(SocketTransceiver tra) {
                 myClientTranceiver = tra;
@@ -108,6 +108,9 @@ public class MyClient {
                 iConnectListener.onDisconnect();
             }
         };
+    }
+
+    public void connect() {
         tcpClient.connect("gettrend.tk", 6060);
     }
 
@@ -235,8 +238,8 @@ public class MyClient {
             } catch (Exception e) {
                 System.out.println(e);
             }
-        } catch (ParseException ex) {
-            System.out.println(ex);
+        } catch (Exception ex) {
+            iGetSearchRegionListener.OnGetSearchRegionFailed();
         } finally {
             iGetSearchRegionListener.OnGetSearchRegionSuccess(searchRegionReponses);
         }
@@ -310,8 +313,8 @@ public class MyClient {
             } catch (Exception e) {
                 System.out.println(e);
             }
-        } catch (ParseException ex) {
-            System.out.println(ex);
+        } catch (Exception ex) {
+            iSearchRelatedTopicListener.OnGetSearchRelatedTopicFailed();
         } finally {
             iSearchRelatedTopicListener.OnGetSearchRelatedTopicSuccess(searchRelatedTopicReponses);
         }
@@ -375,7 +378,7 @@ public class MyClient {
             } catch (Exception e) {
                 System.out.println(e);
             }
-        } catch (ParseException ex) {
+        } catch (Exception ex) {
             iSearchOvertimeListener.OnGetSearchOvertimeFailed();
         } finally {
             iSearchOvertimeListener.OnGetSearchOvertimeSuccess(searchOverTimeReponse);
@@ -397,7 +400,6 @@ public class MyClient {
                 }
                 suggesstionKeywordResponse.setResponse(keyword);
             } catch (Exception e) {
-                System.out.println(e);
                 iSuggestionKeywordListener.OnGetSuggestionKeywordFailed();
             } finally {
             iSuggestionKeywordListener.OnGetSuggestionKeywordSuccess(suggesstionKeywordResponse);

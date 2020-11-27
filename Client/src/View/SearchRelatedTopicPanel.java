@@ -24,14 +24,25 @@ public class SearchRelatedTopicPanel extends javax.swing.JPanel {
         MyClient.getInstance().getSearchRelatedTopic(searchRelatedTopicRequest, new Interfaces.ISearchRelatedTopicListener() {
             @Override
             public void OnGetSearchRelatedTopicSuccess(List<SearchRelatedTopicReponse> searchRelatedTopicReponses) {
-                initData(searchRelatedTopicRequest.getSearchQuery().get(0), searchRelatedTopicReponses);
-                dismisLoading();
+                 new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        initData(searchRelatedTopicRequest.getSearchQuery().get(0), searchRelatedTopicReponses);
+                        dismisLoading();
+                    }
+                }).start();
+                
             }
 
             @Override
             public void OnGetSearchRelatedTopicFailed() {
-                dismisLoading();
-                showTryAgain();
+                 new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dismisLoading();
+                        showTryAgain();
+                    }
+                }).start();
             }
         });
     }

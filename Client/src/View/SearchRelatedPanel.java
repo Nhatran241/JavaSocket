@@ -28,16 +28,28 @@ public class SearchRelatedPanel extends javax.swing.JPanel {
             @Override
             public void OnGetSearchRelatedSuccess(List<SearchRelatedReponse> searchRelatedReponses) {
                 error.setVisible(false);
-                initData(searchRelatedReponses);
-                dismisLoading();
+                 new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        initData(searchRelatedReponses);
+                        dismisLoading();
+                    }
+                }).start();
+                
             }
 
             @Override
             public void OnGetSearchRelatedFailed() {
-                dismisLoading();
-                showTryAgain();
-                error.setVisible(true);
-                error.invalidate();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dismisLoading();
+                        showTryAgain();
+                        error.setVisible(true);
+                        error.invalidate();
+                    }
+                }).start();
+                
             }
         });
     }

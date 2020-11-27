@@ -25,14 +25,26 @@ public class SuggestionKeywordPanel extends javax.swing.JPanel {
         MyClient.getInstance().getSuggestionKeyword(suggestionsKeywordRequest, new Interfaces.ISuggestionKeywordListener() {
             @Override
             public void OnGetSuggestionKeywordSuccess(SuggesstionKeywordResponse suggesstionKeywordResponse) {
-                initData(suggesstionKeywordResponse);
-                dismisLoading();
+               
+                 new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                            initData(suggesstionKeywordResponse);
+                            dismisLoading();
+                    }
+                }).start();
             }
 
             @Override
             public void OnGetSuggestionKeywordFailed() {
-                    dismisLoading();
-                showTryAgain();
+                    
+                 new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dismisLoading();
+                        showTryAgain();
+                    }
+                }).start();
           
             }
         });

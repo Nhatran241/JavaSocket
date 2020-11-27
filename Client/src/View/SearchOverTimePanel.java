@@ -22,14 +22,25 @@ public class SearchOverTimePanel extends javax.swing.JPanel {
         MyClient.getInstance().getSearchOvertime(searchOvertimeRequest, new Interfaces.ISearchOvertimeListener() {
             @Override
             public void OnGetSearchOvertimeSuccess(SearchOverTimeReponse searchOverTimeReponse) {
-                initData(searchOvertimeRequest,searchOverTimeReponse);
-                dismisLoading();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        initData(searchOvertimeRequest,searchOverTimeReponse);
+                        dismisLoading();
+                    }
+                }).start();
+                
             }
 
             @Override
             public void OnGetSearchOvertimeFailed() {
-                dismisLoading();
-                showTryAgain();
+                 new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dismisLoading();
+                        showTryAgain();
+                    }
+                }).start();
                 
             }
         });
