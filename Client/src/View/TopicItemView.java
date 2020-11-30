@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.Desktop;
+import java.awt.Image;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -8,6 +9,9 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javalibrary.model.reponse.RelatedTopicReponse;
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 public class TopicItemView extends javax.swing.JPanel {
 
@@ -43,6 +47,10 @@ public class TopicItemView extends javax.swing.JPanel {
         });
 
         descriptionJLabel.setText("jLabel2");
+
+        imgJLabel.setBackground(new java.awt.Color(204, 0, 204));
+        imgJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/loading90x90.gif"))); // NOI18N
+        imgJLabel.setPreferredSize(new java.awt.Dimension(64, 64));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -120,14 +128,23 @@ public class TopicItemView extends javax.swing.JPanel {
         
         titleJLabel.setText(relatedTopicReponse.getTitle());
         descriptionJLabel.setText(relatedTopicReponse.getDescription());
-//        System.out.println("////////////"+relatedTopicReponse.getImage());
-//        try {
-//            URL url = new URL(unescapeJava(relatedTopicReponse.getImage()));
-//            Image image = ImageIO.read(url);
-//            imgJLabel.setIcon(new ImageIcon(image));
-//        } catch (Exception e) {
-//            System.err.println(""+e+unescapeJava(relatedTopicReponse.getImage()));
-//        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(unescapeJava(relatedTopicReponse.getImage()));
+                    Image image = ImageIO.read(url).getScaledInstance(90,90, Image.SCALE_DEFAULT);
+                    imgJLabel.setIcon(new ImageIcon(image));
+                } catch (Exception e) {
+                    Icon noiamge = new ImageIcon(this.getClass().getResource("../image/noimage.png"));
+                    imgJLabel.setIcon(noiamge);
+                    System.err.println("image"+relatedTopicReponse.getImage());
+                }
+                
+            }
+        }).start();
+        
+        
 //       
     }
     public static String unescapeJava(String escaped) {
