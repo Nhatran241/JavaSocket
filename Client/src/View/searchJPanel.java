@@ -408,7 +408,7 @@ public class searchJPanel extends javax.swing.JPanel {
         searchRelatedTopicRequest.setSearchQuery(listSearchs);
         searchOvertimeRequest.setSearchQuery(listSearchs);
         relatedTopicRequest.setRelatedTopicQuery(listSearchs.get(0));
-        relatedTopicRequest.setPageNumber(0);
+        relatedTopicRequest.setPageNumber(1);
 
         searchRegionRequest.setCategory(new Category(cbcategoty));
         searchRelatedQueryRequest.setCategory(new Category(cbcategoty));
