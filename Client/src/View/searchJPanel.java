@@ -523,11 +523,7 @@ public class searchJPanel extends javax.swing.JPanel {
                 searchReponseJPanel.add(jScrollPane);
                 searchReponseJPanel.validate();
             } else {
-                List<RelatedTopicRequest> relatedTopicRequests = new ArrayList<>();
-                for (int i = 0; i < listSearchs.size(); i++) {
-                    relatedTopicRequests.add(new RelatedTopicRequest(listSearchs.get(i)));
-                }
-                JScrollPane jScrollPane = new JScrollPane(new searchReponsesJPanel(searchOvertimeRequest, searchRegionRequest, searchRelatedQueryRequest, relatedTopicRequests), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                JScrollPane jScrollPane = new JScrollPane(new searchReponsesJPanel(searchOvertimeRequest, searchRegionRequest, searchRelatedQueryRequest, relatedTopicRequest), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                 searchReponseJPanel.removeAll();
                 searchReponseJPanel.setLayout(new BorderLayout());
                 searchReponseJPanel.add(jScrollPane);

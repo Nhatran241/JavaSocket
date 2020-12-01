@@ -177,7 +177,7 @@ public class RequestManager {
         }
 
     }
-    public int getStartPage(int pageNumber) { return pageNumber+1; }
+    public int getStartPage(int pageNumber) { return pageNumber; }
 
     public interface RequestListener {
         void onResponse(String response);
