@@ -40,6 +40,8 @@ public class searchJPanel extends javax.swing.JPanel {
         myClient.init(new Interfaces.IConnectListener() {
             @Override
             public void onConnectSuccess() {
+               searchReponseJPanel.removeAll();
+               searchReponseJPanel.validate();
                myClient.getCategory(new Interfaces.IGetCategoryListener() {
                     @Override
                     public void onGetCategorySuccess(List<Category> categorys) {

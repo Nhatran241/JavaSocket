@@ -325,6 +325,10 @@ public class MyClient {
         try {
             JSONObject items = (JSONObject) jSONParser.parse(inputString);
             JSONArray jSONArray = (JSONArray) items.get("items");
+            if(jSONArray.size() == 0){
+                iRelatedTopicListener.OnGetRelatedTopicFailed();
+                return;
+            }
             for (int i = 0; i < jSONArray.size(); i++) {
                 JSONObject jSONObject = (JSONObject) jSONArray.get(i);
                 if (jSONObject.get("title") != null && jSONObject.get("link") != null) {

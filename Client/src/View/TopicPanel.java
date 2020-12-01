@@ -168,8 +168,8 @@ public class TopicPanel extends javax.swing.JPanel {
 
             @Override
             public void OnGetRelatedTopicFailed() {
-            dismisLoading();
-                showTryAgain();
+                initData(new ArrayList<>());
+                dismisLoading();
           }
         });
     }//GEN-LAST:event_btn_nextActionPerformed
@@ -187,8 +187,8 @@ public class TopicPanel extends javax.swing.JPanel {
 
             @Override
             public void OnGetRelatedTopicFailed() {
-            dismisLoading();
-                showTryAgain();
+                initData(new ArrayList<>());
+                dismisLoading();
           }
         });
     }//GEN-LAST:event_btn_previousActionPerformed
@@ -233,6 +233,7 @@ public class TopicPanel extends javax.swing.JPanel {
     private javax.swing.JTextField tfpage;
     // End of variables declaration//GEN-END:variables
     private void initData(List<RelatedTopicReponse> list) {
+        tfpage.setText(relatedTopicRequest.getPageNumber()+"");
            if(relatedTopicRequest.getPageNumber()>1){
                     btn_previous.setVisible(true);
                 }else {
@@ -271,18 +272,20 @@ public class TopicPanel extends javax.swing.JPanel {
 
             @Override
             public void OnGetRelatedTopicFailed() {
-            dismisLoading();
-                showTryAgain();
+                initData(new ArrayList<>());
+                dismisLoading();
           }
         });
     }
     private void showLoading() {
         scrollPane.add(loading,BorderLayout.CENTER);
-        scrollPane.invalidate();
+        scrollPane.revalidate();
+        scrollPane.repaint();
     }
      
     private void dismisLoading(){
-         scrollPane.invalidate();
+        scrollPane.revalidate();
+        scrollPane.repaint();
     
     }
     private void showTryAgain(){
