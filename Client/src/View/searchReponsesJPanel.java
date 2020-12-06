@@ -1,9 +1,12 @@
 package View;
 
+import Services.Interfaces.Interfaces;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
+import javalibrary.model.reponse.RelatedTopicReponse;
 import javalibrary.model.request.RelatedTopicRequest;
 import javalibrary.model.request.SearchOvertimeRequest;
 import javalibrary.model.request.SearchRegionRequest;
@@ -40,12 +43,11 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         initData1();
     }
 
-    public searchReponsesJPanel(SearchOvertimeRequest searchOvertimeRequest, SearchRegionRequest searchRegionRequest, SearchRelatedQueryRequest searchRelatedQueryRequest, List<RelatedTopicRequest> relatedTopicRequests) {
-        System.out.println("searchRelatedQueryRequest: " + searchRelatedQueryRequest);
+    public searchReponsesJPanel(SearchOvertimeRequest searchOvertimeRequest, SearchRegionRequest searchRegionRequest, SearchRelatedQueryRequest searchRelatedQueryRequest, RelatedTopicRequest relatedTopicRequest) {
         this.searchOvertimeRequest = searchOvertimeRequest;
         this.searchRegionRequest = searchRegionRequest;
         this.searchRelatedQueryRequest = searchRelatedQueryRequest;
-        this.relatedTopicRequests = relatedTopicRequests;
+        this.relatedTopicRequest = relatedTopicRequest;
         initComponents();
         initContainer2();
         initData2();
@@ -222,7 +224,8 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         searchRegionPanel.loadData(searchRegionRequest);
         searchRelatedPanel.loadData(searchRelatedQueryRequest);
         searchRelatedTopicPanel.loadData(searchRelatedTopicRequest);
-//        topicPanel.loadData(relatedTopicRequest);
+        topicPanel.setListKeyword(searchOvertimeRequest.getSearchQuery());
+        topicPanel.loadData(relatedTopicRequest);
         suggestionKeywordPanel.loadData(suggestionsKeywordRequest);
     }
 
@@ -256,7 +259,8 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         searchOverTimePanel.loadData(searchOvertimeRequest);
         searchRegionPanel.loadData(searchRegionRequest);
         searchRelatedPanel.loadData(searchRelatedQueryRequest);
-        
+        topicPanel.setListKeyword(searchOvertimeRequest.getSearchQuery());
+        topicPanel.loadData(relatedTopicRequest);
     }
 
     private void initContainer2() {
@@ -274,8 +278,8 @@ public class searchReponsesJPanel extends javax.swing.JPanel {
         containerSearchRelatedJPanel.add(searchRelatedPanel);
         containerSearchRelatedJPanel.invalidate();
         
-//        containerRelatedTopicPanel.setLayout(new BorderLayout());
-//        containerRelatedTopicPanel.add(new ListTopicPanel(relatedTopicRequests));
-//        containerRelatedTopicPanel.invalidate();
+        containerRelatedTopicPanel.setLayout(new BorderLayout());
+        containerRelatedTopicPanel.add(topicPanel);
+        containerRelatedTopicPanel.invalidate();
     }
 }

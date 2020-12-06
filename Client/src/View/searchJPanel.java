@@ -40,6 +40,8 @@ public class searchJPanel extends javax.swing.JPanel {
         myClient.init(new Interfaces.IConnectListener() {
             @Override
             public void onConnectSuccess() {
+               searchReponseJPanel.removeAll();
+               searchReponseJPanel.validate();
                myClient.getCategory(new Interfaces.IGetCategoryListener() {
                     @Override
                     public void onGetCategorySuccess(List<Category> categorys) {
@@ -408,7 +410,7 @@ public class searchJPanel extends javax.swing.JPanel {
         searchRelatedTopicRequest.setSearchQuery(listSearchs);
         searchOvertimeRequest.setSearchQuery(listSearchs);
         relatedTopicRequest.setRelatedTopicQuery(listSearchs.get(0));
-        relatedTopicRequest.setPageNumber(0);
+        relatedTopicRequest.setPageNumber(1);
 
         searchRegionRequest.setCategory(new Category(cbcategoty));
         searchRelatedQueryRequest.setCategory(new Category(cbcategoty));
@@ -523,11 +525,7 @@ public class searchJPanel extends javax.swing.JPanel {
                 searchReponseJPanel.add(jScrollPane);
                 searchReponseJPanel.validate();
             } else {
-                List<RelatedTopicRequest> relatedTopicRequests = new ArrayList<>();
-                for (int i = 0; i < listSearchs.size(); i++) {
-                    relatedTopicRequests.add(new RelatedTopicRequest(listSearchs.get(i)));
-                }
-                JScrollPane jScrollPane = new JScrollPane(new searchReponsesJPanel(searchOvertimeRequest, searchRegionRequest, searchRelatedQueryRequest, relatedTopicRequests), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                JScrollPane jScrollPane = new JScrollPane(new searchReponsesJPanel(searchOvertimeRequest, searchRegionRequest, searchRelatedQueryRequest, relatedTopicRequest), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                 searchReponseJPanel.removeAll();
                 searchReponseJPanel.setLayout(new BorderLayout());
                 searchReponseJPanel.add(jScrollPane);

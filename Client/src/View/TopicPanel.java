@@ -11,6 +11,8 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javalibrary.model.reponse.RelatedTopicReponse;
@@ -43,6 +45,11 @@ public class TopicPanel extends javax.swing.JPanel {
         scrollPane = new java.awt.ScrollPane();
         btn_previous = new javax.swing.JButton();
         btn_next = new javax.swing.JButton();
+        combokeyword = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        tfpage = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1236, 524));
@@ -61,37 +68,92 @@ public class TopicPanel extends javax.swing.JPanel {
             }
         });
 
+        combokeyword.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                combokeywordItemStateChanged(evt);
+            }
+        });
+        combokeyword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                combokeywordActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Topic for keyword :");
+
+        jLabel2.setText("Page :");
+
+        tfpage.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tfpage.setText("1");
+        tfpage.setPreferredSize(new java.awt.Dimension(50, 20));
+
+        jButton1.setText("Go");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel1)
+                        .addGap(27, 27, 27)
+                        .addComponent(combokeyword, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfpage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_previous)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_next, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 599, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(btn_previous)
-                .addGap(18, 18, 18)
-                .addComponent(btn_next, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(969, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_previous)
+                    .addComponent(combokeyword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(btn_previous, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(tfpage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
                     .addComponent(btn_next))
-                .addGap(23, 23, 23))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         btn_previous.setVisible(false);
         btn_next.setVisible(false);
+        tfpage.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+                    e.consume(); // consume non-numbers
+                }else {
+                    if(c == '0' && tfpage.getText().trim().length() ==0){
+                        e.consume();
+                        tfpage.setText("1");
+                    }
+                }
+            }
+        });
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void btn_nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nextActionPerformed
         // TODO add your handling code here:
         relatedTopicRequest.setPageNumber(relatedTopicRequest.getPageNumber()+1);
@@ -106,8 +168,8 @@ public class TopicPanel extends javax.swing.JPanel {
 
             @Override
             public void OnGetRelatedTopicFailed() {
-            dismisLoading();
-                showTryAgain();
+                initData(new ArrayList<>());
+                dismisLoading();
           }
         });
     }//GEN-LAST:event_btn_nextActionPerformed
@@ -125,19 +187,53 @@ public class TopicPanel extends javax.swing.JPanel {
 
             @Override
             public void OnGetRelatedTopicFailed() {
-            dismisLoading();
-                showTryAgain();
+                initData(new ArrayList<>());
+                dismisLoading();
           }
         });
     }//GEN-LAST:event_btn_previousActionPerformed
+
+    private void combokeywordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combokeywordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_combokeywordActionPerformed
+
+    private void combokeywordItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combokeywordItemStateChanged
+        // TODO add your handling code here:
+        if(relatedTopicRequest ==null)
+            return;
+        if(evt.getItem().toString() != relatedTopicRequest.getRelatedTopicQuery()){
+        relatedTopicRequest.setRelatedTopicQuery(evt.getItem().toString());
+        relatedTopicRequest.setPageNumber(1);
+        loadData(relatedTopicRequest);
+        }
+    }//GEN-LAST:event_combokeywordItemStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(relatedTopicRequest.getPageNumber()+"" != tfpage.getText().trim()){
+            if(tfpage.getText().trim().isEmpty()){
+                relatedTopicRequest.setPageNumber(1);
+            }else{
+                relatedTopicRequest.setPageNumber(Integer.parseInt(tfpage.getText().trim()));
+            }
+            tfpage.setText(relatedTopicRequest.getPageNumber()+"");
+            loadData(relatedTopicRequest);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_next;
     private javax.swing.JButton btn_previous;
+    private javax.swing.JComboBox<String> combokeyword;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private java.awt.ScrollPane scrollPane;
+    private javax.swing.JTextField tfpage;
     // End of variables declaration//GEN-END:variables
- private void initData(List<RelatedTopicReponse> list) {
+    private void initData(List<RelatedTopicReponse> list) {
+        tfpage.setText(relatedTopicRequest.getPageNumber()+"");
            if(relatedTopicRequest.getPageNumber()>1){
                     btn_previous.setVisible(true);
                 }else {
@@ -162,8 +258,8 @@ public class TopicPanel extends javax.swing.JPanel {
         }
 
   }
-
     RelatedTopicRequest relatedTopicRequest;
+    List<String> keyword ;
     public void loadData(RelatedTopicRequest relatedTopicRequest){
         this.relatedTopicRequest = relatedTopicRequest;
         showLoading();
@@ -176,18 +272,20 @@ public class TopicPanel extends javax.swing.JPanel {
 
             @Override
             public void OnGetRelatedTopicFailed() {
-            dismisLoading();
-                showTryAgain();
+                initData(new ArrayList<>());
+                dismisLoading();
           }
         });
     }
     private void showLoading() {
         scrollPane.add(loading,BorderLayout.CENTER);
-        scrollPane.invalidate();
+        scrollPane.revalidate();
+        scrollPane.repaint();
     }
      
     private void dismisLoading(){
-         scrollPane.invalidate();
+        scrollPane.revalidate();
+        scrollPane.repaint();
     
     }
     private void showTryAgain(){
@@ -208,6 +306,12 @@ public class TopicPanel extends javax.swing.JPanel {
     public TopicPanel() {
         initComponents();
         initUI();
+    }
+
+    public void setListKeyword(List<String> searchQuery) {
+        for (int i = 0; i < searchQuery.size(); i++) {
+            combokeyword.addItem(searchQuery.get(i));
+        }
     }
 
 }

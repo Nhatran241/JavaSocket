@@ -186,7 +186,7 @@ public class MyClient {
             JsonObject jsonObject = new JsonParser().parse(inpuString).getAsJsonObject();
             String jsonArray = jsonObject.get("children").toString();
             iGetCategoryListener.onGetCategorySuccess(Categoryrecursive(jsonArray));
-        } catch (JsonSyntaxException e) {
+        } catch (Exception e) {
             iGetCategoryListener.onGetCategoryFailed();
         }
     }
@@ -325,6 +325,10 @@ public class MyClient {
         try {
             JSONObject items = (JSONObject) jSONParser.parse(inputString);
             JSONArray jSONArray = (JSONArray) items.get("items");
+            if(jSONArray.size() == 0){
+                iRelatedTopicListener.OnGetRelatedTopicFailed();
+                return;
+            }
             for (int i = 0; i < jSONArray.size(); i++) {
                 JSONObject jSONObject = (JSONObject) jSONArray.get(i);
                 if (jSONObject.get("title") != null && jSONObject.get("link") != null) {
@@ -333,6 +337,15 @@ public class MyClient {
                     relatedTopicReponse.setUrl(jSONObject.get("link").toString());
                     relatedTopicReponse.setDescription(jSONObject.get("snippet") != null ? jSONObject.get("snippet").toString() : "");
                     relatedTopicReponse.setImage("");
+                    JSONObject pagemap = (JSONObject) jSONObject.get("pagemap");
+                    if(pagemap != null){
+                        JSONArray thum = (JSONArray) pagemap.get("cse_thumbnail");
+                        if(thum != null && thum.size() >0){
+                            JSONObject scr = (JSONObject) thum.get(0);
+                            if(scr!=null && scr.get("src")!=null)
+                                relatedTopicReponse.setImage(scr.get("src").toString());
+                        }
+                    }
                     relatedTopicReponses.add(relatedTopicReponse);
                 }
             }
