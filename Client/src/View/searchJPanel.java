@@ -3,13 +3,12 @@ package View;
 import Services.Interfaces.Interfaces;
 import Services.MyClient;
 import java.awt.BorderLayout;
-import java.awt.Frame;
+import java.awt.FlowLayout;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import javalibrary.model.Category;
 import javalibrary.model.Geo;
 import javalibrary.model.request.RelatedTopicRequest;
@@ -18,20 +17,23 @@ import javalibrary.model.request.SearchRegionRequest;
 import javalibrary.model.request.SearchRelatedQueryRequest;
 import javalibrary.model.request.SearchRelatedTopicRequest;
 import javalibrary.model.request.SuggestionsKeywordRequest;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 
 public class searchJPanel extends javax.swing.JPanel {
 
     MyClient myClient = MyClient.getInstance();
     String[] dateStrings = {"The past 12 months", "Hours passed", "Last 4 hours", "Last day", "Last 7 days", "30 days", "90 days", "The past 5 years", "Custom time"};
     JLabel loading;
+    public static String fromDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+    public static String toDate =  new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+    
 
     public searchJPanel() {
         initComponents();
@@ -340,7 +342,18 @@ public class searchJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txSearch2KeyPressed
 
     private void cbDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDateActionPerformed
-     
+        String cbdate = cbDate.getSelectedItem().toString();
+        System.out.println("cbdate: " + cbdate);
+        if (cbdate.contains("Custom time")) {
+            JDialog jDialog = new JDialog();
+            JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+            panel.add(new ChooseDatePanel());
+            jDialog.add(panel);
+            jDialog.setSize(340, 297);
+            jDialog.setLocationRelativeTo(null);
+            jDialog.setVisible(true);
+        }
     }//GEN-LAST:event_cbDateActionPerformed
 
 
@@ -418,106 +431,6 @@ public class searchJPanel extends javax.swing.JPanel {
             listSearchs.add(txsearch5);
         }
 
-        searchRegionRequest.setSearchQuery(listSearchs);
-        searchRelatedQueryRequest.setSearchQuery(listSearchs);
-        searchRelatedTopicRequest.setSearchQuery(listSearchs);
-        searchOvertimeRequest.setSearchQuery(listSearchs);
-        relatedTopicRequest.setRelatedTopicQuery(listSearchs.get(0));
-        relatedTopicRequest.setPageNumber(1);
-
-        searchRegionRequest.setCategory(new Category(cbcategoty));
-        searchRelatedQueryRequest.setCategory(new Category(cbcategoty));
-        searchRelatedTopicRequest.setCategory(new Category(cbcategoty));
-        searchOvertimeRequest.setCategory(new Category(cbcategoty));
-
-        if (!cbgeo.equalsIgnoreCase("GLOBAL")) {
-            searchRegionRequest.setGeo(new Geo(cbgeo));
-            searchRelatedQueryRequest.setGeo(new Geo(cbgeo));
-            searchRelatedTopicRequest.setGeo(new Geo(cbgeo));
-            searchOvertimeRequest.setGeo(new Geo(cbgeo));
-        }
-
-        Calendar c = Calendar.getInstance();
-        Date dt = new Date();
-        c.setTime(dt);
-        if (cbdate.contains("The past 12 months")) {
-            c.add(Calendar.YEAR, -1);
-        } else if (cbdate.contains("Hours passed")) {
-            c.add(Calendar.HOUR, -1);
-        } else if (cbdate.contains("Last 4 hours")) {
-            c.add(Calendar.HOUR, -4);
-        } else if (cbdate.contains("Last day")) {
-            c.add(Calendar.HOUR, -24);
-        } else if (cbdate.contains("Last 7 days")) {
-            c.add(Calendar.DATE, -7);
-        } else if (cbdate.contains("30 days")) {
-            c.add(Calendar.DATE, -30);
-        } else if (cbdate.contains("90 days")) {
-            c.add(Calendar.DATE, -90);
-        } else if (cbdate.contains("The past 5 years")) {
-            c.add(Calendar.YEAR, -5);
-        }
-
-        searchRegionRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
-        searchRelatedQueryRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
-        searchRelatedTopicRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
-        searchOvertimeRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
-        if (cbdate.contains("Hours passed")) {
-            searchRegionRequest.setFromDate("now1h");
-            searchRelatedQueryRequest.setFromDate("now1h");
-            searchRelatedTopicRequest.setFromDate("now1h");
-            searchOvertimeRequest.setFromDate("now1h");
-            searchRegionRequest.setToDate("");
-            searchRelatedQueryRequest.setToDate("");
-            searchRelatedTopicRequest.setToDate("");
-            searchOvertimeRequest.setToDate("");
-        } else if (cbdate.contains("Last 4 hours")) {
-            searchRegionRequest.setFromDate("now4h");
-            searchRelatedQueryRequest.setFromDate("now4h");
-            searchRelatedTopicRequest.setFromDate("now4h");
-            searchOvertimeRequest.setFromDate("now4h");
-            searchRegionRequest.setToDate("");
-            searchRelatedQueryRequest.setToDate("");
-            searchRelatedTopicRequest.setToDate("");
-            searchOvertimeRequest.setToDate("");
-        } else if (cbdate.contains("Last day")) {
-            searchRegionRequest.setFromDate("now1d");
-            searchRelatedQueryRequest.setFromDate("now1d");
-            searchRelatedTopicRequest.setFromDate("now1d");
-            searchOvertimeRequest.setFromDate("now1d");
-            searchRegionRequest.setToDate("");
-            searchRelatedQueryRequest.setToDate("");
-            searchRelatedTopicRequest.setToDate("");
-            searchOvertimeRequest.setToDate("");
-        } else if (cbdate.contains("Last 7 days")) {
-            searchRegionRequest.setFromDate("now7d");
-            searchRelatedQueryRequest.setFromDate("now7d");
-            searchRelatedTopicRequest.setFromDate("now7d");
-            searchOvertimeRequest.setFromDate("now7d");
-            searchRegionRequest.setToDate("");
-            searchRelatedQueryRequest.setToDate("");
-            searchRelatedTopicRequest.setToDate("");
-            searchOvertimeRequest.setToDate("");
-        } else if (cbdate.contains("30 days")) {
-            searchRegionRequest.setFromDate("now1m");
-            searchRelatedQueryRequest.setFromDate("now1m");
-            searchRelatedTopicRequest.setFromDate("now1m");
-            searchOvertimeRequest.setFromDate("now1m");
-            searchRegionRequest.setToDate("");
-            searchRelatedQueryRequest.setToDate("");
-            searchRelatedTopicRequest.setToDate("");
-            searchOvertimeRequest.setToDate("");
-        } else if (cbdate.contains("90 days")) {
-            searchRegionRequest.setFromDate("now3m");
-            searchRelatedQueryRequest.setFromDate("now3m");
-            searchRelatedTopicRequest.setFromDate("now3m");
-            searchOvertimeRequest.setFromDate("now3m");
-            searchRegionRequest.setToDate("");
-            searchRelatedQueryRequest.setToDate("");
-            searchRelatedTopicRequest.setToDate("");
-            searchOvertimeRequest.setToDate("");
-        }
-//        
 //        Calendar c2 = Calendar.getInstance();
 //        Date dt2 = new Date();
 //        c2.setTime(dt2);
@@ -526,8 +439,106 @@ public class searchJPanel extends javax.swing.JPanel {
 //        searchRelatedQueryRequest.setToDate(new SimpleDateFormat("yyyy-MM-dd").format(c2.getTime()));
 //        searchRelatedTopicRequest.setToDate(new SimpleDateFormat("yyyy-MM-dd").format(c2.getTime()));
 //        searchOvertimeRequest.setToDate(new SimpleDateFormat("yyyy-MM-dd").format(c2.getTime()));
-
         if (!txsearch1.isEmpty()) {
+            searchRegionRequest.setSearchQuery(listSearchs);
+            searchRelatedQueryRequest.setSearchQuery(listSearchs);
+            searchRelatedTopicRequest.setSearchQuery(listSearchs);
+            searchOvertimeRequest.setSearchQuery(listSearchs);
+            relatedTopicRequest.setRelatedTopicQuery(listSearchs.get(0));
+            relatedTopicRequest.setPageNumber(1);
+
+            searchRegionRequest.setCategory(new Category(cbcategoty));
+            searchRelatedQueryRequest.setCategory(new Category(cbcategoty));
+            searchRelatedTopicRequest.setCategory(new Category(cbcategoty));
+            searchOvertimeRequest.setCategory(new Category(cbcategoty));
+
+            if (!cbgeo.equalsIgnoreCase("GLOBAL")) {
+                searchRegionRequest.setGeo(new Geo(cbgeo));
+                searchRelatedQueryRequest.setGeo(new Geo(cbgeo));
+                searchRelatedTopicRequest.setGeo(new Geo(cbgeo));
+                searchOvertimeRequest.setGeo(new Geo(cbgeo));
+            }
+
+            Calendar c = Calendar.getInstance();
+            Date dt = new Date();
+            c.setTime(dt);
+            if (cbdate.contains("The past 12 months")) {
+                c.add(Calendar.YEAR, -1);
+            } else if (cbdate.contains("Hours passed")) {
+                c.add(Calendar.HOUR, -1);
+            } else if (cbdate.contains("Last 4 hours")) {
+                c.add(Calendar.HOUR, -4);
+            } else if (cbdate.contains("Last day")) {
+                c.add(Calendar.HOUR, -24);
+            } else if (cbdate.contains("Last 7 days")) {
+                c.add(Calendar.DATE, -7);
+            } else if (cbdate.contains("30 days")) {
+                c.add(Calendar.DATE, -30);
+            } else if (cbdate.contains("90 days")) {
+                c.add(Calendar.DATE, -90);
+            } else if (cbdate.contains("The past 5 years")) {
+                c.add(Calendar.YEAR, -5);
+            }
+
+            searchRegionRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+            searchRelatedQueryRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+            searchRelatedTopicRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+            searchOvertimeRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+            if (cbdate.contains("Hours passed")) {
+                searchRegionRequest.setFromDate("now1h");
+                searchRelatedQueryRequest.setFromDate("now1h");
+                searchRelatedTopicRequest.setFromDate("now1h");
+                searchOvertimeRequest.setFromDate("now1h");
+                searchRegionRequest.setToDate("");
+                searchRelatedQueryRequest.setToDate("");
+                searchRelatedTopicRequest.setToDate("");
+                searchOvertimeRequest.setToDate("");
+            } else if (cbdate.contains("Last 4 hours")) {
+                searchRegionRequest.setFromDate("now4h");
+                searchRelatedQueryRequest.setFromDate("now4h");
+                searchRelatedTopicRequest.setFromDate("now4h");
+                searchOvertimeRequest.setFromDate("now4h");
+                searchRegionRequest.setToDate("");
+                searchRelatedQueryRequest.setToDate("");
+                searchRelatedTopicRequest.setToDate("");
+                searchOvertimeRequest.setToDate("");
+            } else if (cbdate.contains("Last day")) {
+                searchRegionRequest.setFromDate("now1d");
+                searchRelatedQueryRequest.setFromDate("now1d");
+                searchRelatedTopicRequest.setFromDate("now1d");
+                searchOvertimeRequest.setFromDate("now1d");
+                searchRegionRequest.setToDate("");
+                searchRelatedQueryRequest.setToDate("");
+                searchRelatedTopicRequest.setToDate("");
+                searchOvertimeRequest.setToDate("");
+            } else if (cbdate.contains("Last 7 days")) {
+                searchRegionRequest.setFromDate("now7d");
+                searchRelatedQueryRequest.setFromDate("now7d");
+                searchRelatedTopicRequest.setFromDate("now7d");
+                searchOvertimeRequest.setFromDate("now7d");
+                searchRegionRequest.setToDate("");
+                searchRelatedQueryRequest.setToDate("");
+                searchRelatedTopicRequest.setToDate("");
+                searchOvertimeRequest.setToDate("");
+            } else if (cbdate.contains("30 days")) {
+                searchRegionRequest.setFromDate("now1m");
+                searchRelatedQueryRequest.setFromDate("now1m");
+                searchRelatedTopicRequest.setFromDate("now1m");
+                searchOvertimeRequest.setFromDate("now1m");
+                searchRegionRequest.setToDate("");
+                searchRelatedQueryRequest.setToDate("");
+                searchRelatedTopicRequest.setToDate("");
+                searchOvertimeRequest.setToDate("");
+            } else if (cbdate.contains("90 days")) {
+                searchRegionRequest.setFromDate("now3m");
+                searchRelatedQueryRequest.setFromDate("now3m");
+                searchRelatedTopicRequest.setFromDate("now3m");
+                searchOvertimeRequest.setFromDate("now3m");
+                searchRegionRequest.setToDate("");
+                searchRelatedQueryRequest.setToDate("");
+                searchRelatedTopicRequest.setToDate("");
+                searchOvertimeRequest.setToDate("");
+            }
             if (txsearch2.isEmpty() && txsearch3.isEmpty() && txsearch4.isEmpty() && txsearch5.isEmpty()) {
                 suggestionsKeywordRequest.setKeyword(txsearch1.toString());
                 JScrollPane jScrollPane = new JScrollPane(new searchReponsesJPanel(searchOvertimeRequest, searchRegionRequest, searchRelatedQueryRequest, searchRelatedTopicRequest, relatedTopicRequest, suggestionsKeywordRequest), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
