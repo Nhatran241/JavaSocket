@@ -260,16 +260,18 @@ public class MyClient {
                 JSONObject jSONObjectKey = (JSONObject) jSONObject.get(keySearchs.get(i).trim());
                 JSONObject raising = (JSONObject) jSONObjectKey.get("rising");
                 JSONObject top = (JSONObject) jSONObjectKey.get("top");
+                if(raising != null && top != null){
                 JSONArray raisingData = (JSONArray) raising.get("data");
                 JSONArray topData = (JSONArray) top.get("data");
 
-                for (int j = 0; j < raisingData.size(); j++) {
-                    JSONArray itemDataRaising = (JSONArray) raisingData.get(j);
-                    JSONArray itemDataTop = (JSONArray) topData.get(j);
-                    String name = (String) itemDataRaising.get(0);
-                    String raisingdata = itemDataRaising.get(1).toString();
-                    String topdata = itemDataTop.get(1).toString();
-                    listItem.add(new RelatedReponse(name, raisingdata, topdata));
+                    for (int j = 0; j < raisingData.size(); j++) {
+                        JSONArray itemDataRaising = (JSONArray) raisingData.get(j);
+                        JSONArray itemDataTop = (JSONArray) topData.get(j);
+                        String name = (String) itemDataRaising.get(0);
+                        String raisingdata = itemDataRaising.get(1).toString();
+                        String topdata = itemDataTop.get(1).toString();
+                        listItem.add(new RelatedReponse(name, raisingdata, topdata));
+                    }
                 }
                 searchRelatedReponses.add(new SearchRelatedReponse(keySearchs.get(i), listItem));
             }

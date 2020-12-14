@@ -26,8 +26,9 @@ public class SearchOverTimePanel extends javax.swing.JPanel {
                     @Override
                     public void run() {
                         initData(searchOvertimeRequest,searchOverTimeReponse);
-                        dismisLoading();
                     }
+
+                    
                 }).start();
                 
             }
@@ -37,8 +38,7 @@ public class SearchOverTimePanel extends javax.swing.JPanel {
                  new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        dismisLoading();
-                        showTryAgain();
+                        showError();
                     }
                 }).start();
                 
@@ -87,48 +87,52 @@ public class SearchOverTimePanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void initData(SearchOvertimeRequest searchOvertimeRequest, SearchOverTimeReponse searchOverTimeReponse) {
-        if(searchOverTimeReponse.getOverTimeReponses()==null || searchOverTimeReponse.getOverTimeReponses().size() == 0){
-            error.setVisible(true);
+        if(searchOverTimeReponse.getOverTimeReponses()==null || searchOverTimeReponse.getOverTimeReponses().isEmpty()){
+            showError();
+            return;
         }else{
-             error.setVisible(false);
-        graphPanel.removeAll();
-        graphPanel.setLayout(new BorderLayout());
-        boolean isdayformat=true;
-        boolean ishourformat=false;
-        boolean ishourminuteformat=false;
-        if(searchOvertimeRequest.getFromDate().contains("now1h")||searchOvertimeRequest.getFromDate().contains("now4h")
-                ||searchOvertimeRequest.getFromDate().contains("now1d")){
-            ishourminuteformat=true;
-            ishourformat=false;
-            isdayformat =false;
-        }
-         if(searchOvertimeRequest.getFromDate().contains("now7d")){
-            ishourminuteformat=false;
-            ishourformat =true;
-            isdayformat =false;
-        }
-        
-        graphPanel.add(new SearchOverTimeGraph(searchOvertimeRequest.getSearchQuery(), searchOverTimeReponse,isdayformat,ishourformat,ishourminuteformat));
-        graphPanel.validate();
-        graphPanel.repaint();
+            dismisLoading();
+            graphPanel.removeAll();
+            graphPanel.setLayout(new BorderLayout());
+            boolean isdayformat=true;
+            boolean ishourformat=false;
+            boolean ishourminuteformat=false;
+            if(searchOvertimeRequest.getFromDate().contains("now1h")||searchOvertimeRequest.getFromDate().contains("now4h")
+                    ||searchOvertimeRequest.getFromDate().contains("now1d")){
+                ishourminuteformat=true;
+                ishourformat=false;
+                isdayformat =false;
+            }
+             if(searchOvertimeRequest.getFromDate().contains("now7d")){
+                ishourminuteformat=false;
+                ishourformat =true;
+                isdayformat =false;
+            }
+
+            graphPanel.add(new SearchOverTimeGraph(searchOvertimeRequest.getSearchQuery(), searchOverTimeReponse,isdayformat,ishourformat,ishourminuteformat));
+            graphPanel.validate();
+            graphPanel.repaint();
         }
 
   }
 
     private void showLoading() {
-        
          graphPanel.setVisible(false);
          loading.setVisible(true);
+         error.setVisible(false);
     }
-     
+    private void showError() {
+         graphPanel.setVisible(false);
+         loading.setVisible(false);
+         error.setVisible(true);
+    }
     private void dismisLoading(){
          graphPanel.setVisible(true);
          loading.setVisible(false);
+         error.setVisible(true);
     
     }
-    private void showTryAgain(){
     
-    }
     private void onTryAgainClick(){
     
     }
@@ -141,10 +145,13 @@ public class SearchOverTimePanel extends javax.swing.JPanel {
         loading.setLocation(600, 150);
         add(loading,BorderLayout.CENTER);
         
-        error = new JLabel("No data");
+        
+        error = new JLabel("Graph No Data");
         error.setVisible(false);
-        error.setFont(new Font("Serif", Font.PLAIN, 20));
+        error.setSize(200, 200);
         error.setLocation(600, 150);
+        error.setFont(new Font("Serif", Font.PLAIN, 30));
         add(error,BorderLayout.CENTER);
+        
     }
 }
