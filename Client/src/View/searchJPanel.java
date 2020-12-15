@@ -25,12 +25,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.WindowConstants;
 
 public class searchJPanel extends javax.swing.JPanel {
 
     MyClient myClient = MyClient.getInstance();
-    String[] dateStrings = {"The past 12 months", "Hours passed", "Last 4 hours", "Last day", "Last 7 days", "30 days", "90 days", "The past 5 years", "Custom time"};
+    String[] dateStrings = {"Last 7 days", "Hours passed", "Last 4 hours", "Last day", "30 days", "90 days", "The past 5 years", "Custom time"};
     JLabel loading;
     public static JDialog jDialog;
     public static Date fromDate;
