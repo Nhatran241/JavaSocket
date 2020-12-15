@@ -31,7 +31,6 @@ public class ChooseDatePanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         yearComboBox = new javax.swing.JComboBox<>();
         okButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
 
         chooseDatePanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -89,48 +88,38 @@ public class ChooseDatePanel extends javax.swing.JPanel {
             }
         });
 
-        cancelButton.setText("Hủy");
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout chooseDatePanelLayout = new javax.swing.GroupLayout(chooseDatePanel);
         chooseDatePanel.setLayout(chooseDatePanelLayout);
         chooseDatePanelLayout.setHorizontalGroup(
             chooseDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(chooseDatePanelLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
                 .addGroup(chooseDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(chooseDatePanelLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(chooseDatePanelLayout.createSequentialGroup()
                         .addGroup(chooseDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(chooseDatePanelLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(yearRadioButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel4))
                             .addGroup(chooseDatePanelLayout.createSequentialGroup()
+                                .addComponent(fromtoRadioButton)
+                                .addGap(22, 22, 22)
                                 .addGroup(chooseDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(chooseDatePanelLayout.createSequentialGroup()
-                                        .addComponent(yearRadioButton)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel4))
-                                    .addGroup(chooseDatePanelLayout.createSequentialGroup()
-                                        .addComponent(fromtoRadioButton)
-                                        .addGap(22, 22, 22)
-                                        .addGroup(chooseDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel1)
-                                            .addComponent(jLabel2))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                                .addGroup(chooseDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(toDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(fromDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, chooseDatePanelLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cancelButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(okButton)))
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                        .addGroup(chooseDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(toDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(fromDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, chooseDatePanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(okButton)
+                .addGap(31, 31, 31))
         );
         chooseDatePanelLayout.setVerticalGroup(
             chooseDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,11 +149,9 @@ public class ChooseDatePanel extends javax.swing.JPanel {
                         .addGroup(chooseDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(20, 20, 20)
-                .addGroup(chooseDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(okButton)
-                    .addComponent(cancelButton))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(okButton)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -221,12 +208,6 @@ public class ChooseDatePanel extends javax.swing.JPanel {
             searchJPanel.jDialog.dispose();
         }
     }//GEN-LAST:event_okButtonActionPerformed
-
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        searchJPanel.fromDate = null;
-        searchJPanel.toDate = null;
-        searchJPanel.jDialog.dispose();
-    }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void yearRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearRadioButtonActionPerformed
         if (yearRadioButton.isSelected()) {
@@ -286,7 +267,6 @@ public class ChooseDatePanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cancelButton;
     private javax.swing.JPanel chooseDatePanel;
     private com.toedter.calendar.JDateChooser fromDateChooser;
     private javax.swing.JRadioButton fromtoRadioButton;

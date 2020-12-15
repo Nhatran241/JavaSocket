@@ -352,7 +352,6 @@ public class searchJPanel extends javax.swing.JPanel {
             panel.add(new ChooseDatePanel());
             jDialog.add(panel);
             jDialog.setSize(340, 297);
-            jDialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
             jDialog.setLocationRelativeTo(null);
             jDialog.setVisible(true);
         }
