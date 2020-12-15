@@ -33,8 +33,8 @@ public class searchJPanel extends javax.swing.JPanel {
     String[] dateStrings = {"The past 12 months", "Hours passed", "Last 4 hours", "Last day", "Last 7 days", "30 days", "90 days", "The past 5 years", "Custom time"};
     JLabel loading;
     public static JDialog jDialog;
-    public static String fromDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
-    public static String toDate =  new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+    public static Date fromDate;
+    public static Date toDate;
     
 
     public searchJPanel() {
@@ -484,6 +484,7 @@ public class searchJPanel extends javax.swing.JPanel {
             
             if (cbdate.contains("Custom time")) {
                 if (fromDate != null && toDate != null) {
+                    
                     searchRegionRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(fromDate));
                     searchRelatedQueryRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(fromDate));
                     searchRelatedTopicRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(fromDate));
@@ -493,6 +494,7 @@ public class searchJPanel extends javax.swing.JPanel {
                     searchRelatedQueryRequest.setToDate(new SimpleDateFormat("yyyy-MM-dd").format(toDate));
                     searchRelatedTopicRequest.setToDate(new SimpleDateFormat("yyyy-MM-dd").format(toDate));
                     searchOvertimeRequest.setToDate(new SimpleDateFormat("yyyy-MM-dd").format(toDate));
+                    System.out.println("fromDate + toDate: " + fromDate + "/" + toDate);
                 } else {
                     cbDate.setSelectedIndex(0);
                     c.add(Calendar.YEAR, -1);

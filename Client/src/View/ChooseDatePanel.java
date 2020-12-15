@@ -1,14 +1,19 @@
 package View;
 
+import static View.searchJPanel.fromDate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class ChooseDatePanel extends javax.swing.JPanel {
 
     public ChooseDatePanel() {
         initComponents();
+        initData();
     }
 
     @SuppressWarnings("unchecked")
@@ -185,22 +190,34 @@ public class ChooseDatePanel extends javax.swing.JPanel {
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         if (fromtoRadioButton.isSelected()) {
             if (fromDateChooser.getDate() != null && toDateChooser.getDate() != null) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                String fromDate = sdf.format(fromDateChooser.getDate());
-                String toDate = sdf.format(toDateChooser.getDate());
-                searchJPanel.fromDate = fromDate;
-                searchJPanel.toDate = toDate;
+                searchJPanel.fromDate = fromDateChooser.getDate();
+                searchJPanel.toDate = toDateChooser.getDate();
                 searchJPanel.jDialog.dispose();
             } else {
                 JOptionPane.showMessageDialog(chooseDatePanel, "Is not allowed to be empty");
             }
         } else {
             String year = yearComboBox.getSelectedItem().toString();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String fromDate = sdf.format(year + "-01-01");
-            String toDate = sdf.format(year + "-12-31");
-            searchJPanel.fromDate = fromDate;
-            searchJPanel.toDate = toDate;
+            SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd");
+            String dateString = year + "-01-01";
+            try {
+                searchJPanel.fromDate = sdt.parse(dateString);
+            } catch (ParseException ex) {
+                Logger.getLogger(ChooseDatePanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Date date = new Date();
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy");
+            if (year == sdf1.format(date)) {
+                searchJPanel.toDate = date;
+            } else {
+                dateString = year + "-12-31";
+                try {
+                    searchJPanel.toDate = sdt.parse(dateString);
+                } catch (ParseException ex) {
+                    Logger.getLogger(ChooseDatePanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
             searchJPanel.jDialog.dispose();
         }
     }//GEN-LAST:event_okButtonActionPerformed
@@ -282,4 +299,14 @@ public class ChooseDatePanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> yearComboBox;
     private javax.swing.JRadioButton yearRadioButton;
     // End of variables declaration//GEN-END:variables
+
+    private void initData() {
+        Date date=new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        int start = Integer.parseInt(sdf.format(date));
+        for (int i = 0; i < 20; i++) {
+             yearComboBox.addItem(Integer.toString(start - i));
+        }
+        yearComboBox.setSelectedIndex(0);
+    }
 }
