@@ -26,7 +26,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="nameJLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="424" pref="424" max="-2" attributes="0"/>
+                      <EmptySpace pref="424" max="32767" attributes="0"/>
                       <Component id="btn_top" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
                       <Component id="btn_raising" min="-2" max="-2" attributes="0"/>
