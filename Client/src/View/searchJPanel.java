@@ -25,12 +25,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.WindowConstants;
 
 public class searchJPanel extends javax.swing.JPanel {
 
     MyClient myClient = MyClient.getInstance();
     String[] dateStrings = {"The past 12 months", "Hours passed", "Last 4 hours", "Last day", "Last 7 days", "30 days", "90 days", "The past 5 years", "Custom time"};
     JLabel loading;
+    public static JDialog jDialog;
     public static String fromDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
     public static String toDate =  new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
     
@@ -343,14 +345,14 @@ public class searchJPanel extends javax.swing.JPanel {
 
     private void cbDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDateActionPerformed
         String cbdate = cbDate.getSelectedItem().toString();
-        System.out.println("cbdate: " + cbdate);
         if (cbdate.contains("Custom time")) {
-            JDialog jDialog = new JDialog();
+            jDialog = new JDialog();
             JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
             panel.add(new ChooseDatePanel());
             jDialog.add(panel);
             jDialog.setSize(340, 297);
+            jDialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
             jDialog.setLocationRelativeTo(null);
             jDialog.setVisible(true);
         }
@@ -479,11 +481,29 @@ public class searchJPanel extends javax.swing.JPanel {
             } else if (cbdate.contains("The past 5 years")) {
                 c.add(Calendar.YEAR, -5);
             }
+            
+            if (cbdate.contains("Custom time")) {
+                if (fromDate != null && toDate != null) {
+                    searchRegionRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(fromDate));
+                    searchRelatedQueryRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(fromDate));
+                    searchRelatedTopicRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(fromDate));
+                    searchOvertimeRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(fromDate));
+                    
+                    searchRegionRequest.setToDate(new SimpleDateFormat("yyyy-MM-dd").format(toDate));
+                    searchRelatedQueryRequest.setToDate(new SimpleDateFormat("yyyy-MM-dd").format(toDate));
+                    searchRelatedTopicRequest.setToDate(new SimpleDateFormat("yyyy-MM-dd").format(toDate));
+                    searchOvertimeRequest.setToDate(new SimpleDateFormat("yyyy-MM-dd").format(toDate));
+                } else {
+                    cbDate.setSelectedIndex(0);
+                    c.add(Calendar.YEAR, -1);
+                    searchRegionRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+                    searchRelatedQueryRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+                    searchRelatedTopicRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+                    searchOvertimeRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+                }
+            }
 
-            searchRegionRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
-            searchRelatedQueryRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
-            searchRelatedTopicRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
-            searchOvertimeRequest.setFromDate(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+            
             if (cbdate.contains("Hours passed")) {
                 searchRegionRequest.setFromDate("now1h");
                 searchRelatedQueryRequest.setFromDate("now1h");
